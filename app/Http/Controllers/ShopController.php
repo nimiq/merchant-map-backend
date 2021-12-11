@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class ShopController extends Controller
@@ -29,7 +30,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        //
+        return view('shops.create');
     }
 
     /**
@@ -40,7 +41,7 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -51,7 +52,7 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        return view('shops.show');
+        return view('shops.show', ['shop' => Shop::find($id)]);
     }
 
     /**
