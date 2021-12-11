@@ -15,7 +15,6 @@ class CreateShopsTable extends Migration
     {
         Schema::create('shops', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
 
             $table->string('label');
             $table->longText('description')->nullable();
@@ -35,6 +34,7 @@ class CreateShopsTable extends Migration
             $table->string('country')->nullable();
 
             $table->boolean('digital_goods');
+            $table->timestamps();
 
             $table->foreignId('user_id');
         });

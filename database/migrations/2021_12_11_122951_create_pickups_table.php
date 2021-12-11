@@ -15,9 +15,10 @@ class CreatePickupsTable extends Migration
     {
         Schema::create('pickups', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
 
+            $table->bigInteger('shop_id');
             $table->point('geo_location');
+            $table->timestamps();
         });
     }
 

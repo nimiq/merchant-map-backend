@@ -15,11 +15,12 @@ class CreateShippingsTable extends Migration
     {
         Schema::create('shippings', function (Blueprint $table) {
             $table->id();
-            $table->timestamps();
+            $table->bigInteger('shop_id');
 
             $table->point('geo_location')->nullable();
             $table->float('radius')->nullable();
             $table->json('countries')->nullable();
+            $table->timestamps();
         });
     }
 
