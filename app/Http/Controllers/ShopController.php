@@ -33,7 +33,7 @@ class ShopController extends Controller
      */
     public function create()
     {
-        return view('shops.create');
+        return view('shops.edit');
     }
 
     /**
