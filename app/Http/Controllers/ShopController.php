@@ -8,11 +8,6 @@ use Illuminate\Http\Request;
 class ShopController extends Controller
 {
 
-    public function __construct()
-    {
-        // $this->authorizeResource(Shop::class, 'shop');
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -65,6 +60,11 @@ class ShopController extends Controller
      */
     public function show(Shop $shop)
     {
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
         return view('shops.show', ['shop' => $shop]);
     }
 
@@ -88,14 +88,18 @@ class ShopController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $shop = Shop::findOrFail($id);
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
         $request->validate([
             'label' => 'required',
             'description' => 'required',
             'email' => 'email:rfc,dns'
         ]);
-
-        $shop = Shop::findOrFail($id);
-        $shop->update($request->request);
+        $shop->update($request->all());
 
         return redirect(route('shops.show', $shop->id));
     }
