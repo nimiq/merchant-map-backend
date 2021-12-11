@@ -19,7 +19,7 @@ class ShopController extends Controller
      */
     public function index()
     {
-        //
+        return view('shops.index');
     }
 
     /**
@@ -51,7 +51,7 @@ class ShopController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('shops.show');
     }
 
     /**
@@ -62,7 +62,7 @@ class ShopController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('shops.edit');
     }
 
     /**
