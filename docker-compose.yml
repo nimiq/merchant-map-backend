@@ -19,6 +19,8 @@ services:
       - postgres
   postgres:
     image: postgres:14.1-alpine
+    ports:
+      - 5433:5432
     volumes:
       - ./docker/postgres/persistence:/var/lib/postgresql/data
     environment:
