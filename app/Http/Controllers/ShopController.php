@@ -20,7 +20,10 @@ class ShopController extends Controller
      */
     public function index()
     {
-        return view('shops.index');
+        $user = auth()->user();
+        return view('shops.index', [
+            'shops' => ($user->is_admin) ? Shop::all() : Shop::where('user_id', $user->id)->get()
+        ]);
     }
 
     /**
@@ -51,39 +54,39 @@ class ShopController extends Controller
         $shop->user_id = auth()->user()->id;
         $shop->save();
 
-        return $request;
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop)
     {
-        return view('shops.show', ['shop' => Shop::find($id)]);
+        return view('shops.show', ['shop' => $shop]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Shop $shop)
     {
-        return view('shops.edit');
+        return view('shops.edit', ['shop' => $shop]);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  Shop  $shop
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shop $shop)
     {
         //
     }
