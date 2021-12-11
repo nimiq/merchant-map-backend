@@ -33,7 +33,7 @@ class CreateShopsTable extends Migration
             $table->string('city')->nullable();
             $table->string('country')->nullable();
 
-            $table->boolean('digital_goods');
+            $table->boolean('digital_goods')->default(false);
             $table->timestamps();
 
             $table->foreignId('user_id');
