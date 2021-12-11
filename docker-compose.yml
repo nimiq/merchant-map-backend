@@ -9,13 +9,20 @@ services:
     depends_on:
       - php
   php:
-    image: php:8.0.13-fpm-alpine3.15
+    build:
+      context: ./docker/php
+    ports:
+      - 9005:9000
     volumes:
       - ./:/var/www/html
     depends_on:
       - postgres
   postgres:
     image: postgres:14.1-alpine
+    volumes:
+      - ./docker/postgres/persistence:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: shop-directory
       POSTGRES_DB: shop-directory
+      POSTGRES_PASSWORD: password
+      POSTGRES_HOST_AUTH_METHOD: trust
