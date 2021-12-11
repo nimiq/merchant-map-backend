@@ -18,7 +18,7 @@ services:
     depends_on:
       - postgres
   postgres:
-    image: postgres:14.1-alpine
+    image: postgis/postgis:13-3.1-alpine
     ports:
       - 5433:5432
     volumes:
@@ -27,4 +27,5 @@ services:
       POSTGRES_USER: shop-directory
       POSTGRES_DB: shop-directory
       POSTGRES_PASSWORD: password
+      # TODO: remove this eventually
       POSTGRES_HOST_AUTH_METHOD: trust
