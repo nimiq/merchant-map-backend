@@ -41,6 +41,16 @@ class ShopController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'label' => 'required',
+            'description' => 'required',
+            'email' => 'email:rfc,dns'
+        ]);
+
+        $shop = new Shop($request->all());
+        $shop->user_id = auth()->user()->id;
+        $shop->save();
+
         return $request;
     }
 

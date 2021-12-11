@@ -9,6 +9,21 @@ class Shop extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'label',
+        'description',
+        'object_id',
+        'source_id',
+        'website',
+        'email',
+        'phone',
+        'street',
+        'number',
+        'zip',
+        'city',
+        'country'
+    ];
+
     public function pickups()
     {
         return $this->hasMany(Pickup::class);
