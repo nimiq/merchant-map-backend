@@ -17,10 +17,9 @@ class CreateShippingsTable extends Migration
             $table->id();
             $table->timestamps();
 
-            $table->point('geo_location');
-            $table->float('radius');
-            $table->json('countries');
-
+            $table->point('geo_location')->nullable();
+            $table->float('radius')->nullable();
+            $table->json('countries')->nullable();
         });
     }
 

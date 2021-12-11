@@ -18,21 +18,21 @@ class CreateShopsTable extends Migration
             $table->timestamps();
 
             $table->string('label');
-            $table->longText('description');
+            $table->longText('description')->nullable();
 
             /** Source information */
-            $table->string('object_id');
-            $table->string('source_id');
+            $table->string('object_id')->nullable();
+            $table->string('source_id')->nullable();
 
             /** Contact information */
-            $table->string('website');
-            $table->string('email');
-            $table->string('phone');
-            $table->string('street');
-            $table->string('number');
-            $table->string('zip');
-            $table->string('city');
-            $table->string('country');
+            $table->string('website')->nullable();
+            $table->string('email')->nullable();
+            $table->string('phone')->nullable();
+            $table->string('street')->nullable();
+            $table->string('number')->nullable();
+            $table->string('zip')->nullable();
+            $table->string('city')->nullable();
+            $table->string('country')->nullable();
 
             $table->boolean('digital_goods');
 
