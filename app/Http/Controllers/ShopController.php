@@ -83,12 +83,21 @@ class ShopController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  Shop  $shop
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Shop $shop)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'label' => 'required',
+            'description' => 'required',
+            'email' => 'email:rfc,dns'
+        ]);
+
+        $shop = Shop::findOrFail($id);
+        $shop->update($request->request);
+
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**
