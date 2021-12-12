@@ -77,8 +77,8 @@
 
             </div>
 
-            <div class="flex justify-end my-8">
-                <x-forms.button type="reset" class="bg-white border-gray-300 mr-2">{{ __('Cancel') }}</x-button>
+            <div class="flex justify-end my-8 items-center">
+                <x-utils.link href="{{ route('shops.show', $shop->id) }}" class="mr-2">{{ __('Cancel') }}</x-utils.link>
                 <x-forms.button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white">{{ __('Save') }}</x-button>
             </div>
 

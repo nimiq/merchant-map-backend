@@ -9,15 +9,6 @@ use MStaack\LaravelPostgis\Geometries\Point;
 
 class PickupController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -64,26 +55,27 @@ class PickupController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shop $shop, Pickup $pickup)
     {
-        //
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $request->validate([
+            'longtitude' => 'required',
+            'latitude' => 'required'
+        ]);
+
+        $pickup->update(['geo_location' => new Point($request->latitude, $request->longtitude)]);
+
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**
@@ -92,8 +84,14 @@ class PickupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shop $shop, Pickup $pickup)
     {
-        //
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $pickup->delete();
+        return redirect(route('shops.show', $shop->id));
     }
 }

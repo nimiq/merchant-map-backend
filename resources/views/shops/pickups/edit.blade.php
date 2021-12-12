@@ -3,7 +3,7 @@
         <div class="flex">
             <x-utils.link href="{{ route('shops.show', $shop->id) }}" class="mr-4"><</x-utils.link>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                {{ isset($pickup) ? 'Edit Shipping Location #' . $pickup->id : 'Create New Pickup Location'  }} For {{ $shop->label }}
+                {{ isset($pickup) ? 'Edit Pickup Location #' . $pickup->id : 'Create New Pickup Location'  }} For {{ $shop->label }}
             </h2>
         </div>
     </x-slot>
