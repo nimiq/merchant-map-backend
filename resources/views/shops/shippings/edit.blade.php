@@ -46,7 +46,7 @@
                             <div class="col-span-3">
                                 <x-forms.label for="radius">{{ __('Radius') }}</x-forms.label>
                                 <x-forms.input-group>
-                                    <x-forms.input type="number" name="radius" id="radius" value="{{ old('radius', $shipping->radius ?? '') }}" />
+                                    <x-forms.input type="text" name="radius" id="radius" value="{{ old('radius', $shipping->radius ?? '') }}" />
                                 </x-forms.input-group>
                             </div>
                         </div>
