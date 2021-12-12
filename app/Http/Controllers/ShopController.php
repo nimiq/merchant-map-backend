@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\LocationFilter;
+use App\Filters\VoidFilter;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -108,13 +110,16 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        $request->validate([
-            'limit' => 'numeric|min:1'
-        ]);
-
-        $limit = $request->limit;
-        if (!is_null($limit) && $limit > 100) {
+        $limit = intval($request->query('filter')['limit'] ?? 20);
+        if ($limit === 0) {
+            throw new \Exception('Unable to parse limit into int.');
+        } else if ($limit > 100) {
             $limit = 100;
+        }
+
+        $radius = floatval($request->query('filter')['radius'] ?? 50);
+        if ($radius === 0.0) {
+            throw new \Exception('Unable to parse radius into float.');
         }
 
         $shops = QueryBuilder::for(Shop::class)
@@ -128,9 +133,12 @@ class ShopController extends Controller
                 'number',
                 'website',
                 'zip',
-                AllowedFilter::exact('digital_goods')
+                AllowedFilter::exact('digital_goods'),
+                AllowedFilter::custom('limit', new VoidFilter),
+                AllowedFilter::custom('location', new LocationFilter($radius)),
+                AllowedFilter::custom('radius', new VoidFilter)
             ])
-            ->paginate($limit ?? 20)
+            ->paginate($limit)
             ->appends(request()->query());
 
 
