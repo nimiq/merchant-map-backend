@@ -65,7 +65,7 @@ Start a new terminal session in the PHP container:
 
 <br/>
 
-Inside the PHP container terminal session generate an Laravel APP_KEY:
+Inside the PHP container terminal session generate a Laravel APP_KEY:
 ```
 php artisan key:generate
 ```
