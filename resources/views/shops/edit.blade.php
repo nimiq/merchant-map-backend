@@ -1,8 +1,11 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ isset($shop) ? __('Shops Edit') : __('Add Shop') }}
-        </h2>
+        <div class="flex">
+            <x-utils.link href="{{ route('shops.index') }}" class="mr-4"><</x-utils.link>
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ isset($shop) ? __('Shops Edit') : __('Add Shop') }}
+            </h2>
+        </div>
     </x-slot>
 
     <div class="py-12">

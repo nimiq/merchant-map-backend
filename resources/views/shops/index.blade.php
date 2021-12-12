@@ -1,16 +1,20 @@
 <x-app-layout>
 
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Shops') }}
-        </h2>
+
+        <div class="flex justify-between">
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Shops') }}
+            </h2>
+
+            <div class="self-end">
+                <x-utils.link-button href="{{ route('shops.create') }}">{{ __('New Shop') }}</x-utils.link-button>
+            </div>
+
+        </div>
     </x-slot>
 
     <x-utils.container class="py-12">
-
-        <div class="pb-4 flex justify-end">
-            <x-utils.link-button href="{{ route('shops.create') }}">{{ __('Add Shop') }}</x-utils.link-button>
-        </div>
 
         <x-card.card>
 
