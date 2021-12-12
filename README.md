@@ -10,7 +10,7 @@
 </p>
 
 # Shop Directory Backend
-The Shop Directory Backend is an application for serving and managing on.......
+The Shop Directory Backend is an application for serving and managing shops. This application also comes with an API endpoint for searching shops that have been imported or added. 
 
 <br/>
 
@@ -77,4 +77,4 @@ Inside the PHP container terminal session run the migrations:
 php artisan migrate
 ```
 
-After downloading, bringing up and configuring the system it should be served on <a href="http://localhost:3000">http://localhost:3000</a>.
+After downloading, bringing up and configuring the system it should be served on <a href="http://localhost:3000" target="_blank">http://localhost:3000</a>.
