@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pickup;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class PickupController extends Controller
@@ -34,7 +36,22 @@ class PickupController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'shop_id' => 'required|numeric',
+            'geo_location' => 'required'
+        ]);
+
+        $shop = Shop::findOrFail($request->shop_id);
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $pickup = new Pickup($request->all());
+        $pickup->shop_id = $request->shop_id;
+        $pickup->save();
+
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**

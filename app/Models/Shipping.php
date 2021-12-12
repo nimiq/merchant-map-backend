@@ -12,6 +12,12 @@ class Shipping extends Model
 
     protected $hidden = ['pivot'];
 
+    protected $fillable = [
+        'geo_location',
+        'radius',
+        'countries'
+    ];
+
     protected $postgisFields = [
         'geo_location',
     ];

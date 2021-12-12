@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Shipping;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class ShippingController extends Controller
@@ -34,7 +36,21 @@ class ShippingController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'shop_id' => 'required|numeric'
+        ]);
+
+        $shop = Shop::findOrFail($request->shop_id);
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $shipping = new Shipping($request->all());
+        $shipping->shop_id = $request->shop_id;
+        $shipping->save();
+
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**
