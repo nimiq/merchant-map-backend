@@ -24,6 +24,12 @@ class Shop extends Model
         'country'
     ];
 
+    protected $hidden = [
+        'object_id',
+        'source_id',
+        'user_id'
+    ];
+
     public function pickups()
     {
         return $this->hasMany(Pickup::class);

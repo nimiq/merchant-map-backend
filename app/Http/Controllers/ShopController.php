@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use Spatie\QueryBuilder\AllowedFilter;
+use Spatie\QueryBuilder\QueryBuilder;
 
 class ShopController extends Controller
 {
@@ -102,6 +104,37 @@ class ShopController extends Controller
         $shop->update($request->all());
 
         return redirect(route('shops.show', $shop->id));
+    }
+
+    public function search(Request $request)
+    {
+        $request->validate([
+            'limit' => 'numeric|min:1'
+        ]);
+
+        $limit = $request->limit;
+        if (!is_null($limit) && $limit > 100) {
+            $limit = 100;
+        }
+
+        $shops = QueryBuilder::for(Shop::class)
+            ->allowedFilters([
+                'city',
+                'country',
+                'description',
+                'email',
+                'label',
+                'street',
+                'number',
+                'website',
+                'zip',
+                AllowedFilter::exact('digital_goods')
+            ])
+            ->paginate($limit ?? 20)
+            ->appends(request()->query());
+
+
+        return $shops;
     }
 
     /**
