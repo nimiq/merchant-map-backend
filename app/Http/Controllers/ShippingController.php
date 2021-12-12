@@ -23,7 +23,7 @@ class ShippingController extends Controller
      */
     public function create()
     {
-        //
+        return view('shops.shippings.edit');
     }
 
     /**

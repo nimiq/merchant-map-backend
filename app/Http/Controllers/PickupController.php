@@ -23,7 +23,7 @@ class PickupController extends Controller
      */
     public function create()
     {
-        //
+        return view('shops.pickups.edit');
     }
 
     /**
