@@ -73,7 +73,7 @@ class ShippingController extends Controller
             'longtitude' => [ '' ],
             'latitude' => [ '' ],
             'radius' => [ 'numeric' ],
-            'countries' => [ 'json' ]
+            'countries' => [ 'nullable', 'json' ]
         ]);
 
         $user = auth()->user();
