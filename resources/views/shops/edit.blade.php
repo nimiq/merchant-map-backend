@@ -56,7 +56,7 @@
                         <div class="mb-4">
                             <x-label for="email">{{ __('Email*') }}</x-label>
                             <x-input id="email" name="email" class=" w-full" :value="old('email', $shop->email ?? '')" required />
-                            @error('phone')<x-error>{{ $message }}</x-error>@enderror
+                            @error('email')<x-error>{{ $message }}</x-error>@enderror
                         </div>
 
                         <div class="mb-4">

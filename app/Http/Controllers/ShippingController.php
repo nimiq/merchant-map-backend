@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Shipping;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class ShippingController extends Controller
 {
@@ -23,9 +24,9 @@ class ShippingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Shop $shop)
     {
-        return view('shops.shippings.edit');
+        return view('shops.shippings.edit', compact('shop'));
     }
 
     /**
@@ -34,21 +35,20 @@ class ShippingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Shop $shop)
     {
-        $request->validate([
-            'shop_id' => 'required|numeric'
-        ]);
+        $request->validate([]);
 
-        $shop = Shop::findOrFail($request->shop_id);
         $user = auth()->user();
         if (!$user->is_admin && $shop->user_id !== $user->id) {
             return redirect(route('shops.index'));
         }
 
-        $shipping = new Shipping($request->all());
-        $shipping->shop_id = $request->shop_id;
-        $shipping->save();
+        $shop->shippings()->create([
+            'geo_location' => new Point($request->latitude, $request->longtitude),
+            'radius' => $request->radius,
+            'countries' => $request->countries
+        ]);
 
         return redirect(route('shops.show', $shop->id));
     }
@@ -59,9 +59,9 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop, Shipping $shipping)
     {
-        //
+        return view('shops.shippings.edit', compact('shop', 'shipping'));
     }
 
     /**

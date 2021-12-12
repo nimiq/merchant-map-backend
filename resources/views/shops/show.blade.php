@@ -9,21 +9,20 @@
     </x-slot>
 
     <x-utils.container class="py-12">
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <div class="md:col-span-1">
-                <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">General Information</h3>
-                    <p class="mt-1 text-sm text-gray-600">
-                    </p>
+        <form action="{{ route('shops.update', $shop->id) }}" method="POST">
+            @csrf
+            @method('put')
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('General Information') }}</h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                        </p>
+                    </div>
                 </div>
-            </div>
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="{{ route('shops.update', $shop->id) }}" method="POST">
-                    @csrf
-                    @method('put')
+                <div class="mt-5 md:mt-0 md:col-span-2">
                     <div class="shadow sm:rounded-md sm:overflow-hidden">
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3">
                                     <x-forms.label for="label">{{ __('Label*') }}</x-forms.label>
@@ -32,38 +31,51 @@
                                     </x-forms.input-group>
                                 </div>
                             </div>
-
                             <div class="col-span-3">
                                 <x-forms.label for="description">{{ __('Description*') }}</x-forms.label>
                                 <x-forms.input-group>
                                     <x-forms.text-area type="text" name="description" id="description" required>{{ old('description', $shop->description) }}</x-forms.text-area>
                                 </x-forms.input-group>
                             </div>
-
-                            <h2>Source</h2>
-
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Source') }}</h3>
+                        <p class="mt-1 text-sm text-gray-600"></p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="shadow sm:rounded-md sm:overflow-hidden">
+                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
-
                                 <div class="col-span-3">
                                     <x-forms.label for="object_id">{{ __('Object ID') }}</x-forms.label>
                                     <x-forms.input-group>
                                         <x-forms.input type="text" name="object_id" id="object_id" value="{{ old('object_id', $shop->object_id) }}" />
                                     </x-forms.input-group>
                                 </div>
-
                                 <div class="col-span-3">
                                     <x-forms.label for="source_id">{{ __('Source ID') }}</x-forms.label>
                                     <x-forms.input-group>
                                         <x-forms.input type="text" name="source_id" id="source_id" value="{{ old('source_id', $shop->source_id) }}" />
                                     </x-forms.input-group>
                                 </div>
-
                             </div>
-
-                            <h2>
-                                Contact information
-                            </h2>
-
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Contact Information') }}</h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="shadow sm:rounded-md sm:overflow-hidden">
+                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3">
                                     <x-forms.label for="source_id">{{ __('Website URL') }}</x-forms.label>
@@ -71,14 +83,12 @@
                                         <x-forms.input type="text" name="website" id="website" value="{{ old('website', $shop->website) }}" />
                                     </x-forms.input-group>
                                 </div>
-
                                 <div class="col-span-3">
                                     <x-forms.label for="source_id">{{ __('Email*') }}</x-forms.label>
                                     <x-forms.input-group>
                                         <x-forms.input type="email" name="email" id="email" value="{{ old('email', $shop->email) }}" required/>
                                     </x-forms.input-group>
                                 </div>
-
                                 <div class="col-span-3">
                                     <x-forms.label for="phone">{{ __('Phone') }}</x-forms.label>
                                     <x-forms.input-group>
@@ -86,11 +96,19 @@
                                     </x-forms.input-group>
                                 </div>
                             </div>
-
-                            <h2>
-                                Address
-                            </h2>
-
+                        </div>
+                    </div>
+                </div>
+                <div class="md:col-span-1">
+                    <div class="px-4 sm:px-0">
+                        <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Address') }}</h3>
+                        <p class="mt-1 text-sm text-gray-600">
+                        </p>
+                    </div>
+                </div>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="shadow sm:rounded-md sm:overflow-hidden">
+                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-2">
                                     <x-forms.label for="street">{{ __('Street') }}</x-forms.label>
@@ -105,7 +123,6 @@
                                     </x-forms.input-group>
                                 </div>
                             </div>
-
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-1">
                                     <x-forms.label for="zip">{{ __('Zip') }}</x-forms.label>
@@ -120,7 +137,6 @@
                                     </x-forms.input-group>
                                 </div>
                             </div>
-
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3">
                                     <x-forms.label for="country">{{ __('Country') }}</x-frms.label>
@@ -129,32 +145,90 @@
                                     </x-forms.input-group>
                                 </div>
                             </div>
-
-                            <div class="flex flex-row-reverse">
-                                <x-forms.button type="submit" class="bg-blue-400 text-white">{{ __('Save') }}</x-button>
-                            </div>
-
                         </div>
                     </div>
-                </form>
+                </div>
+            </div>
+
+            <div class="flex justify-end my-8">
+                <x-forms.button type="reset" class="bg-white border-gray-300 mr-2">{{ __('Cancel') }}</x-button>
+                <x-forms.button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white">{{ __('Save') }}</x-button>
+            </div>
+            <div class="my-8 border-t border-gray-300 w-full"></div>
+
+        </form>
+
+        <div class="md:grid md:grid-cols-3 md:gap-6 mt-16">
+            <div class="md:col-span-1">
+                <div class="px-4 sm:px-0">
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Shipping limits') }}</h3>
+                    <p class="mt-1 text-sm text-gray-600">
+                    </p>
+                </div>
+            </div>
+            <div class="mt-5 md:mt-0 md:col-span-2">
+                <div class="shadow sm:rounded-md sm:overflow-hidden">
+                    <div class="bg-white space-y-6">
+                        <x-table.table>
+                            <x-slot name="tableHead">
+                                <x-table.header>{{ __('ID') }}</x-table.header>
+                                <x-table.header><span class="sr-only">Show</span></x-table.header>
+                            </x-slot>
+                            <x-slot name="tableBody">
+                                @foreach($shop->shippings as $shipping)
+                                    <tr>
+                                        <x-table.data>{{ $shipping->id }}</x-table.data>
+                                        <x-table.data class="text-right text-sm font-medium">
+                                            <x-utils.link href="{{ route('shops.shippings.show', [ $shop->id, $shipping->id ]) }}">Show</x-utils.link>
+                                        </x-table.data>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <x-table.data colspan="2">
+                                        <x-utils.link href="{{ route('shops.shippings.create', $shop->id) }}">Add new shipping limit</x-utils.link>
+                                    </x-table.data>
+                                </tr>
+                            </x-slot>
+                        </x-table.table>
+                    </div>
+                </div>
             </div>
         </div>
 
         <div class="md:grid md:grid-cols-3 md:gap-6 mt-16">
             <div class="md:col-span-1">
                 <div class="px-4 sm:px-0">
-                    <h3 class="text-lg font-medium leading-6 text-gray-900">Locations</h3>
+                    <h3 class="text-lg font-medium leading-6 text-gray-900">{{ __('Pickup locations') }}</h3>
                     <p class="mt-1 text-sm text-gray-600">
                     </p>
                 </div>
             </div>
             <div class="mt-5 md:mt-0 md:col-span-2">
-                <form action="#" method="POST">
-                    <div class="shadow sm:rounded-md sm:overflow-hidden">
-                        <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                        </div>
+                <div class="shadow sm:rounded-md sm:overflow-hidden">
+                    <div class="bg-white space-y-6">
+                        <x-table.table>
+                            <x-slot name="tableHead">
+                                <x-table.header>{{ __('ID') }}</x-table.header>
+                                <x-table.header><span class="sr-only">Show</span></x-table.header>
+                            </x-slot>
+                            <x-slot name="tableBody">
+                                @foreach($shop->pickups as $pickup)
+                                    <tr>
+                                        <x-table.data>{{ $pickup->id }}</x-table.data>
+                                        <x-table.data class="text-right text-sm font-medium">
+                                            <x-utils.link href="{{ route('shops.pickups.show', [$shop->id, $pickup->id]) }}">Show</x-utils.link>
+                                        </x-table.data>
+                                    </tr>
+                                @endforeach
+                                <tr>
+                                    <x-table.data colspan="2">
+                                        <x-utils.link href="{{ route('shops.pickups.create', $shop->id) }}">Add new pickup location</x-utils.link>
+                                    </x-table.data>
+                                </tr>
+                            </x-slot>
+                        </x-table.table>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
 

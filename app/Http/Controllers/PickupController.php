@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Pickup;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class PickupController extends Controller
 {
@@ -23,9 +24,9 @@ class PickupController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Shop $shop)
     {
-        return view('shops.pickups.edit');
+        return view('shops.pickups.edit', compact('shop'));
     }
 
     /**
@@ -34,22 +35,19 @@ class PickupController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Shop $shop)
     {
-        $request->validate([
-            'shop_id' => 'required|numeric',
-            'geo_location' => 'required'
-        ]);
-
-        $shop = Shop::findOrFail($request->shop_id);
         $user = auth()->user();
         if (!$user->is_admin && $shop->user_id !== $user->id) {
             return redirect(route('shops.index'));
         }
 
-        $pickup = new Pickup($request->all());
-        $pickup->shop_id = $request->shop_id;
-        $pickup->save();
+        $request->validate([
+            'longtitude' => 'required',
+            'latitude' => 'required'
+        ]);
+
+        $shop->pickups()->create(['geo_location' => new Point($request->latitude, $request->longtitude)]);
 
         return redirect(route('shops.show', $shop->id));
     }
@@ -60,9 +58,9 @@ class PickupController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop, Pickup $pickup)
     {
-        //
+        return view('shops.pickups.edit', compact('shop', 'pickup'));
     }
 
     /**
