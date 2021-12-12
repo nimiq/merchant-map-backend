@@ -69,7 +69,7 @@ class ShopController extends Controller
             return redirect(route('shops.index'));
         }
 
-        return view('shops.show', ['shop' => $shop]);
+        return view('shops.edit', ['shop' => $shop]);
     }
 
     /**
@@ -151,8 +151,15 @@ class ShopController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shop $shop)
     {
-        //
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $shop->delete();
+
+        return redirect(route('shops.index'));
     }
 }

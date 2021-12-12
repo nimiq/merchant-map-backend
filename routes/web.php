@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\PickupController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,6 +22,8 @@ Route::redirect('/', '/shops', 301);
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
 
-Route::resource('/shops', ShopController::class)->middleware(['auth']);
+Route::resource('shops', ShopController::class)->middleware(['auth']);
+Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);
+Route::resource('shops.shippings', ShippingController::class)->middleware(['auth']);
 
 require __DIR__.'/auth.php';

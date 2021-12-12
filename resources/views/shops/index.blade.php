@@ -41,6 +41,11 @@
                             <x-table.data>{{ $shop->source_id }}</x-table.data>
                             <x-table.data class="text-right text-sm font-medium">
                                 <x-utils.link href="{{ route('shops.show', $shop->id) }}">Show</x-utils.link>
+                                <form action="{{ route('shops.destroy', [ $shop->id ]) }}" method="POST" class="inline-block">
+                                    @csrf
+                                    @method('delete')
+                                    <button class="text-red-500">{{ __('Delete') }}</button>
+                                </form>
                             </x-table.data>
                         </tr>
 

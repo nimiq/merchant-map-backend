@@ -5,27 +5,19 @@ namespace App\Http\Controllers;
 use App\Models\Shipping;
 use App\Models\Shop;
 use Illuminate\Http\Request;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class ShippingController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Shop $shop)
     {
-        return view('shops.shippings.edit');
+        return view('shops.shippings.edit', compact('shop'));
     }
 
     /**
@@ -34,21 +26,25 @@ class ShippingController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request, Shop $shop)
     {
-        $request->validate([
-            'shop_id' => 'required|numeric'
-        ]);
-
-        $shop = Shop::findOrFail($request->shop_id);
         $user = auth()->user();
         if (!$user->is_admin && $shop->user_id !== $user->id) {
             return redirect(route('shops.index'));
         }
 
-        $shipping = new Shipping($request->all());
-        $shipping->shop_id = $request->shop_id;
-        $shipping->save();
+        $request->validate([
+            'longtitude' => [ '' ],
+            'latitude' => [ '' ],
+            'radius' => [ 'numeric' ],
+            'countries' => [ 'json' ]
+        ]);
+
+        $shop->shippings()->create([
+            'geo_location' => new Point($request->latitude, $request->longtitude),
+            'radius' => $request->radius,
+            'countries' => $request->countries
+        ]);
 
         return redirect(route('shops.show', $shop->id));
     }
@@ -59,20 +55,9 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Shop $shop, Shipping $shipping)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
+        return view('shops.shippings.edit', compact('shop', 'shipping'));
     }
 
     /**
@@ -82,9 +67,27 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Shop $shop, Shipping $shipping)
     {
-        //
+        $request->validate([
+            'longtitude' => [ '' ],
+            'latitude' => [ '' ],
+            'radius' => [ 'numeric' ],
+            'countries' => [ 'json' ]
+        ]);
+
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $shipping->update([
+            'geo_location' => new Point($request->latitude, $request->longtitude),
+            'radius' => $request->radius,
+            'countries' => $request->countries
+        ]);
+
+        return redirect(route('shops.show', $shop->id));
     }
 
     /**
@@ -93,8 +96,14 @@ class ShippingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Shop $shop, Shipping $shipping)
     {
-        //
+        $user = auth()->user();
+        if (!$user->is_admin && $shop->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $shipping->delete();
+        return redirect(route('shops.show', $shop->id));
     }
 }
