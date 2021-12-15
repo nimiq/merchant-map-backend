@@ -15,7 +15,7 @@ The Shop Directory Backend is an application for serving and managing shops. Thi
 <br/>
 
 ## Quick setup for local development
-After you've cloned this repository you can easily serve this application through the following steps. The quick setup assumes that you already have access to Docker, Docker Compose, Composer and NodeJS/NPM. The enviroment comes with NGINX, PHP 8 and Postgres 13 including the PostGIS extension enabled for geospatial storage. The database is made persisent through a Docker volume and can be found in `/docker/postgres/persistence`.
+After you've cloned this repository you can easily serve this application through the following steps. The quick setup assumes that you already have access to Docker, Docker Compose andd NodeJS/NPM. The enviroment comes with NGINX, PHP 8 and Postgres 13 including the PostGIS extension enabled for geospatial storage. The database is made persisent through a Docker volume and can be found in `/docker/postgres/persistence`.
 
 <strong>Note: this quick setup is meant for development purposes only. It doesn't come with proper database protection since no database password is necassary when the connection is coming from localhost.</strong>
 
@@ -31,13 +31,6 @@ cp .env.example .env
 Pull NodeJs packages:
 ```
 npm install
-```
-
-<br/>
-
-Pull PHP packages:
-```
-composer install
 ```
 
 <br/>
@@ -61,6 +54,13 @@ docker-compose up -d
 Start a new terminal session in the PHP container:
 ```
 ./terminal.sh php
+```
+
+<br/>
+
+Inside the PHP container terminal session pull PHP packages:
+```
+composer install
 ```
 
 <br/>
