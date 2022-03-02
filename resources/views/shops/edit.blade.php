@@ -240,7 +240,7 @@
                                             <x-table.data>{{ $pickup->id }}</x-table.data>
                                             <x-table.data class="text-right text-sm font-medium">
                                                 <x-utils.link href="{{ route('shops.pickups.show', [ $shop->id, $pickup->id ]) }}" class="mr-4">{{ __('Edit') }}</x-utils.link>
-                                                <form action="{{ route('shops.pickups.destroy', [ $shop->id, $shipping->id ]) }}" method="POST" class="inline-block">
+                                                <form action="{{ route('shops.pickups.destroy', [ $shop->id, $pickup->id ]) }}" method="POST" class="inline-block">
                                                     @csrf
                                                     @method('delete')
                                                     <button class="text-red-500">{{ __('Delete') }}</button>
