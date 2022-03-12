@@ -34,10 +34,10 @@ class ShippingController extends Controller
         }
 
         $request->validate([
-            'longtitude' => [ '' ],
-            'latitude' => [ '' ],
-            'radius' => [ 'numeric' ],
-            'countries' => [ 'json' ]
+            'longtitude' => [''],
+            'latitude' => [''],
+            'radius' => ['numeric'],
+            'countries' => ['nullable', 'json']
         ]);
 
         $shop->shippings()->create([
@@ -70,10 +70,10 @@ class ShippingController extends Controller
     public function update(Request $request, Shop $shop, Shipping $shipping)
     {
         $request->validate([
-            'longtitude' => [ '' ],
-            'latitude' => [ '' ],
-            'radius' => [ 'numeric' ],
-            'countries' => [ 'nullable', 'json' ]
+            'longtitude' => [''],
+            'latitude' => [''],
+            'radius' => ['numeric'],
+            'countries' => ['nullable', 'json']
         ]);
 
         $user = auth()->user();
