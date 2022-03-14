@@ -16,6 +16,19 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
 {
     use SkipsFailures;
 
+    private function addGeocodingPickup($shop, $data)
+    {
+        $geocoder = new Geocoder(new \GuzzleHttp\Client());
+        $geocoder->setApiKey(config('geocoder.key'));
+
+        try {
+            $geo = $geocoder->getCoordinatesForAddress($data['street'] . ' ' . $data['city']);
+            $shop->pickups()->delete();
+            $shop->pickups()->create(['geo_location' => new Point($geo['lat'], $geo['lng'])]);
+        } catch (\Throwable $th) {
+        }
+    }
+
     public function onFailure(Failure ...$failures)
     {
     }
@@ -48,19 +61,10 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
             $shop->source_id = 'salamantex';
             $shop->save();
         } else {
-            $shop->pickups()->delete();
-
-            $geocoder = new Geocoder(new \GuzzleHttp\Client());
-            $geocoder->setApiKey(config('geocoder.key'));
-
-            try {
-                $geo = $geocoder->getCoordinatesForAddress($data['street'] . ' ' . $data['city']);
-                $shop->pickups()->create(['geo_location' => new Point($geo['lat'], $geo['lng'])]);
-            } catch (\Throwable $th) {
-            }
-
             $shop->update($data);
         }
+
+        $this->addGeocodingPickup($shop, $data);
     }
 
     public function rules(): array
