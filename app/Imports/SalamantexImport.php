@@ -3,12 +3,23 @@
 namespace App\Imports;
 
 use App\Models\Shop;
+use Maatwebsite\Excel\Concerns\SkipsOnFailure;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
+use Maatwebsite\Excel\Concerns\WithValidation;
+use Maatwebsite\Excel\Concerns\SkipsFailures;
+use Maatwebsite\Excel\Validators\Failure;
+use MStaack\LaravelPostgis\Geometries\Point;
+use Spatie\Geocoder\Geocoder;
 
-
-class SalamantexImport implements ToModel, WithHeadingRow
+class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithValidation
 {
+    use SkipsFailures;
+
+    public function onFailure(Failure ...$failures)
+    {
+    }
+
     public function model(array $row)
     {
         if (is_null($row['column1companyname'])) {
@@ -37,7 +48,25 @@ class SalamantexImport implements ToModel, WithHeadingRow
             $shop->source_id = 'salamantex';
             $shop->save();
         } else {
+            $shop->pickups()->delete();
+
+            $geocoder = new Geocoder(new \GuzzleHttp\Client());
+            $geocoder->setApiKey(config('geocoder.key'));
+
+            try {
+                $geo = $geocoder->getCoordinatesForAddress($data['street'] . ' ' . $data['city']);
+                $shop->pickups()->create(['geo_location' => new Point($geo['lat'], $geo['lng'])]);
+            } catch (\Throwable $th) {
+            }
+
             $shop->update($data);
         }
+    }
+
+    public function rules(): array
+    {
+        return [
+            '1' => \Illuminate\Validation\Rule::unique('column1partnernumber'),
+        ];
     }
 }
