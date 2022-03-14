@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Filters\LocationFilter;
 use App\Filters\VoidFilter;
+use App\Models\Pickup;
+use App\Models\Shipping;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -141,6 +143,20 @@ class ShopController extends Controller
             ->paginate($limit)
             ->appends(request()->query());
 
+        $pickups = Pickup::all();
+        $shippings = Shipping::all();
+
+        $shops->transform(function ($shop) use (&$pickups, &$shippings) {
+            $shop->pickups = $pickups->filter(function ($pickup) use (&$shop) {
+                return $shop->id === $pickup->shop_id;
+            });
+
+            $shop->shippings = $shippings->filter(function ($shipping) use (&$shop) {
+                return $shop->id === $shipping->shop_id;
+            });
+
+            return $shop;
+        });
 
         return $shops;
     }
