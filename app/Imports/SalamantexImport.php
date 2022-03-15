@@ -23,7 +23,10 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
 
         try {
             $geo = $geocoder->getCoordinatesForAddress($data['street'] . ' ' . $data['city']);
-            $shop->pickups()->create(['geo_location' => new Point($geo['lat'], $geo['lng'])]);
+            $shop->pickups()->create([
+                'geo_location' => new Point($geo['lat'], $geo['lng']),
+                'place_id' => $geo['place_id'] ?? null
+            ]);
         } catch (\Throwable $th) {
         }
     }
