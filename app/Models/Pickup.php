@@ -13,7 +13,8 @@ class Pickup extends Model
     protected $hidden = ['pivot'];
 
     protected $fillable = [
-        'geo_location'
+        'geo_location',
+        'place_id'
     ];
 
     protected $postgisFields = [
