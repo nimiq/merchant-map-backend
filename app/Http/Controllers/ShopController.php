@@ -115,8 +115,8 @@ class ShopController extends Controller
         $limit = intval($request->query('filter')['limit'] ?? 20);
         if ($limit === 0) {
             throw new \Exception('Unable to parse limit into int.');
-        } else if ($limit > 100) {
-            $limit = 100;
+        } else if ($limit > 200) {
+            $limit = 200;
         }
 
         $radius = floatval($request->query('filter')['radius'] ?? 50);
