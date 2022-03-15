@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Filters\BoundingBoxFilter;
 use App\Filters\LocationFilter;
 use App\Filters\VoidFilter;
 use App\Models\Pickup;
@@ -135,10 +136,11 @@ class ShopController extends Controller
                 'number',
                 'website',
                 'zip',
-                AllowedFilter::exact('digital_goods'),
+                AllowedFilter::custom('bounding_box', new BoundingBoxFilter($request->query('filter')['bounding_box'] ?? null)),
                 AllowedFilter::custom('limit', new VoidFilter),
                 AllowedFilter::custom('location', new LocationFilter($radius)),
-                AllowedFilter::custom('radius', new VoidFilter)
+                AllowedFilter::custom('radius', new VoidFilter),
+                AllowedFilter::exact('digital_goods')
             ])
             ->paginate($limit)
             ->appends(request()->query());
