@@ -149,11 +149,11 @@ class ShopController extends Controller
         $shops->transform(function ($shop) use (&$pickups, &$shippings) {
             $shop->pickups = $pickups->filter(function ($pickup) use (&$shop) {
                 return $shop->id === $pickup->shop_id;
-            });
+            })->values();
 
             $shop->shippings = $shippings->filter(function ($shipping) use (&$shop) {
                 return $shop->id === $shipping->shop_id;
-            });
+            })->values();
 
             return $shop;
         });
