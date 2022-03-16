@@ -41,6 +41,8 @@ Run `composer install`
 
 Run `npm run prod`
 
+Once the `.env` contains the correct database information and credentials run `php artisan migrate`.
+
 <br/>
 
 ## Quick setup for local development
