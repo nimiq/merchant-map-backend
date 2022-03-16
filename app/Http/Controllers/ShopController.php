@@ -113,37 +113,41 @@ class ShopController extends Controller
 
     public function search(Request $request)
     {
-        $limit = intval($request->query('filter')['limit'] ?? 20);
-        if ($limit === 0) {
-            throw new \Exception('Unable to parse limit into int.');
-        } else if ($limit > 200) {
-            $limit = 200;
-        }
+        try {
+            $limit = intval($request->query('filter')['limit'] ?? 20);
+            if ($limit === 0) {
+                throw new \Exception('Unable to parse limit into int.');
+            } else if ($limit > 200) {
+                $limit = 200;
+            }
 
-        $radius = floatval($request->query('filter')['radius'] ?? 50);
-        if ($radius === 0.0) {
-            throw new \Exception('Unable to parse radius into float.');
-        }
+            $radius = floatval($request->query('filter')['radius'] ?? 50);
+            if ($radius === 0.0) {
+                throw new \Exception('Unable to parse radius into float.');
+            }
 
-        $shops = QueryBuilder::for(Shop::class)
-            ->allowedFilters([
-                'city',
-                'country',
-                'description',
-                'email',
-                'label',
-                'street',
-                'number',
-                'website',
-                'zip',
-                AllowedFilter::custom('bounding_box', new BoundingBoxFilter($request->query('filter')['bounding_box'] ?? null)),
-                AllowedFilter::custom('limit', new VoidFilter),
-                AllowedFilter::custom('location', new LocationFilter($radius)),
-                AllowedFilter::custom('radius', new VoidFilter),
-                AllowedFilter::exact('digital_goods')
-            ])
-            ->paginate($limit)
-            ->appends(request()->query());
+            $shops = QueryBuilder::for(Shop::class)
+                ->allowedFilters([
+                    'city',
+                    'country',
+                    'description',
+                    'email',
+                    'label',
+                    'street',
+                    'number',
+                    'website',
+                    'zip',
+                    AllowedFilter::custom('bounding_box', new BoundingBoxFilter($request->query('filter')['bounding_box'] ?? null)),
+                    AllowedFilter::custom('limit', new VoidFilter),
+                    AllowedFilter::custom('location', new LocationFilter($radius)),
+                    AllowedFilter::custom('radius', new VoidFilter),
+                    AllowedFilter::exact('digital_goods')
+                ])
+                ->paginate($limit)
+                ->appends(request()->query());
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 400);
+        }
 
         $pickups = Pickup::all();
         $shippings = Shipping::all();
