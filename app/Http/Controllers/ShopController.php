@@ -48,7 +48,6 @@ class ShopController extends Controller
     {
         $request->validate([
             'label' => 'required',
-            'description' => 'required',
             'email' => 'email:rfc,dns'
         ]);
 
@@ -103,7 +102,6 @@ class ShopController extends Controller
 
         $request->validate([
             'label' => 'required',
-            'description' => 'required',
             'email' => 'email:rfc,dns'
         ]);
         $shop->update($request->all());
@@ -133,8 +131,9 @@ class ShopController extends Controller
                     'description',
                     'email',
                     'label',
-                    'street',
-                    'number',
+                    'address_line_1',
+                    'address_line_2',
+                    'address_line_3',
                     'website',
                     'zip',
                     AllowedFilter::custom('bounding_box', new BoundingBoxFilter($request->query('filter')['bounding_box'] ?? null)),

@@ -138,7 +138,9 @@ Search for shops that have a label that contains `crypto` within the city `Wels`
 | description   | ?filter[description]=value                                                                                                                                                          |
 | email         | ?filter[email]=value                                                                                                                                                                |
 | label         | ?filter[label]=value                                                                                                                                                                |
-| street        | ?filter[street]=value                                                                                                                                                               |
+| address_line_1 | ?filter[address_line_1]=value                                                                                                                                                               |
+| address_line_2 | ?filter[address_line_2]=value                                                                                                                                                               |
+| address_line_3 | ?filter[address_line_3]=value                                                                                                                                                               |
 | number        | ?filter[number]=value                                                                                                                                                               |
 | website       | ?filter[website]=value                                                                                                                                                              |
 | zip           | ?filter[zip]=value                                                                                                                                                                  |

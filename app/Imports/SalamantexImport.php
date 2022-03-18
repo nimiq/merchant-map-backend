@@ -22,7 +22,7 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
         $geocoder->setApiKey(config('geocoder.key'));
 
         try {
-            $geo = $geocoder->getCoordinatesForAddress($data['street'] . ' ' . $data['city']);
+            $geo = $geocoder->getCoordinatesForAddress($data['address_line_1'] . ' ' . $data['city']);
             $shop->pickups()->create([
                 'geo_location' => new Point($geo['lat'], $geo['lng']),
                 'place_id' => $geo['place_id'] ?? null
@@ -50,7 +50,7 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
             'label' => $row['column1companyname'],
             'email' => $row['column1companymail'],
             'description' => '',
-            'street' => $row['column1addressinfoaddresslines'],
+            'address_line_1' => $row['column1addressinfoaddresslines'],
             'zip' => $row['column1addressinfozipcode'],
             'city' => $row['column1addressinfocity'],
             'country' => $row['column1addressinfocountry']
