@@ -32,6 +32,12 @@
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-3">
+                                    <x-forms.label for="label">{{ __('Label') }}</x-forms.label>
+                                    <x-forms.input-group>
+                                        <x-forms.input type="text" name="label" id="label" value="{{ old('label', isset($pickup->label) ? $pickup->label : '') }}" />
+                                    </x-forms.input-group>
+                                </div>
+                                <div class="col-span-3">
                                     <x-forms.label for="label">{{ __('Latitude') }}</x-forms.label>
                                     <x-forms.input-group>
                                         <x-forms.input type="text" name="latitude" id="latitude" value="{{ old('latitude', isset($pickup->geo_location) ? $pickup->geo_location->getLat() : '') }}" />
