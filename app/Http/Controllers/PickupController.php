@@ -38,7 +38,12 @@ class PickupController extends Controller
             'latitude' => 'required'
         ]);
 
-        $shop->pickups()->create(['geo_location' => new Point($request->latitude, $request->longtitude)]);
+        $shop->pickups()->create(
+            [
+                'geo_location' => new Point($request->latitude, $request->longtitude),
+                'label' => $request->label
+            ]
+        );
 
         return redirect(route('shops.show', $shop->id));
     }
@@ -73,7 +78,12 @@ class PickupController extends Controller
             'latitude' => 'required'
         ]);
 
-        $pickup->update(['geo_location' => new Point($request->latitude, $request->longtitude)]);
+        $pickup->update(
+            [
+                'geo_location' => new Point($request->latitude, $request->longtitude),
+                'label' => $request->label
+            ]
+        );
 
         return redirect(route('shops.show', $shop->id));
     }
