@@ -36,7 +36,7 @@ class ShippingController extends Controller
         $request->validate([
             'longtitude' => [''],
             'latitude' => [''],
-            'radius' => ['numeric'],
+            'radius' => ['numeric', 'nullable'],
             'countries' => ['nullable', 'json']
         ]);
 
@@ -72,7 +72,7 @@ class ShippingController extends Controller
         $request->validate([
             'longtitude' => [''],
             'latitude' => [''],
-            'radius' => ['numeric'],
+            'radius' => ['numeric', 'nullable'],
             'countries' => ['nullable', 'json']
         ]);
 

@@ -67,7 +67,7 @@
                                 <div class="col-span-3">
                                     <x-forms.label for="label">{{ __('Countries') }}</x-forms.label>
                                     <x-forms.input-group>
-                                        <x-forms.input type="text" name="countries" id="countries" value="{{ old('countries', $shipping->countries ?? '') }}" />
+                                        <x-forms.input type="text" name="countries" id="countries" placeholder="[&quot;NL&quot;, &quot;DE&quot;, &quot;CR&quot;]" value="{{ old('countries', $shipping->countries ?? '') }}" />
                                     </x-forms.input-group>
                                 </div>
                             </div>
