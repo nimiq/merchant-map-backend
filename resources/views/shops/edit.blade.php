@@ -40,9 +40,9 @@
                                 </div>
                             </div>
                             <div class="col-span-3">
-                                <x-forms.label for="description">{{ __('Description*') }}</x-forms.label>
+                                <x-forms.label for="description">{{ __('Description') }}</x-forms.label>
                                 <x-forms.input-group>
-                                    <x-forms.text-area type="text" name="description" id="description" required>{{ old('description', $shop->description ?? '') }}</x-forms.text-area>
+                                    <x-forms.text-area type="text" name="description" id="description">{{ old('description', $shop->description ?? '') }}</x-forms.text-area>
                                 </x-forms.input-group>
                                 @error('description')<span class="text-red-500">{{ $message }}</span>@enderror
                             </div>
@@ -121,15 +121,25 @@
                         <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                             <div class="grid grid-cols-3 gap-6">
                                 <div class="col-span-2">
-                                    <x-forms.label for="street">{{ __('Street') }}</x-forms.label>
+                                    <x-forms.label for="address_line_1">{{ __('Address Line 1') }}</x-forms.label>
                                     <x-forms.input-group>
-                                        <x-forms.input type="text" name="street" id="street" value="{{ old('street', $shop->street ?? '') }}" />
+                                        <x-forms.input type="text" name="address_line_1" id="address_line_1" value="{{ old('address_line_1', $shop->address_line_1 ?? '') }}" />
                                     </x-forms.input-group>
                                 </div>
-                                <div class="col-span-1">
-                                    <x-forms.label for="number">{{ __('Number') }}</x-forms.label>
+                            </div>
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="col-span-2">
+                                    <x-forms.label for="address_line_2">{{ __('Address Line 2') }}</x-forms.label>
                                     <x-forms.input-group>
-                                        <x-forms.input type="text" name="number" id="number" value="{{ old('number', $shop->number ?? '') }}" />
+                                        <x-forms.input type="text" name="address_line_2" id="address_line_2" value="{{ old('address_line_2', $shop->address_line_2 ?? '') }}" />
+                                    </x-forms.input-group>
+                                </div>
+                            </div>
+                            <div class="grid grid-cols-3 gap-6">
+                                <div class="col-span-2">
+                                    <x-forms.label for="address_line_3">{{ __('Address Line 3') }}</x-forms.label>
+                                    <x-forms.input-group>
+                                        <x-forms.input type="text" name="address_line_3" id="address_line_3" value="{{ old('address_line_3', $shop->address_line_3 ?? '') }}" />
                                     </x-forms.input-group>
                                 </div>
                             </div>
