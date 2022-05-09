@@ -10,6 +10,7 @@ use Maatwebsite\Excel\Concerns\WithValidation;
 use Maatwebsite\Excel\Concerns\SkipsFailures;
 use Maatwebsite\Excel\Validators\Failure;
 use MStaack\LaravelPostgis\Geometries\Point;
+use Illuminate\Support\Facades\Log;
 use Spatie\Geocoder\Geocoder;
 
 class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithValidation
@@ -22,12 +23,31 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
         $geocoder->setApiKey(config('geocoder.key'));
 
         try {
-            $geo = $geocoder->getCoordinatesForAddress($data['address_line_1'] . ' ' . $data['city']);
+            $geo = $geocoder->getCoordinatesForAddress($data['label'] . ' ' . $data['city']);
+            if ($geo['accuracy'] === 'result_not_found' || $geo['accuracy'] === 'APPROXIMATE') {
+                $geo = $geocoder->getCoordinatesForAddress($data['address_line_1'] . ' ' . $data['city']);
+            }
+
+            $placeId = $geo['place_id'] ?? null;
+            if (is_null($placeId)) {
+                return;
+            }
+
+            $httpClient = new \GuzzleHttp\Client();
+            $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/details/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&place_id=' . $placeId);
+            $body = json_decode($request->getBody()->getContents());
+            $body->result->reviews = [];
+            if (property_exists($body->result, 'photos')) {
+                $body->result->photos = (count($body->result->photos) > 0) ? [$body->result->photos[0]] : [];
+            }
+
             $shop->pickups()->create([
                 'geo_location' => new Point($geo['lat'], $geo['lng']),
-                'place_id' => $geo['place_id'] ?? null
+                'place_id' => $geo['place_id'] ?? null,
+                'place_information' => json_encode($body->result)
             ]);
         } catch (\Throwable $th) {
+            Log::debug($th->getMessage() . $th->getLine() . $th->getFile());
         }
     }
 

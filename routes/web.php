@@ -5,6 +5,7 @@ use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ShopController;
 use App\Imports\SalamantexImport;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Log;
 use Maatwebsite\Excel\Facades\Excel;
 
 /*
@@ -31,6 +32,7 @@ Route::resource('shops.shippings', ShippingController::class)->middleware(['auth
 Route::get('/import/salamantex', function () {
     try {
         Excel::import(new SalamantexImport, storage_path('salamantex.xlsx'));
+        Log::debug("Done importing");
         return response('Import successful.');
     } catch (\Throwable $th) {
         return response('Error importing Excel file: ' . $th->getMessage());

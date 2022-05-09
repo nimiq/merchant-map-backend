@@ -15,6 +15,7 @@ class Pickup extends Model
     protected $fillable = [
         'geo_location',
         'place_id',
+        'place_information',
         'label'
     ];
 
