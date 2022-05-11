@@ -28,12 +28,15 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
                 $geo = $geocoder->getCoordinatesForAddress($data['address_line_1'] . ' ' . $data['city']);
             }
 
-            $placeId = $geo['place_id'] ?? null;
+            $httpClient = new \GuzzleHttp\Client();
+            $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&inputtype=textquery&input=' . $data['label'] . ' ' . $data['address_line_1']);
+            $body = collect(json_decode($request->getBody()->getContents())->candidates)->first();
+
+            $placeId = $body->place_id ?? null;
             if (is_null($placeId)) {
                 return;
             }
 
-            $httpClient = new \GuzzleHttp\Client();
             $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/details/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&place_id=' . $placeId);
             $body = json_decode($request->getBody()->getContents());
             $body->result->reviews = [];
