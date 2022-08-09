@@ -2629,27 +2629,27 @@
         },
         {
             "name": "mstaack/laravel-postgis",
-            "version": "5.2",
+            "version": "5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/mstaack/laravel-postgis.git",
-                "reference": "1e9b896d71c2f71bcdd49fc86da30ec31c1857b7"
+                "reference": "a3c00e0bd2b6ee371a869f6c9079e33d9ca99f7c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/mstaack/laravel-postgis/zipball/1e9b896d71c2f71bcdd49fc86da30ec31c1857b7",
-                "reference": "1e9b896d71c2f71bcdd49fc86da30ec31c1857b7",
+                "url": "https://api.github.com/repos/mstaack/laravel-postgis/zipball/a3c00e0bd2b6ee371a869f6c9079e33d9ca99f7c",
+                "reference": "a3c00e0bd2b6ee371a869f6c9079e33d9ca99f7c",
                 "shasum": ""
             },
             "require": {
-                "bosnadev/database": "^0.21",
+                "bosnadev/database": "^0.21|master",
                 "geo-io/wkb-parser": "^1.0",
-                "illuminate/database": "^6.0|^7.0|^8.0",
+                "illuminate/database": "^6.0|^7.0|^8.0|^9.0",
                 "jmikola/geojson": "^1.0",
                 "php": ">=7.1"
             },
             "require-dev": {
-                "illuminate/pagination": "^6.0|^7.0|^8.0",
+                "illuminate/pagination": "^6.0|^7.0|^8.0|^9.0",
                 "mockery/mockery": "^1.3",
                 "phpunit/phpunit": "^8.5"
             },
@@ -2687,9 +2687,9 @@
             "description": "Postgis extensions for laravel. Aims to make it easy to work with geometries from laravel models",
             "support": {
                 "issues": "https://github.com/mstaack/laravel-postgis/issues",
-                "source": "https://github.com/mstaack/laravel-postgis/tree/5.2"
+                "source": "https://github.com/mstaack/laravel-postgis/tree/5.4"
             },
-            "time": "2020-10-22T12:00:14+00:00"
+            "time": "2022-04-25T13:19:25+00:00"
         },
         {
             "name": "myclabs/php-enum",
@@ -9229,5 +9229,5 @@
         "php": "^7.3|^8.0"
     },
     "platform-dev": [],
-    "plugin-api-version": "2.2.0"
+    "plugin-api-version": "2.3.0"
 }
