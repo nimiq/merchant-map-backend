@@ -43,7 +43,8 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
             $shop->pickups()->create([
                 'geo_location' => new Point($geo->lat, $geo->lng),
                 'place_id' => $placeId,
-                'place_information' => json_encode($body->result)
+                'place_information' => json_encode($body->result),
+                'types' => json_encode($body->result->types)
             ]);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage() . $th->getLine() . $th->getFile());

@@ -16,7 +16,8 @@ class Pickup extends Model
         'geo_location',
         'place_id',
         'place_information',
-        'label'
+        'label',
+        'types'
     ];
 
     protected $postgisFields = [
