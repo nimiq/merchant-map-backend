@@ -3,10 +3,9 @@
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ShopController;
-use App\Imports\SalamantexImport;
+use App\Imports\SalamantexCSVImport;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Log;
-use Maatwebsite\Excel\Facades\Excel;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,10 +30,13 @@ Route::resource('shops.shippings', ShippingController::class)->middleware(['auth
 
 Route::get('/import/salamantex', function () {
     try {
-        Excel::import(new SalamantexImport, storage_path('salamantex.xlsx'));
+        Log::debug("Start Salamantex importer");
+        $importer = new SalamantexCSVImport(storage_path('active_partners.csv'));
+        $importer->import();
         Log::debug("Done importing");
         return response('Import successful.');
     } catch (\Throwable $th) {
+        Log::error($th->getMessage());
         return response('Error importing Excel file: ' . $th->getMessage());
     }
 })->middleware(['auth']);
