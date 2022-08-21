@@ -20,7 +20,7 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
     {
         try {
             $httpClient = new \GuzzleHttp\Client();
-            $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&inputtype=textquery&input=' . $data['label'] . ' ' . $data['address_line_1']);
+            $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/findplacefromtext/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&fields=business_status,formatted_address,geometry,icon,icon_mask_base_uri,icon_background_color,name,photo,place_id,plus_code,type&inputtype=textquery&input=' . $data['label'] . ' ' . $data['address_line_1']);
             $body = collect(json_decode($request->getBody()->getContents())->candidates)->first();
 
             $placeId = $body->place_id ?? null;
@@ -29,21 +29,17 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
                 return;
             }
 
-            $request = $httpClient->get('https://maps.googleapis.com/maps/api/place/details/json?key=' . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&place_id=' . $placeId);
-            $body = json_decode($request->getBody()->getContents());
-
             // Get the location information from the API result if available.
-            $geo = $body->result->geometry->location ?? (object)array('lat' => 0, 'lng' => 0);
+            $geo = $body->geometry->location ?? (object)array('lat' => 0, 'lng' => 0);
 
-            $body->result->reviews = [];
-            if (property_exists($body->result, 'photos')) {
-                $body->result->photos = (count($body->result->photos) > 0) ? [$body->result->photos[0]] : [];
+            if (property_exists($body, 'photos')) {
+                $body->photos = (count($body->photos) > 0) ? [$body->photos[0]] : [];
             }
 
             $shop->pickups()->create([
                 'geo_location' => new Point($geo->lat, $geo->lng),
                 'place_id' => $placeId,
-                'place_information' => json_encode($body->result)
+                'place_information' => json_encode($body)
             ]);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage() . $th->getLine() . $th->getFile());
