@@ -113,11 +113,6 @@ class ShopController extends Controller
     {
         try {
             $limit = intval($request->query('filter')['limit'] ?? 20);
-            if ($limit === 0) {
-                throw new \Exception('Unable to parse limit into int.');
-            } else if ($limit > 200) {
-                $limit = 200;
-            }
 
             $radius = floatval($request->query('filter')['radius'] ?? 50);
             if ($radius === 0.0) {
@@ -141,9 +136,15 @@ class ShopController extends Controller
                     AllowedFilter::custom('location', new LocationFilter($radius)),
                     AllowedFilter::custom('radius', new VoidFilter),
                     AllowedFilter::exact('digital_goods')
-                ])
-                ->paginate($limit)
-                ->appends(request()->query());
+                ]);
+
+            if ($limit === 0) {
+                $shops = $shops->paginate($shops->count());
+            } else {
+                $shops = $shops->paginate($limit);
+            };
+
+            $shops = $shops->appends(request()->query());
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 400);
         }
