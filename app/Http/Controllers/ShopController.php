@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Filters\BoundingBoxFilter;
 use App\Filters\LocationFilter;
 use App\Filters\VoidFilter;
+use App\Imports\PlacesImport;
 use App\Models\Pickup;
 use App\Models\Shipping;
 use App\Models\Shop;
@@ -72,6 +73,17 @@ class ShopController extends Controller
         }
 
         return view('shops.edit', ['shop' => $shop]);
+    }
+
+    public function importCsv(Request $request)
+    {
+        try {
+            $importer = new PlacesImport($request->file('csv_file_import')->getRealPath());
+            $importer->import();
+        } catch (\Throwable $th) {
+        }
+
+        return redirect('/');
     }
 
     /**

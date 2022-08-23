@@ -41,4 +41,12 @@ Route::get('/import/salamantex', function () {
     }
 })->middleware(['auth']);
 
+Route::get('/shops/import/csv', function () {
+    return view('shops.import');
+})->middleware(['auth']);
+
+Route::post('/shops/import/csv', [ShopController::class, 'importCsv'])
+    ->name('shops.importCsv')
+    ->middleware(['auth']);
+
 require __DIR__ . '/auth.php';
