@@ -10,6 +10,10 @@ class Pickup extends Model
 {
     use HasFactory, PostGisTrait;
 
+    protected $casts = [
+        'place_information' => 'object',
+    ];
+
     protected $hidden = ['pivot'];
 
     protected $fillable = [
