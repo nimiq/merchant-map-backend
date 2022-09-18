@@ -56,6 +56,9 @@ class ShopController extends Controller
         $shop->user_id = auth()->user()->id;
         $shop->save();
 
+        // FIXME: We probably want to support creating shops that don't accept all currencies in the future.
+        $shop->currencies()->attach(\App\Models\Currency::all());
+
         return redirect(route('shops.show', $shop->id));
     }
 
@@ -149,7 +152,7 @@ class ShopController extends Controller
                     AllowedFilter::custom('radius', new VoidFilter),
                     AllowedFilter::exact('digital_goods')
                 ])
-                ->with(['pickups', 'shippings']);
+                ->with(['pickups', 'shippings','currencies']);
 
             if ($limit === 0) {
                 $shops = $shops->paginate($shops->count());
@@ -161,6 +164,15 @@ class ShopController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 400);
         }
+
+        // We only want to provide currencies' name and symbol, the rest is just noise
+        $shops->transform(function ($shop) {
+            $shop->currencies->transform(function ($currency) {
+                return array($currency->symbol => $currency->name);
+            });
+
+            return $shop;
+        });
 
         return $shops;
     }

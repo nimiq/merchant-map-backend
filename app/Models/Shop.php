@@ -48,4 +48,12 @@ class Shop extends Model
     {
         return $this->hasMany(Shipping::class);
     }
+
+    /**
+     * The currencies supported by the shop
+     */
+    public function currencies()
+    {
+        return $this->belongsToMany(Currency::class)->withTimestamps();
+    }
 }

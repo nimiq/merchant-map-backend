@@ -65,6 +65,9 @@ class PlacesImport
                     $shop->object_id = $line;
                     $shop->source_id = 'dashboard-csv';
                     $shop->save();
+
+                    // FIXME: We probably want to support importing shops that don't accept all currencies in the future.
+                    $shop->currencies()->attach(\App\Models\Currency::all());
                 } else {
                     $shop->update($data);
                 }

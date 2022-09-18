@@ -71,6 +71,9 @@ class SalamantexCSVImport
                 $shop->object_id = $line->partnerNumber;
                 $shop->source_id = 'salamantex';
                 $shop->save();
+
+                // FIXME: We probably want to support importing shops that don't accept all currencies in the future.
+                $shop->currencies()->attach(\App\Models\Currency::all());
             } else {
                 $shop->update($data);
             }

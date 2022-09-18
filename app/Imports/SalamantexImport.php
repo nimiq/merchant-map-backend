@@ -81,6 +81,9 @@ class SalamantexImport implements SkipsOnFailure, ToModel, WithHeadingRow, WithV
             $shop->object_id = $row['column1partnernumber'];
             $shop->source_id = 'salamantex';
             $shop->save();
+
+            // FIXME: We probably want to support importing shops that don't accept all currencies in the future.
+            $shop->currencies()->attach(\App\Models\Currency::all());
         } else {
             $shop->update($data);
         }
