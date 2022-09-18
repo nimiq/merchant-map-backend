@@ -148,7 +148,8 @@ class ShopController extends Controller
                     AllowedFilter::custom('location', new LocationFilter($radius)),
                     AllowedFilter::custom('radius', new VoidFilter),
                     AllowedFilter::exact('digital_goods')
-                ]);
+                ])
+                ->with(['pickups', 'shippings']);
 
             if ($limit === 0) {
                 $shops = $shops->paginate($shops->count());
@@ -160,21 +161,6 @@ class ShopController extends Controller
         } catch (\Throwable $th) {
             return response()->json(['error' => $th->getMessage()], 400);
         }
-
-        $pickups = Pickup::all();
-        $shippings = Shipping::all();
-
-        $shops->transform(function ($shop) use (&$pickups, &$shippings) {
-            $shop->pickups = $pickups->filter(function ($pickup) use (&$shop) {
-                return $shop->id === $pickup->shop_id;
-            })->values();
-
-            $shop->shippings = $shippings->filter(function ($shipping) use (&$shop) {
-                return $shop->id === $shipping->shop_id;
-            })->values();
-
-            return $shop;
-        });
 
         return $shops;
     }
