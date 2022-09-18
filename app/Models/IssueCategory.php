@@ -12,4 +12,13 @@ class IssueCategory extends Model
     protected $fillable = [
         'label'
     ];
+
+    /**
+     * Get all the issues assigned with this category
+     */
+    public function issues()
+    {
+        return $this->hasMany(Issue::class);
+    }
+
 }

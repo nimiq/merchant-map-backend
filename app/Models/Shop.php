@@ -56,4 +56,12 @@ class Shop extends Model
     {
         return $this->belongsToMany(Currency::class)->withTimestamps();
     }
+
+    /**
+     * Get all the issues assigned to the shop
+     */
+    public function issues()
+    {
+        return $this->hasMany(Issue::class);
+    }
 }
