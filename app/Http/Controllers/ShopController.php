@@ -166,7 +166,6 @@ class ShopController extends Controller
 
         $shops->transform(function ($shop) use (&$pickups, &$shippings) {
             $shop->pickups = $pickups->filter(function ($pickup) use (&$shop) {
-                $shop->accepts = ["Bitcoin", "Dash", "Litecoin", "Ethereum", "Ripple", "Stellar", "Nimiq"];
                 return $shop->id === $pickup->shop_id;
             })->values();
 
