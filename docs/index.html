@@ -1327,7 +1327,7 @@ ul.nav-tabs {
                           <div class="tab-pane active" id="examples-Locations-searchLocations-0-curl">
                             <pre class="prettyprint"><code class="language-bsh">curl -X GET \
  -H "Accept: application/json" \
- "http://localhost/api/search?filter[city]=filterLeft_Square_BracketcityRight_Square_Bracket_example&filter[country]=filterLeft_Square_BracketcountryRight_Square_Bracket_example"
+ "http://localhost/api/search?filter[city]=filterLeft_Square_BracketcityRight_Square_Bracket_example&filter[country]=filterLeft_Square_BracketcountryRight_Square_Bracket_example&filter[description]=filterLeft_Square_BracketdescriptionRight_Square_Bracket_example&filter[email]=filterLeft_Square_BracketemailRight_Square_Bracket_example&filter[label]=filterLeft_Square_BracketlabelRight_Square_Bracket_example&filter[address_line_1]=filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example&filter[address_line_2]=filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example&filter[address_line_3]=filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example&filter[number]=8.14&filter[website]=filterLeft_Square_BracketwebsiteRight_Square_Bracket_example&filter[zip]=filterLeft_Square_BracketzipRight_Square_Bracket_example&filter[bounding]=filterLeft_Square_BracketboundingRight_Square_Bracket_example&filter[limit]=8.14&filter[digital_goods]=true"
 </code></pre>
                           </div>
                           <div class="tab-pane" id="examples-Locations-searchLocations-0-java">
@@ -1346,9 +1346,21 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
         String filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; // String | 
         String filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; // String | 
+        BigDecimal filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; // BigDecimal | 
+        String filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; // String | SW longitude, SW latitude, NE longitude, NE latitude
+        BigDecimal filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; // BigDecimal | 
+        Boolean filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean | 
 
         try {
-            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket);
+            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#searchLocations");
@@ -1367,9 +1379,21 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
         String filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; // String | 
         String filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; // String | 
+        BigDecimal filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; // BigDecimal | 
+        String filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; // String | 
+        String filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; // String | SW longitude, SW latitude, NE longitude, NE latitude
+        BigDecimal filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; // BigDecimal | 
+        Boolean filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean | 
 
         try {
-            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket);
+            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#searchLocations");
@@ -1389,10 +1413,34 @@ public class LocationsApiExample {
 LocationsApi *apiInstance = [[LocationsApi alloc] init];
 String *filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; //  (optional) (default to null)
 String *filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; //  (optional) (default to null)
+BigDecimal *filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; //  (optional) (default to null)
+String *filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; //  (optional) (default to null)
+String *filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; // SW longitude, SW latitude, NE longitude, NE latitude (optional) (default to null)
+BigDecimal *filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; //  (optional) (default to null)
+Boolean *filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; //  (optional) (default to null)
 
 // search
 [apiInstance searchLocationsWith:filterLeft_Square_BracketcityRight_Square_Bracket
     filterLeft_Square_BracketcountryRight_Square_Bracket:filterLeft_Square_BracketcountryRight_Square_Bracket
+    filterLeft_Square_BracketdescriptionRight_Square_Bracket:filterLeft_Square_BracketdescriptionRight_Square_Bracket
+    filterLeft_Square_BracketemailRight_Square_Bracket:filterLeft_Square_BracketemailRight_Square_Bracket
+    filterLeft_Square_BracketlabelRight_Square_Bracket:filterLeft_Square_BracketlabelRight_Square_Bracket
+    filterLeft_Square_BracketaddressLine1Right_Square_Bracket:filterLeft_Square_BracketaddressLine1Right_Square_Bracket
+    filterLeft_Square_BracketaddressLine2Right_Square_Bracket:filterLeft_Square_BracketaddressLine2Right_Square_Bracket
+    filterLeft_Square_BracketaddressLine3Right_Square_Bracket:filterLeft_Square_BracketaddressLine3Right_Square_Bracket
+    filterLeft_Square_BracketnumberRight_Square_Bracket:filterLeft_Square_BracketnumberRight_Square_Bracket
+    filterLeft_Square_BracketwebsiteRight_Square_Bracket:filterLeft_Square_BracketwebsiteRight_Square_Bracket
+    filterLeft_Square_BracketzipRight_Square_Bracket:filterLeft_Square_BracketzipRight_Square_Bracket
+    filterLeft_Square_BracketboundingRight_Square_Bracket:filterLeft_Square_BracketboundingRight_Square_Bracket
+    filterLeft_Square_BracketlimitRight_Square_Bracket:filterLeft_Square_BracketlimitRight_Square_Bracket
+    filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket:filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket
               completionHandler: ^(SearchLocationsResponse output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
@@ -1411,7 +1459,19 @@ String *filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square
 var api = new CryptoMapApiDocumentation.LocationsApi()
 var opts = {
   'filterLeft_Square_BracketcityRight_Square_Bracket': filterLeft_Square_BracketcityRight_Square_Bracket_example, // {String} 
-  'filterLeft_Square_BracketcountryRight_Square_Bracket': filterLeft_Square_BracketcountryRight_Square_Bracket_example // {String} 
+  'filterLeft_Square_BracketcountryRight_Square_Bracket': filterLeft_Square_BracketcountryRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketdescriptionRight_Square_Bracket': filterLeft_Square_BracketdescriptionRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketemailRight_Square_Bracket': filterLeft_Square_BracketemailRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketlabelRight_Square_Bracket': filterLeft_Square_BracketlabelRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketaddressLine1Right_Square_Bracket': filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketaddressLine2Right_Square_Bracket': filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketaddressLine3Right_Square_Bracket': filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketnumberRight_Square_Bracket': 8.14, // {BigDecimal} 
+  'filterLeft_Square_BracketwebsiteRight_Square_Bracket': filterLeft_Square_BracketwebsiteRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketzipRight_Square_Bracket': filterLeft_Square_BracketzipRight_Square_Bracket_example, // {String} 
+  'filterLeft_Square_BracketboundingRight_Square_Bracket': filterLeft_Square_BracketboundingRight_Square_Bracket_example, // {String} SW longitude, SW latitude, NE longitude, NE latitude
+  'filterLeft_Square_BracketlimitRight_Square_Bracket': 8.14, // {BigDecimal} 
+  'filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket': true // {Boolean} 
 };
 
 var callback = function(error, data, response) {
@@ -1446,10 +1506,22 @@ namespace Example
             var apiInstance = new LocationsApi();
             var filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example;  // String |  (optional)  (default to null)
             var filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14;  // BigDecimal |  (optional)  (default to null)
+            var filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example;  // String |  (optional)  (default to null)
+            var filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example;  // String | SW longitude, SW latitude, NE longitude, NE latitude (optional)  (default to null)
+            var filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14;  // BigDecimal |  (optional)  (default to null)
+            var filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true;  // Boolean |  (optional)  (default to null)
 
             try {
                 // search
-                SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket);
+                SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling LocationsApi.searchLocations: " + e.Message );
@@ -1468,9 +1540,21 @@ require_once(__DIR__ . '/vendor/autoload.php');
 $api_instance = new OpenAPITools\Client\Api\LocationsApi();
 $filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; // String | 
 $filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; // BigDecimal | 
+$filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; // String | 
+$filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; // String | SW longitude, SW latitude, NE longitude, NE latitude
+$filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; // BigDecimal | 
+$filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean | 
 
 try {
-    $result = $api_instance->searchLocations($filterLeft_Square_BracketcityRight_Square_Bracket, $filterLeft_Square_BracketcountryRight_Square_Bracket);
+    $result = $api_instance->searchLocations($filterLeft_Square_BracketcityRight_Square_Bracket, $filterLeft_Square_BracketcountryRight_Square_Bracket, $filterLeft_Square_BracketdescriptionRight_Square_Bracket, $filterLeft_Square_BracketemailRight_Square_Bracket, $filterLeft_Square_BracketlabelRight_Square_Bracket, $filterLeft_Square_BracketaddressLine1Right_Square_Bracket, $filterLeft_Square_BracketaddressLine2Right_Square_Bracket, $filterLeft_Square_BracketaddressLine3Right_Square_Bracket, $filterLeft_Square_BracketnumberRight_Square_Bracket, $filterLeft_Square_BracketwebsiteRight_Square_Bracket, $filterLeft_Square_BracketzipRight_Square_Bracket, $filterLeft_Square_BracketboundingRight_Square_Bracket, $filterLeft_Square_BracketlimitRight_Square_Bracket, $filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
     print_r($result);
 } catch (Exception $e) {
     echo 'Exception when calling LocationsApi->searchLocations: ', $e->getMessage(), PHP_EOL;
@@ -1487,9 +1571,21 @@ use WWW::OPenAPIClient::LocationsApi;
 my $api_instance = WWW::OPenAPIClient::LocationsApi->new();
 my $filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; # String | 
 my $filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; # BigDecimal | 
+my $filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; # String | 
+my $filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; # String | SW longitude, SW latitude, NE longitude, NE latitude
+my $filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; # BigDecimal | 
+my $filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; # Boolean | 
 
 eval {
-    my $result = $api_instance->searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket => $filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket => $filterLeft_Square_BracketcountryRight_Square_Bracket);
+    my $result = $api_instance->searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket => $filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket => $filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket => $filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket => $filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket => $filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket => $filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket => $filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket => $filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket => $filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket => $filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket => $filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket => $filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket => $filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket => $filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
     print Dumper($result);
 };
 if ($@) {
@@ -1508,10 +1604,22 @@ from pprint import pprint
 api_instance = openapi_client.LocationsApi()
 filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example # String |  (optional) (default to null)
 filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14 # BigDecimal |  (optional) (default to null)
+filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example # String |  (optional) (default to null)
+filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example # String | SW longitude, SW latitude, NE longitude, NE latitude (optional) (default to null)
+filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14 # BigDecimal |  (optional) (default to null)
+filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true # Boolean |  (optional) (default to null)
 
 try:
     # search
-    api_response = api_instance.search_locations(filterLeft_Square_BracketcityRight_Square_Bracket=filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket=filterLeft_Square_BracketcountryRight_Square_Bracket)
+    api_response = api_instance.search_locations(filterLeft_Square_BracketcityRight_Square_Bracket=filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket=filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket=filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket=filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket=filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket=filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket=filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket=filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket=filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket=filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket=filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket=filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket=filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket=filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling LocationsApi->searchLocations: %s\n" % e)</code></pre>
@@ -1523,9 +1631,21 @@ except ApiException as e:
 pub fn main() {
     let filterLeft_Square_BracketcityRight_Square_Bracket = filterLeft_Square_BracketcityRight_Square_Bracket_example; // String
     let filterLeft_Square_BracketcountryRight_Square_Bracket = filterLeft_Square_BracketcountryRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketdescriptionRight_Square_Bracket = filterLeft_Square_BracketdescriptionRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketemailRight_Square_Bracket = filterLeft_Square_BracketemailRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketlabelRight_Square_Bracket = filterLeft_Square_BracketlabelRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketaddressLine1Right_Square_Bracket = filterLeft_Square_BracketaddressLine1Right_Square_Bracket_example; // String
+    let filterLeft_Square_BracketaddressLine2Right_Square_Bracket = filterLeft_Square_BracketaddressLine2Right_Square_Bracket_example; // String
+    let filterLeft_Square_BracketaddressLine3Right_Square_Bracket = filterLeft_Square_BracketaddressLine3Right_Square_Bracket_example; // String
+    let filterLeft_Square_BracketnumberRight_Square_Bracket = 8.14; // BigDecimal
+    let filterLeft_Square_BracketwebsiteRight_Square_Bracket = filterLeft_Square_BracketwebsiteRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketzipRight_Square_Bracket = filterLeft_Square_BracketzipRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketboundingRight_Square_Bracket = filterLeft_Square_BracketboundingRight_Square_Bracket_example; // String
+    let filterLeft_Square_BracketlimitRight_Square_Bracket = 8.14; // BigDecimal
+    let filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean
 
     let mut context = LocationsApi::Context::default();
-    let result = client.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, &context).wait();
+    let result = client.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket, &context).wait();
 
     println!("{:?}", result);
 }
@@ -1576,6 +1696,219 @@ pub fn main() {
             <div class="primitive">
                 <span class="type">
                     String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[description]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketdescriptionRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[email]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketemailRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+                    <span class="format">
+                        (email)
+                    </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[label]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketlabelRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[address_line_1]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketaddressLine1Right_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[address_line_2]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketaddressLine2Right_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[address_line_3]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketaddressLine3Right_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[number]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketnumberRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    BigDecimal
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[website]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketwebsiteRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+                    <span class="format">
+                        (url)
+                    </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[zip]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketzipRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[bounding]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketboundingRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+                    <div class="inner description marked">
+SW longitude, SW latitude, NE longitude, NE latitude
+                    </div>
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[limit]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketlimitRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    BigDecimal
+                </span>
+
+            </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                                <tr><td style="width:150px;">filter[digital_goods]</td>
+<td>
+
+
+    <div id="d2e199_searchLocations_filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    Boolean
                 </span>
 
             </div>
