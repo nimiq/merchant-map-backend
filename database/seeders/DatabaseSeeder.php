@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(1)->create();
 
+        // Seed database with supported currencies
         $currencies = [
             'Bitcoin' => 'BTC',
             'Dash' => 'DASH',
@@ -29,6 +30,21 @@ class DatabaseSeeder extends Seeder
             \App\Models\Currency::create([
                 'name' => $name,
                 'symbol' => $symbol
+            ]);
+        }
+
+        // Seed database with issue categories
+        $categories = [
+            'Place closed',
+            'Currency missing',
+            'Currency not accepted',
+            'Place doesn\'t accept crypto',
+            'Other'
+        ];
+
+        foreach ($categories as $label) {
+            \App\Models\IssueCategory::create([
+                'label' => $label
             ]);
         }
     }
