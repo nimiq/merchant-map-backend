@@ -24,3 +24,5 @@ Route::get('/issue_categories', function () {
         return array('id' => $category->id, 'label' => $category->label);
     });
 });
+
+Route::post('/place', [ShopController::class, 'store']);

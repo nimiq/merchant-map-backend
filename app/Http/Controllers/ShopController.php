@@ -25,7 +25,7 @@ class ShopController extends Controller
     {
         $user = auth()->user();
         return view('shops.index', [
-            'shops' => ($user->is_admin) ? Shop::withPending()->all() : Shop::withPending()->where('user_id', $user->id)->get()
+            'shops' => ($user->is_admin) ? Shop::withPending()->get() : Shop::withPending()->where('user_id', $user->id)->get()
         ]);
     }
 
@@ -53,13 +53,17 @@ class ShopController extends Controller
         ]);
 
         $shop = new Shop($request->all());
-        $shop->user_id = auth()->user()->id;
+        $shop->user_id = auth()->user()->id ?? 0;
         $shop->save();
 
         // FIXME: We probably want to support creating shops that don't accept all currencies in the future.
         $shop->currencies()->attach(\App\Models\Currency::all());
 
-        return redirect(route('shops.show', $shop->id));
+        if ($request->expectsJson()) {
+            return response()->json(['message' => "Place successfully submitted."],201);
+        } else {
+            return redirect(route('shops.show', $shop->id));
+        }
     }
 
     /**

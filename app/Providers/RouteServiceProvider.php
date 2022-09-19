@@ -47,6 +47,11 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
         });
+
+        // This is necessary because moderation breaks Laravel's starndard Route Model Binding
+        Route::bind('shop', function ($value) {
+            return \App\Models\Shop::withAnyStatus()->findOrFail($value);
+        });
     }
 
     /**
