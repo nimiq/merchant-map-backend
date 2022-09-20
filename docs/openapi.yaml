@@ -248,6 +248,15 @@ components:
         - currencies
     Pickup:
       type: object
+      required:
+        - id
+        - shop_id
+        - geo_location
+        - created_at
+        - updated_at
+        - place_information
+        - place_id
+        - label
       properties:
         id:
           type: integer
