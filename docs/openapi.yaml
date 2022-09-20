@@ -351,6 +351,7 @@ components:
               type: string
             photos:
               type: array
+              nullable: true
               items:
                 type: object
                 properties:
