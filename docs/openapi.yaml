@@ -412,7 +412,6 @@ components:
             - icon_mask_base_uri
             - international_phone_number
             - name
-            - photos
             - place_id
             - plus_code
             - price_level
