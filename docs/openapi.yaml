@@ -103,7 +103,7 @@ components:
       schema:
         type: string
     bounding:
-      name: "filter[bounding]"
+      name: "filter[bounding_box]"
       description: "SW longitude, SW latitude, NE longitude, NE latitude"
       in: query
       schema:
