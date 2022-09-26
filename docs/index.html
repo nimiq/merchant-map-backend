@@ -979,6 +979,7 @@ ul.nav-tabs {
   "description" : "All pages links"
 };
     defs["Pickup"] = {
+  "required" : [ "created_at", "geo_location", "id", "label", "place_id", "place_information", "shop_id", "updated_at" ],
   "type" : "object",
   "properties" : {
     "id" : {
@@ -1009,7 +1010,7 @@ ul.nav-tabs {
   }
 };
     defs["Pickup_place_information"] = {
-  "required" : [ "address_components", "adr_address", "business_status", "formatted_address", "formatted_phone_number", "geometry", "icon", "icon_background_color", "icon_mask_base_uri", "international_phone_number", "name", "photos", "place_id", "plus_code", "price_level", "rating", "reference", "reviews", "types", "url", "user_ratings_total", "utc_offset", "vicinity", "website" ],
+  "required" : [ "address_components", "adr_address", "business_status", "formatted_address", "formatted_phone_number", "geometry", "icon", "icon_background_color", "icon_mask_base_uri", "international_phone_number", "name", "place_id", "plus_code", "price_level", "rating", "reference", "reviews", "types", "url", "user_ratings_total", "utc_offset", "vicinity", "website" ],
   "type" : "object",
   "properties" : {
     "address_components" : {
@@ -1050,6 +1051,7 @@ ul.nav-tabs {
     },
     "photos" : {
       "type" : "array",
+      "nullable" : true,
       "items" : {
         "$ref" : "#/components/schemas/Pickup_place_information_photos_inner"
       }
@@ -1950,16 +1952,7 @@ SW longitude, SW latitude, NE longitude, NE latitude
                                   <div id="responses-Locations-searchLocations-schema-200" class="exampleStyle">
                                     <script>
                                       $(document).ready(function() {
-                                        var schemaWrapper = {
-  "description" : "OK",
-  "content" : {
-    "application/json" : {
-      "schema" : {
-        "$ref" : "#/components/schemas/SearchLocationsResponse"
-      }
-    }
-  }
-};
+                                        var schemaWrapper = ;
                                         var schema = findNode('schema',schemaWrapper).schema;
                                         if (!schema) {
                                           schema = schemaWrapper.schema;
