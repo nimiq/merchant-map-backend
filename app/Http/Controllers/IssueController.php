@@ -14,7 +14,7 @@ class IssueController extends Controller
      */
     public function index()
     {
-        //
+        return view('issues.index', ['issues' => Issue::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class IssueController extends Controller
      */
     public function create()
     {
-        //
+        return view('issues.edit');
     }
 
     /**
@@ -51,23 +51,23 @@ class IssueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Issue $issue)
     {
-        //
+        return view('issues.edit', ['issue' => $issue]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Issue $issue)
     {
-        //
+        return view('issues.edit', ['issue' => $issue]);
     }
 
     /**
@@ -79,17 +79,29 @@ class IssueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $issue = Issue::findOrFail($id);
+
+        // Validate that the issue refers to an existing shop and has a valid category
+        $validated = $request->validate([
+            'shop_id' => 'required|exists:\App\Models\Shop,id',
+            'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+        ]);
+
+        $issue->update($request->all());
+
+        return redirect(route('issues.show', $issue->id));
+  }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Issue $issue)
     {
-        //
+        $issue->delete();
+
+        return redirect(route('issue.index'));
     }
 }

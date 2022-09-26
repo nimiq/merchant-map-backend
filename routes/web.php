@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\ShopController;
@@ -23,6 +24,8 @@ Route::redirect('/', '/shops', 301);
 // Route::get('/dashboard', function () {
 //     return view('dashboard');
 // })->middleware(['auth'])->name('dashboard');
+
+Route::resource('issues', IssueController::class)->middleware(['auth']);
 
 Route::resource('shops', ShopController::class)->middleware(['auth']);
 Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);

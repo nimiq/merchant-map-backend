@@ -18,7 +18,7 @@ class Issue extends Model
     /**
      * Get the category associated with this issue
      */
-    public function category()
+    public function issue_category()
     {
         return $this->belongsTo(IssueCategory::class);
     }
