@@ -16,4 +16,12 @@ class Currency extends Model
     {
         return $this->belongsToMany(Shop::class)->withTimestamps();
     }
+
+    /**
+     * The submitted places that support this currency
+     */
+    public function submittedPlaces()
+    {
+        return $this->belongsToMany(submittedPlaces::class)->withTimestamps();
+    }
 }
