@@ -33,4 +33,9 @@ class Pickup extends Model
             'srid' => 4326
         ]
     ];
+
+    public function shop()
+    {
+        return $this->belongsTo(Shop::class);
+    }
 }

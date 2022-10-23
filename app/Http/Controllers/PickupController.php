@@ -59,6 +59,21 @@ class PickupController extends Controller
         return view('shops.pickups.edit', compact('shop', 'pickup'));
     }
 
+    public function searchByPlaceId($placeId)
+    {
+        $pickup = Pickup::where('place_id', $placeId)->first();
+        if (!$pickup) {
+            return response(null, 404);
+        }
+
+        $shop = Shop::find($pickup->shop->id);
+        $shop->pickups = $shop->pickups;
+        $shop->shippings = $shop->shippings;
+        $shop->currencies = $shop->currencies;
+
+        return response()->json($shop);
+    }
+
     /**
      * Update the specified resource in storage.
      *
