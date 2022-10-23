@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CurrencyController;
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\IssueController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/search', [ShopController::class, 'search']);
 Route::post('/issue', [IssueController::class, 'store']);
+Route::get('/currencies', [CurrencyController::class, 'index']);
 
 Route::get('/issue_categories', function () {
     // We only want to provide categories' id and label, the rest is just noise
