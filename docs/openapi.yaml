@@ -43,6 +43,47 @@ paths:
           description: Create
         "404":
           description: Not Found
+  /api/location/{locationId}:
+    get:
+      tags:
+        - locations
+      summary: Get location by id
+      operationId: getLocationById
+      parameters:
+        - in: path
+          name: locationId
+          schema:
+            type: string
+          required: true
+          description: Place id from Google Maps
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CryptoLocation"
+        "201":
+          description: Create
+        "404":
+          description: Not Found
+  /api/currencies:
+    get:
+      tags:
+        - locations
+      summary: Currencies
+      operationId: getCurrencies
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Currencies"
+        "201":
+          description: Create
+        "404":
+          description: Not Found
 components:
   parameters:
     city:
@@ -476,3 +517,17 @@ components:
           type: string
         active:
           type: boolean
+    Currencies:
+      title: Currency
+      description: All supported currencies
+      type: array
+      items:
+        type: object
+        required:
+          - "symbol"
+          - "name"
+        properties:
+          name:
+            type: string
+          symbol:
+            type: string

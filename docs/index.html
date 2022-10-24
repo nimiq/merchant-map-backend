@@ -945,6 +945,18 @@ ul.nav-tabs {
     }
   }
 };
+    defs["Currencies_inner"] = {
+  "required" : [ "name", "symbol" ],
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string"
+    },
+    "symbol" : {
+      "type" : "string"
+    }
+  }
+};
     defs["GeoLocation"] = {
   "required" : [ "coordinates" ],
   "type" : "object",
@@ -1268,6 +1280,12 @@ ul.nav-tabs {
             <li class="nav-fixed nav-header active" data-group="_"><a href="#api-_">API Summary</a></li>
 
                   <li class="nav-header" data-group="Locations"><a href="#api-Locations">API Methods - Locations</a></li>
+                    <li data-group="Locations" data-name="getCurrencies" class="">
+                      <a href="#api-Locations-getCurrencies">getCurrencies</a>
+                    </li>
+                    <li data-group="Locations" data-name="getLocationById" class="">
+                      <a href="#api-Locations-getLocationById">getLocationById</a>
+                    </li>
                     <li data-group="Locations" data-name="searchLocations" class="">
                       <a href="#api-Locations-searchLocations">searchLocations</a>
                     </li>
@@ -1294,6 +1312,728 @@ ul.nav-tabs {
         <div id="sections">
                 <section id="api-Locations">
                   <h1>Locations</h1>
+                    <div id="api-Locations-getCurrencies">
+                      <article id="api-Locations-getCurrencies-0" data-group="User" data-name="getCurrencies" data-version="0">
+                        <div class="pull-left">
+                          <h1>getCurrencies</h1>
+                          <p>Currencies</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/currencies</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Locations-getCurrencies-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Locations-getCurrencies-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Locations-getCurrencies-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Locations-getCurrencies-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Locations-getCurrencies-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://localhost/api/currencies"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Locations-getCurrencies-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.LocationsApi;
+
+import java.io.File;
+import java.util.*;
+
+public class LocationsApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        LocationsApi apiInstance = new LocationsApi();
+
+        try {
+            array[Currencies_inner] result = apiInstance.getCurrencies();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling LocationsApi#getCurrencies");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Locations-getCurrencies-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.LocationsApi;
+
+public class LocationsApiExample {
+    public static void main(String[] args) {
+        LocationsApi apiInstance = new LocationsApi();
+
+        try {
+            array[Currencies_inner] result = apiInstance.getCurrencies();
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling LocationsApi#getCurrencies");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Locations-getCurrencies-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+LocationsApi *apiInstance = [[LocationsApi alloc] init];
+
+// Currencies
+[apiInstance getCurrenciesWithCompletionHandler: 
+              ^(array[Currencies_inner] output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CryptoMapApiDocumentation = require('crypto_map_api_documentation');
+
+// Create an instance of the API class
+var api = new CryptoMapApiDocumentation.LocationsApi()
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getCurrencies(callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Locations-getCurrencies-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class getCurrenciesExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new LocationsApi();
+
+            try {
+                // Currencies
+                array[Currencies_inner] result = apiInstance.getCurrencies();
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling LocationsApi.getCurrencies: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\LocationsApi();
+
+try {
+    $result = $api_instance->getCurrencies();
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling LocationsApi->getCurrencies: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::LocationsApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::LocationsApi->new();
+
+eval {
+    my $result = $api_instance->getCurrencies();
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling LocationsApi->getCurrencies: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.LocationsApi()
+
+try:
+    # Currencies
+    api_response = api_instance.get_currencies()
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling LocationsApi->getCurrencies: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getCurrencies-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate LocationsApi;
+
+pub fn main() {
+
+    let mut context = LocationsApi::Context::default();
+    let result = client.getCurrencies(&context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Locations-getCurrencies-title-200"></h3>
+                            <p id="examples-Locations-getCurrencies-description-200" class="marked"></p>
+                            <script>
+                              var responseLocations200_description = `OK`;
+                              var responseLocations200_description_break = responseLocations200_description.indexOf('\n');
+                              if (responseLocations200_description_break == -1) {
+                                $("#examples-Locations-getCurrencies-title-200").text("Status: 200 - " + responseLocations200_description);
+                              } else {
+                                $("#examples-Locations-getCurrencies-title-200").text("Status: 200 - " + responseLocations200_description.substring(0, responseLocations200_description_break));
+                                $("#examples-Locations-getCurrencies-description-200").html(responseLocations200_description.substring(responseLocations200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getCurrencies-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Locations-getCurrencies-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getCurrencies-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Locations-getCurrencies-200-schema">
+                                  <div id="responses-Locations-getCurrencies-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Locations-getCurrencies-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Locations-getCurrencies-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Locations-getCurrencies-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Locations-getCurrencies-title-201"></h3>
+                            <p id="examples-Locations-getCurrencies-description-201" class="marked"></p>
+                            <script>
+                              var responseLocations201_description = `Create`;
+                              var responseLocations201_description_break = responseLocations201_description.indexOf('\n');
+                              if (responseLocations201_description_break == -1) {
+                                $("#examples-Locations-getCurrencies-title-201").text("Status: 201 - " + responseLocations201_description);
+                              } else {
+                                $("#examples-Locations-getCurrencies-title-201").text("Status: 201 - " + responseLocations201_description.substring(0, responseLocations201_description_break));
+                                $("#examples-Locations-getCurrencies-description-201").html(responseLocations201_description.substring(responseLocations201_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getCurrencies-201" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getCurrencies-201-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Locations-getCurrencies-title-404"></h3>
+                            <p id="examples-Locations-getCurrencies-description-404" class="marked"></p>
+                            <script>
+                              var responseLocations404_description = `Not Found`;
+                              var responseLocations404_description_break = responseLocations404_description.indexOf('\n');
+                              if (responseLocations404_description_break == -1) {
+                                $("#examples-Locations-getCurrencies-title-404").text("Status: 404 - " + responseLocations404_description);
+                              } else {
+                                $("#examples-Locations-getCurrencies-title-404").text("Status: 404 - " + responseLocations404_description.substring(0, responseLocations404_description_break));
+                                $("#examples-Locations-getCurrencies-description-404").html(responseLocations404_description.substring(responseLocations404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getCurrencies-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getCurrencies-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
+                    <div id="api-Locations-getLocationById">
+                      <article id="api-Locations-getLocationById-0" data-group="User" data-name="getLocationById" data-version="0">
+                        <div class="pull-left">
+                          <h1>getLocationById</h1>
+                          <p>Get location by id</p>
+                        </div>
+                        <div class="pull-right"></div>
+                        <div class="clearfix"></div>
+                        <p></p>
+                        <p class="marked"></p>
+                        <p></p>
+                        <br />
+                        <pre class="prettyprint language-html prettyprinted" data-type="get"><code><span class="pln">/api/location/{locationId}</span></code></pre>
+                        <p>
+                          <h3>Usage and SDK Samples</h3>
+                        </p>
+                        <ul class="nav nav-tabs nav-tabs-examples">
+                          <li class="active"><a href="#examples-Locations-getLocationById-0-curl">Curl</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-java">Java</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-android">Android</a></li>
+                          <!--<li class=""><a href="#examples-Locations-getLocationById-0-groovy">Groovy</a></li>-->
+                          <li class=""><a href="#examples-Locations-getLocationById-0-objc">Obj-C</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-javascript">JavaScript</a></li>
+                          <!--<li class=""><a href="#examples-Locations-getLocationById-0-angular">Angular</a></li>-->
+                          <li class=""><a href="#examples-Locations-getLocationById-0-csharp">C#</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-php">PHP</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-perl">Perl</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-python">Python</a></li>
+                          <li class=""><a href="#examples-Locations-getLocationById-0-rust">Rust</a></li>
+                        </ul>
+
+                        <div class="tab-content">
+                          <div class="tab-pane active" id="examples-Locations-getLocationById-0-curl">
+                            <pre class="prettyprint"><code class="language-bsh">curl -X GET \
+ -H "Accept: application/json" \
+ "http://localhost/api/location/{locationId}"
+</code></pre>
+                          </div>
+                          <div class="tab-pane" id="examples-Locations-getLocationById-0-java">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.*;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.model.*;
+import org.openapitools.client.api.LocationsApi;
+
+import java.io.File;
+import java.util.*;
+
+public class LocationsApiExample {
+    public static void main(String[] args) {
+
+        // Create an instance of the API class
+        LocationsApi apiInstance = new LocationsApi();
+        String locationId = locationId_example; // String | Place id from Google Maps
+
+        try {
+            CryptoLocation result = apiInstance.getLocationById(locationId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling LocationsApi#getLocationById");
+            e.printStackTrace();
+        }
+    }
+}
+</code></pre>
+                          </div>
+
+                          <div class="tab-pane" id="examples-Locations-getLocationById-0-android">
+                            <pre class="prettyprint"><code class="language-java">import org.openapitools.client.api.LocationsApi;
+
+public class LocationsApiExample {
+    public static void main(String[] args) {
+        LocationsApi apiInstance = new LocationsApi();
+        String locationId = locationId_example; // String | Place id from Google Maps
+
+        try {
+            CryptoLocation result = apiInstance.getLocationById(locationId);
+            System.out.println(result);
+        } catch (ApiException e) {
+            System.err.println("Exception when calling LocationsApi#getLocationById");
+            e.printStackTrace();
+        }
+    }
+}</code></pre>
+                          </div>
+  <!--
+  <div class="tab-pane" id="examples-Locations-getLocationById-0-groovy">
+  <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+  </div> -->
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-objc">
+                              <pre class="prettyprint"><code class="language-cpp">
+
+// Create an instance of the API class
+LocationsApi *apiInstance = [[LocationsApi alloc] init];
+String *locationId = locationId_example; // Place id from Google Maps (default to null)
+
+// Get location by id
+[apiInstance getLocationByIdWith:locationId
+              completionHandler: ^(CryptoLocation output, NSError* error) {
+    if (output) {
+        NSLog(@"%@", output);
+    }
+    if (error) {
+        NSLog(@"Error: %@", error);
+    }
+}];
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-javascript">
+                              <pre class="prettyprint"><code class="language-js">var CryptoMapApiDocumentation = require('crypto_map_api_documentation');
+
+// Create an instance of the API class
+var api = new CryptoMapApiDocumentation.LocationsApi()
+var locationId = locationId_example; // {String} Place id from Google Maps
+
+var callback = function(error, data, response) {
+  if (error) {
+    console.error(error);
+  } else {
+    console.log('API called successfully. Returned data: ' + data);
+  }
+};
+api.getLocationById(locationId, callback);
+</code></pre>
+                            </div>
+
+                            <!--<div class="tab-pane" id="examples-Locations-getLocationById-0-angular">
+              <pre class="prettyprint language-json prettyprinted" data-type="json"><code>Coming Soon!</code></pre>
+            </div>-->
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-csharp">
+                              <pre class="prettyprint"><code class="language-cs">using System;
+using System.Diagnostics;
+using Org.OpenAPITools.Api;
+using Org.OpenAPITools.Client;
+using Org.OpenAPITools.Model;
+
+namespace Example
+{
+    public class getLocationByIdExample
+    {
+        public void main()
+        {
+
+            // Create an instance of the API class
+            var apiInstance = new LocationsApi();
+            var locationId = locationId_example;  // String | Place id from Google Maps (default to null)
+
+            try {
+                // Get location by id
+                CryptoLocation result = apiInstance.getLocationById(locationId);
+                Debug.WriteLine(result);
+            } catch (Exception e) {
+                Debug.Print("Exception when calling LocationsApi.getLocationById: " + e.Message );
+            }
+        }
+    }
+}
+</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-php">
+                              <pre class="prettyprint"><code class="language-php"><&#63;php
+require_once(__DIR__ . '/vendor/autoload.php');
+
+// Create an instance of the API class
+$api_instance = new OpenAPITools\Client\Api\LocationsApi();
+$locationId = locationId_example; // String | Place id from Google Maps
+
+try {
+    $result = $api_instance->getLocationById($locationId);
+    print_r($result);
+} catch (Exception $e) {
+    echo 'Exception when calling LocationsApi->getLocationById: ', $e->getMessage(), PHP_EOL;
+}
+?></code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-perl">
+                              <pre class="prettyprint"><code class="language-perl">use Data::Dumper;
+use WWW::OPenAPIClient::Configuration;
+use WWW::OPenAPIClient::LocationsApi;
+
+# Create an instance of the API class
+my $api_instance = WWW::OPenAPIClient::LocationsApi->new();
+my $locationId = locationId_example; # String | Place id from Google Maps
+
+eval {
+    my $result = $api_instance->getLocationById(locationId => $locationId);
+    print Dumper($result);
+};
+if ($@) {
+    warn "Exception when calling LocationsApi->getLocationById: $@\n";
+}</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-python">
+                              <pre class="prettyprint"><code class="language-python">from __future__ import print_statement
+import time
+import openapi_client
+from openapi_client.rest import ApiException
+from pprint import pprint
+
+# Create an instance of the API class
+api_instance = openapi_client.LocationsApi()
+locationId = locationId_example # String | Place id from Google Maps (default to null)
+
+try:
+    # Get location by id
+    api_response = api_instance.get_location_by_id(locationId)
+    pprint(api_response)
+except ApiException as e:
+    print("Exception when calling LocationsApi->getLocationById: %s\n" % e)</code></pre>
+                            </div>
+
+                            <div class="tab-pane" id="examples-Locations-getLocationById-0-rust">
+                              <pre class="prettyprint"><code class="language-rust">extern crate LocationsApi;
+
+pub fn main() {
+    let locationId = locationId_example; // String
+
+    let mut context = LocationsApi::Context::default();
+    let result = client.getLocationById(locationId, &context).wait();
+
+    println!("{:?}", result);
+}
+</code></pre>
+                            </div>
+                          </div>
+
+                          <h2>Scopes</h2>
+                          <table>
+                            
+                          </table>
+
+                          <h2>Parameters</h2>
+
+                            <div class="methodsubtabletitle">Path parameters</div>
+                            <table id="methodsubtable">
+                                <tr>
+                                  <th width="150px">Name</th>
+                                  <th>Description</th>
+                                </tr>
+                                  <tr><td style="width:150px;">locationId*</td>
+<td>
+
+
+    <div id="d2e199_getLocationById_locationId">
+        <div class="json-schema-view">
+            <div class="primitive">
+                <span class="type">
+                    String
+                </span>
+
+                    <div class="inner description marked">
+Place id from Google Maps
+                    </div>
+            </div>
+                <div class="inner required">
+                    Required
+                </div>
+        </div>
+    </div>
+</td>
+</tr>
+
+                            </table>
+
+
+
+
+
+                          <h2>Responses</h2>
+                            <h3 id="examples-Locations-getLocationById-title-200"></h3>
+                            <p id="examples-Locations-getLocationById-description-200" class="marked"></p>
+                            <script>
+                              var responseLocations200_description = `OK`;
+                              var responseLocations200_description_break = responseLocations200_description.indexOf('\n');
+                              if (responseLocations200_description_break == -1) {
+                                $("#examples-Locations-getLocationById-title-200").text("Status: 200 - " + responseLocations200_description);
+                              } else {
+                                $("#examples-Locations-getLocationById-title-200").text("Status: 200 - " + responseLocations200_description.substring(0, responseLocations200_description_break));
+                                $("#examples-Locations-getLocationById-description-200").html(responseLocations200_description.substring(responseLocations200_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getLocationById-200" class="nav nav-tabs nav-tabs-examples" >
+                                <li class="active">
+                                  <a data-toggle="tab" href="#responses-Locations-getLocationById-200-schema">Schema</a>
+                                </li>
+
+
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getLocationById-200-wrapper" style='margin-bottom: 10px;'>
+                                <div class="tab-pane active" id="responses-Locations-getLocationById-200-schema">
+                                  <div id="responses-Locations-getLocationById-schema-200" class="exampleStyle">
+                                    <script>
+                                      $(document).ready(function() {
+                                        var schemaWrapper = ;
+                                        var schema = findNode('schema',schemaWrapper).schema;
+                                        if (!schema) {
+                                          schema = schemaWrapper.schema;
+                                        }
+                                        if (schema.$ref != null) {
+                                          schema = defsParser.$refs.get(schema.$ref);
+                                          Object.keys(schema.properties).forEach( (item) => {
+                                            if (schema.properties[item].$ref != null) {
+                                              schema.properties[item] = defsParser.$refs.get(schema.properties[item].$ref);
+                                            }
+                                          });
+                                        } else if (schema.items != null && schema.items.$ref != null) {
+                                            schema.items = defsParser.$refs.get(schema.items.$ref);
+                                        } else {
+                                          schemaWrapper.definitions = Object.assign({}, defs);
+                                          $RefParser.dereference(schemaWrapper).catch(function(err) {
+                                            console.log(err);
+                                          });
+                                        }
+
+                                        var view = new JSONSchemaView(schema, 3);
+                                        $('#responses-Locations-getLocationById-200-schema-data').val(JSON.stringify(schema));
+                                        var result = $('#responses-Locations-getLocationById-schema-200');
+                                        result.empty();
+                                        result.append(view.render());
+                                      });
+                                    </script>
+                                  </div>
+                                  <input id='responses-Locations-getLocationById-200-schema-data' type='hidden' value=''></input>
+                                </div>
+                            </div>
+                            <h3 id="examples-Locations-getLocationById-title-201"></h3>
+                            <p id="examples-Locations-getLocationById-description-201" class="marked"></p>
+                            <script>
+                              var responseLocations201_description = `Create`;
+                              var responseLocations201_description_break = responseLocations201_description.indexOf('\n');
+                              if (responseLocations201_description_break == -1) {
+                                $("#examples-Locations-getLocationById-title-201").text("Status: 201 - " + responseLocations201_description);
+                              } else {
+                                $("#examples-Locations-getLocationById-title-201").text("Status: 201 - " + responseLocations201_description.substring(0, responseLocations201_description_break));
+                                $("#examples-Locations-getLocationById-description-201").html(responseLocations201_description.substring(responseLocations201_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getLocationById-201" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getLocationById-201-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                            <h3 id="examples-Locations-getLocationById-title-404"></h3>
+                            <p id="examples-Locations-getLocationById-description-404" class="marked"></p>
+                            <script>
+                              var responseLocations404_description = `Not Found`;
+                              var responseLocations404_description_break = responseLocations404_description.indexOf('\n');
+                              if (responseLocations404_description_break == -1) {
+                                $("#examples-Locations-getLocationById-title-404").text("Status: 404 - " + responseLocations404_description);
+                              } else {
+                                $("#examples-Locations-getLocationById-title-404").text("Status: 404 - " + responseLocations404_description.substring(0, responseLocations404_description_break));
+                                $("#examples-Locations-getLocationById-description-404").html(responseLocations404_description.substring(responseLocations404_description_break));
+                              }
+                            </script>
+
+
+                            <ul id="responses-detail-Locations-getLocationById-404" class="nav nav-tabs nav-tabs-examples" >
+
+
+                            </ul>
+
+
+                            <div class="tab-content" id="responses-Locations-getLocationById-404-wrapper" style='margin-bottom: 10px;'>
+                            </div>
+                        </article>
+                      </div>
+                      <hr>
                     <div id="api-Locations-searchLocations">
                       <article id="api-Locations-searchLocations-0" data-group="User" data-name="searchLocations" data-version="0">
                         <div class="pull-left">
