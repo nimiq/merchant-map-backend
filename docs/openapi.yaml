@@ -20,6 +20,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/city"
         - $ref: "#/components/parameters/country"
+        - $ref: "#/components/parameters/currency"
         - $ref: "#/components/parameters/description"
         - $ref: "#/components/parameters/email"
         - $ref: "#/components/parameters/label"
@@ -96,6 +97,13 @@ components:
       in: query
       schema:
         type: string
+    currency:
+      name: "filter[currency]"
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
     description:
       name: "filter[description]"
       in: query
