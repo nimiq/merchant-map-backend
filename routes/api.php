@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ShopController;
 use App\Http\Controllers\IssueController;
+use App\Http\Controllers\LocationCandidateController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,3 +25,5 @@ Route::get('/issue_categories', function () {
         return array('id' => $category->id, 'label' => $category->label);
     });
 });
+
+Route::post('/location', [LocationCandidateController::class, 'store']);
