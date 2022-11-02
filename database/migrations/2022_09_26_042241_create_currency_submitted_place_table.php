@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCurrencySubmittedPlacesTable extends Migration
+class CreateCurrencyLocationCandidatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateCurrencySubmittedPlacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('currency_submitted_place', function (Blueprint $table) {
+        Schema::create('currency_location_candidate', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
             $table->foreignId('currency_id')->constrained();
-            $table->foreignId('submitted_place_id')->constrained();
+            $table->foreignId('location_candidate_id')->constrained();
         });
     }
 
@@ -29,6 +29,6 @@ class CreateCurrencySubmittedPlacesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('currency_submitted_place');
+        Schema::dropIfExists('currency_location_candidate');
     }
 }

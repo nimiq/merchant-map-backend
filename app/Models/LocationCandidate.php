@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class SubmittedPlace extends Model
+class LocationCandidate extends Model
 {
     use HasFactory;
 

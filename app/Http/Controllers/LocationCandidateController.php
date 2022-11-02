@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\SubmittedPlace;
+use App\Models\LocationCandidate;
 use Illuminate\Http\Request;
 
-class SubmittedPlaceController extends Controller
+class LocationCandidateController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -51,10 +51,10 @@ class SubmittedPlaceController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\SubmittedPlace  $submittedPlace
+     * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function show(SubmittedPlace $submittedPlace)
+    public function show(LocationCandidate $LocationCandidate)
     {
         //
     }
@@ -62,10 +62,10 @@ class SubmittedPlaceController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\SubmittedPlace  $submittedPlace
+     * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function edit(SubmittedPlace $submittedPlace)
+    public function edit(LocationCandidate $LocationCandidate)
     {
         //
     }
@@ -74,10 +74,10 @@ class SubmittedPlaceController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\SubmittedPlace  $submittedPlace
+     * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, SubmittedPlace $submittedPlace)
+    public function update(Request $request, LocationCandidate $LocationCandidate)
     {
         //
     }
@@ -85,10 +85,10 @@ class SubmittedPlaceController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\SubmittedPlace  $submittedPlace
+     * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(SubmittedPlace $submittedPlace)
+    public function destroy(LocationCandidate $LocationCandidate)
     {
         //
     }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateSubmittedPlacesTable extends Migration
+class CreateLocationCandidatesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateSubmittedPlacesTable extends Migration
      */
     public function up()
     {
-        Schema::create('submitted_places', function (Blueprint $table) {
+        Schema::create('location_candidates', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
 
@@ -29,6 +29,6 @@ class CreateSubmittedPlacesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('submitted_places');
+        Schema::dropIfExists('location_candidates');
     }
 }

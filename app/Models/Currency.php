@@ -20,8 +20,8 @@ class Currency extends Model
     /**
      * The submitted places that support this currency
      */
-    public function submittedPlaces()
+    public function LocationCandidates()
     {
-        return $this->belongsToMany(submittedPlaces::class)->withTimestamps();
+        return $this->belongsToMany(LocationCandidates::class)->withTimestamps();
     }
 }
