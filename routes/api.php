@@ -25,4 +25,4 @@ Route::get('/issue_categories', function () {
     });
 });
 
-Route::post('/place', [ShopController::class, 'store']);
+Route::post('/place', [ShopCandidateController::class, 'store']);

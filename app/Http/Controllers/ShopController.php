@@ -25,7 +25,9 @@ class ShopController extends Controller
     {
         $user = auth()->user();
         return view('shops.index', [
-            'shops' => ($user->is_admin) ? Shop::withPending()->get() : Shop::withPending()->where('user_id', $user->id)->get()
+            'shops' => ($user->is_admin)
+                ? Shop::withPending()->get()
+                : Shop::withPending()->where('user_id', $user->id)->get()
         ]);
     }
 
@@ -37,6 +39,40 @@ class ShopController extends Controller
     public function create()
     {
         return view('shops.edit');
+    }
+
+    /**
+     * Verifies if the token is valid
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public function verifyToken($token)
+    {
+        try {
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'),
+                    'response' => $_POST['g-recaptcha-response'],
+
+                    // this is optional. Should be user's IP, not server's
+                    // 'remoteip' => $_SERVER['REMOTE_ADDR']
+                    ];
+                    
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data)
+                ]
+            ];
+        
+            $context  = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            return json_decode($result)->success;
+        }
+        catch (Exception $e) {
+            return null;
+        }
     }
 
     /**

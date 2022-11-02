@@ -46,9 +46,9 @@ Once the `.env` contains the correct database information and credentials run `p
 <br/>
 
 ## Quick setup for local development
-After you've cloned this repository you can easily serve this application through the following steps. The quick setup assumes that you already have access to Docker, Docker Compose andd NodeJS/NPM. The enviroment comes with NGINX, PHP 8 and Postgres 13 including the PostGIS extension enabled for geospatial storage. The database is made persisent through a Docker volume and can be found in `/docker/postgres/persistence`.
+After you've cloned this repository you can easily serve this application through the following steps. The quick setup assumes that you already have access to Docker, Docker Compose andd NodeJS/NPM. The environment comes with NGINX, PHP 8 and Postgres 13 including the PostGIS extension enabled for geospatial storage. The database is made persistent through a Docker volume and can be found in `/docker/postgres/persistence`.
 
-<strong>Note: this quick setup is meant for development purposes only. It doesn't come with proper database protection since no database password is necassary when the connection is coming from localhost.</strong>
+<strong>Note: this quick setup is meant for development purposes only. It doesn't come with proper database protection since no database password is necessary when the connection is coming from localhost.</strong>
 
 <br/>
 
@@ -73,7 +73,7 @@ npm run dev
 
 <br/>
 
-Build all the necassary images and bring the system up:
+Build all the necessary images and bring the system up:
 ```
 docker-compose up
 // OR start containers detached
