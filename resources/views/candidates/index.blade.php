@@ -12,9 +12,18 @@
             </div>
 
         </div>
-
+        
         <p>
             These are all the entries that have been submitted by users in the UI.
+            <br>
+            <details class="pl-2">
+                <summary>Actions</summary>
+                <ul class="list-disc ml-8">
+                    <li><b>Process</b>: It will fetch all the information from GMaps and will publish the location automatically</li>
+                    <li><b>GMaps</b>: Opens in GMaps</li>
+                    <li><b>Reject</b>: It will remove the item from the database. This action is not reversible.</li>
+                </ul>
+            </details>
         </p>
     </x-slot>
 
@@ -26,8 +35,9 @@
 
                 <x-slot name="tableHead">
 
-                    <x-table.header>{{ __('Created at') }}</x-table.header>
-                    <x-table.header>{{ __('Google Place ID') }}</x-table.header>
+                    <x-table.header class="text-right">{{ __('Created at') }}</x-table.header>
+                    <x-table.header class="text-right">{{ __('Processed') }}</x-table.header>
+                    <x-table.header class="text-right">{{ __('Google Place ID') }}</x-table.header>
                     <x-table.header>{{ __('Currencies') }}</x-table.header>
                     <x-table.header><span class="sr-only">Show</span></x-table.header>
 
@@ -38,8 +48,9 @@
                     @foreach($candidates as $candidate)
 
                         <tr>
-                            <x-table.data>{{ $candidate->created_at }}</x-table.data>
-                            <x-table.data>{{ $candidate->google_place_id }}</x-table.data>
+                            <x-table.data class="text-right">{{ $candidate->created_at->format('d/m/y H:i') }}</x-table.data>
+                            <x-table.data class="text-right">{{ $candidate->processed ? '✅' : '❌'}}</x-table.data>
+                            <x-table.data class="text-right">{{ $candidate->google_place_id }}</x-table.data>
                             <x-table.data>
                                 @if ($candidate->currencies->count() === 0)
                                     None
@@ -48,6 +59,9 @@
                                 @endif
                             </x-table.data>
                             <x-table.data class="text-right text-sm font-medium space-x-4">
+                                <x-utils.link href="{{ route('candidates.process', [ $candidate->id ]) }}">
+                                    Process
+                                </x-utils.link>
                                 <x-utils.link target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
                                     GMaps
                                 </x-utils.link>

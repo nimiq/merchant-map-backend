@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\LocationCandidate;
+use App\Models\Shop;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class LocationCandidateController extends Controller
 {
@@ -41,6 +43,12 @@ class LocationCandidateController extends Controller
             'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
 
+        // TODO Check if this works
+        $shop = Shop::where('source_id', $request->google_place_id)->first();
+        if ($shop) {
+            return redirect()->back()->withErrors(['google_place_id' => 'This place already exists in the database.']);
+        }
+
         $currencies = [];
 
         foreach ($request->currencies as $currency) {
@@ -75,7 +83,7 @@ class LocationCandidateController extends Controller
      */
     public function edit(LocationCandidate $locationCandidate)
     {
-        return view('candidates.edit', ['candidate' => $locationCandidate]);
+        //
     }
 
     /**
@@ -87,17 +95,7 @@ class LocationCandidateController extends Controller
      */
     public function update(Request $request, LocationCandidate $locationCandidate)
     {
-        $candidate = LocationCandidate::findOrFail($locationCandidate);
-
-        // Validate that the candidate refers to an existing shop and has a valid category
-        $request->validate([
-            'google_place_id' => 'required',
-            'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
-        ]);
-
-        $candidate->update($request->all());
-
-        return redirect(route('candidates.show', $candidate->id));
+        //
     }
 
     /**
