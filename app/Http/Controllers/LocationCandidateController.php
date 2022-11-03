@@ -34,6 +34,7 @@ class LocationCandidateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
+     * TODO @param bool $ignoreToken - If true, it will ignore the token. This is only for the dashboard.
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -41,8 +42,18 @@ class LocationCandidateController extends Controller
         // Validate that the place has valid currencies
         $request->validate([
             'google_place_id' => 'required',
+            'token' => 'required',
             'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
+        
+        
+        // if (!$ignoreToken) {
+        if (!$this->verifyToken($request->token)) {
+            return response()->json([
+                'error' => 'Invalid token'
+            ], 400);
+        }
+        // }
 
         // TODO Check if this works
         $shop = Shop::where('source_id', $request->google_place_id)->first();
@@ -185,7 +196,6 @@ class LocationCandidateController extends Controller
 
             return view('candidates.index', ['candidates' => LocationCandidate::all()]);
         } catch (\Throwable $th) {
-            // ddd($th);
             Log::debug($th->getMessage() . $th->getLine() . $th->getFile());
         }
     }
@@ -200,5 +210,38 @@ class LocationCandidateController extends Controller
             }
         }
         return null;
+    }
+
+        /**
+     * Verifies if the token is valid
+     *
+     * @param string $token
+     * @return boolean
+     */
+    private function verifyToken($token)
+    {
+
+        try {
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+
+            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'), 'response' => $token];
+            // We could use `remoteip` as well, it is optional. Should be user's IP, not server's!
+
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data)
+                ]
+            ];
+
+            $context  = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+
+            return json_decode($result)->success;
+        }
+        catch (Exception $e) {
+            return null;
+        }
     }
 }
