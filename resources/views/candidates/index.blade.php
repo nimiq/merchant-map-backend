@@ -59,24 +59,26 @@
                                 @endif
                             </x-table.data>
                             <x-table.data class="text-right text-sm font-medium space-x-4">
-                                <form action="{{ route('candidates.process', [ $candidate ]) }}"
-                                    method="POST" class="inline-block">
-                                    @csrf
-                                    @method('post')
-                                    <input type="hidden" name="id" value="{{ $candidate->id }}">
-                                    <button class="text-indigo-600">{{ __('Process') }}</button>
-                                    <!-- TODO Show error state if somethings goes kaput -->
-                                </form>
-                                <x-utils.link
-                                    target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
-                                    GMaps
-                                </x-utils.link>
-                                <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}"
-                                    method="POST" class="inline-block">
-                                    @csrf
-                                    @method('post')
-                                    <button class="text-red-500">{{ __('Reject') }}</button>
-                                </form>
+                                @if (!$candidate->processed)
+                                    <form action="{{ route('candidates.process', [ $candidate ]) }}"
+                                        method="POST" class="inline-block">
+                                        @csrf
+                                        @method('post')
+                                        <input type="hidden" name="id" value="{{ $candidate->id }}">
+                                        <button class="text-indigo-600">{{ __('Process') }}</button>
+                                        <!-- TODO Show error state if somethings goes kaput -->
+                                    </form>
+                                    <x-utils.link
+                                        target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
+                                        GMaps
+                                    </x-utils.link>
+                                    <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}"
+                                        method="POST" class="inline-block">
+                                        @csrf
+                                        @method('post')
+                                        <button class="text-red-500">{{ __('Reject') }}</button>
+                                    </form>
+                                @endif
                             </x-table.data>
                         </tr>
 

@@ -15,7 +15,7 @@
         </div>
     </x-slot>
 
-    <x-utils.container class="py-12">
+    <x-utils.container class="py-12 px-4 max-w-7xl">
 
         <x-card.card>
 
