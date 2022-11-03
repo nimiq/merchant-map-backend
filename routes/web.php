@@ -3,7 +3,6 @@
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\LocationCandidateController;
-use App\Http\Controllers\LocationCandidateProcessorController;
 use App\Http\Controllers\ShopController;
 use App\Imports\SalamantexCSVImport;
 use Illuminate\Support\Facades\Route;
@@ -31,7 +30,7 @@ Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);
 Route::resource('shops.shippings', ShippingController::class)->middleware(['auth']);
 
 Route::resource('candidates', LocationCandidateController::class)->middleware(['auth']);
-Route::post('/candidates/process', function () { /** */})
+Route::post('/candidates/process/{id}', [LocationCandidateController::class, 'process'])
     ->name('candidates.process')
     ->middleware(['auth']);
 

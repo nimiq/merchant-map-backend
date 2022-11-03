@@ -6,6 +6,7 @@ use App\Models\LocationCandidate;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use MStaack\LaravelPostgis\Geometries\Point;
 
 class LocationCandidateController extends Controller
 {
@@ -61,7 +62,7 @@ class LocationCandidateController extends Controller
 
         $candidate->currencies()->attach($currencies);
 
-        return response()->json(['message' => "Issue successfully created."], 201);
+        return response()->json(['message' => "Candidate successfully created."], 201);
     }
 
     /**
@@ -114,5 +115,90 @@ class LocationCandidateController extends Controller
         $locationCandidate->delete();
 
         return redirect(route('candidates.index'));
+    }
+
+    /**
+     * Handle the incoming request.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function process(Request $request, $locationCandidateId)
+    {
+        try {
+            $locationCandidate = LocationCandidate::findOrFail($locationCandidateId);
+            
+            // FIX ME - This is duplicated code from Salamantex Import
+
+            $httpClient = new \GuzzleHttp\Client();
+  
+            $request = $httpClient->get(
+                'https://maps.googleapis.com/maps/api/place/details/json?key='
+                . env('GOOGLE_MAPS_GEOCODING_API_KEY') . '&place_id=' . $locationCandidate->google_place_id);
+            $body = json_decode($request->getBody()->getContents());
+
+            // Get the location information from the API result if available.
+            $geo = $body->result->geometry->location ?? (object)array('lat' => 0, 'lng' => 0);
+
+            $body->result->reviews = [];
+            if (property_exists($body->result, 'photos')) {
+                $body->result->photos = (count($body->result->photos) > 0) ? [$body->result->photos[0]] : [];
+            }
+
+            $street = $this->findAddressComponent($body->result->address_components, 'route');
+            $streetNumber = $this->findAddressComponent($body->result->address_components, 'street_number');
+            $city = $this->findAddressComponent($body->result->address_components, 'locality');
+            $country = $this->findAddressComponent($body->result->address_components, 'country');
+            $zipcode = $this->findAddressComponent($body->result->address_components, 'postal_code');
+
+            $data = [
+                'label' => $body->result->name,
+                'email' => null,
+                'description' => null,
+                'address_line_1' => ($street->long_name ?? null) . ' ' . ($streetNumber->long_name ?? null),
+                'address_line_2' => null,
+                'address_line_3' => null,
+                'zip' => $zipcode->long_name ?? null,
+                'city' => $city->long_name ?? null,
+                'country' => $country->short_name ?? null
+            ];
+
+            $shop = new Shop($data);
+            $shop->user_id = auth()->user()->id;
+            // object_id holds the line when the shop was created via CSV. Here it will just store the source.
+            $shop->object_id = 'user';
+            $shop->source_id = $locationCandidate->google_place_id;
+
+            
+            $shop->save();
+            $shop->currencies()->attach($locationCandidate->currencies->pluck('id')->toArray());
+            $shop->pickups()->create([
+                'geo_location' => new Point($geo->lat, $geo->lng),
+                'place_id' => $locationCandidate->google_place_id,
+                'place_information' => json_encode($body->result)
+            ]);
+
+            $locationCandidate->processed = true;
+            $locationCandidate->save();
+
+            var_dump($shop);
+
+            return view('candidates.index', ['candidates' => LocationCandidate::all()]);
+        } catch (\Throwable $th) {
+            // ddd($th);
+            Log::debug($th->getMessage() . $th->getLine() . $th->getFile());
+        }
+    }
+
+    private function findAddressComponent($components, $type)
+    {
+        foreach ($components as $comp) {
+            foreach ($comp->types as $cType) {
+                if ($type === $cType) {
+                    return $comp;
+                }
+            }
+        }
+        return null;
     }
 }

@@ -55,19 +55,26 @@
                                 @if ($candidate->currencies->count() === 0)
                                     None
                                 @else
-                                    {{ $candidate->currencies->pluck('name')->join(', ') }}
+                                    {{ $candidate->currencies->pluck('symbol')->join(', ') }}
                                 @endif
                             </x-table.data>
                             <x-table.data class="text-right text-sm font-medium space-x-4">
-                                <x-utils.link href="{{ route('candidates.process', [ $candidate->id ]) }}">
-                                    Process
-                                </x-utils.link>
-                                <x-utils.link target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
+                                <form action="{{ route('candidates.process', [ $candidate ]) }}"
+                                    method="POST" class="inline-block">
+                                    @csrf
+                                    @method('post')
+                                    <input type="hidden" name="id" value="{{ $candidate->id }}">
+                                    <button class="text-indigo-600">{{ __('Process') }}</button>
+                                    <!-- TODO Show error state if somethings goes kaput -->
+                                </form>
+                                <x-utils.link
+                                    target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
                                     GMaps
                                 </x-utils.link>
-                                <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}" method="POST" class="inline-block">
+                                <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}"
+                                    method="POST" class="inline-block">
                                     @csrf
-                                    @method('delete')
+                                    @method('post')
                                     <button class="text-red-500">{{ __('Reject') }}</button>
                                 </form>
                             </x-table.data>
