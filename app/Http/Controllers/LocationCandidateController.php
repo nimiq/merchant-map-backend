@@ -38,13 +38,13 @@ class LocationCandidateController extends Controller
         // Validate that the place has valid currencies
         $request->validate([
             'google_place_id' => 'required',
-            'currencies' => 'required|array|distinct|exists:App\Models\Currency,id'
+            'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
 
         $currencies = [];
 
         foreach ($request->currencies as $currency) {
-            $currencies[] = \App\Models\Currency::find($currency)->id;
+            $currencies[] = \App\Models\Currency::where('symbol', $currency)->first()->id;
         }
 
         $candidate = new LocationCandidate($request->all());
@@ -92,7 +92,7 @@ class LocationCandidateController extends Controller
         // Validate that the candidate refers to an existing shop and has a valid category
         $request->validate([
             'google_place_id' => 'required',
-            'currencies' => 'required|array|distinct|exists:App\Models\Currency,id'
+            'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
 
         $candidate->update($request->all());
