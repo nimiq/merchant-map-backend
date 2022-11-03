@@ -9,6 +9,10 @@ class Currency extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        ''
+    ];
+
     /**
      * The shops that support this currency
      */
@@ -20,7 +24,7 @@ class Currency extends Model
     /**
      * The submitted places that support this currency
      */
-    public function LocationCandidates()
+    public function locationCandidates()
     {
         return $this->belongsToMany(LocationCandidates::class)->withTimestamps();
     }

@@ -14,7 +14,7 @@ class LocationCandidateController extends Controller
      */
     public function index()
     {
-        //
+        return view('candidates.index', ['candidates' => LocationCandidate::all()]);
     }
 
     /**
@@ -24,7 +24,7 @@ class LocationCandidateController extends Controller
      */
     public function create()
     {
-        //
+        return view('candidates.edit');
     }
 
     /**
@@ -36,27 +36,35 @@ class LocationCandidateController extends Controller
     public function store(Request $request)
     {
         // Validate that the place has valid currencies
-        $validated = $request->validate([
-            'shop_id' => 'required|exists:\App\Models\Shop,id',
-            'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+        $request->validate([
+            'google_place_id' => 'required',
+            'currencies' => 'required|array|distinct|exists:App\Models\Currency,id'
         ]);
 
-        $issue = new Issue($request->all());
-        $issue->resolved = false; // All issues created via API are not resolved yet
-        $issue->save();
+        $currencies = [];
 
-        return response()->json(['message' => "Issue successfully created."],201);
+        foreach ($request->currencies as $currency) {
+            $currencies[] = \App\Models\Currency::find($currency)->id;
+        }
+
+        $candidate = new LocationCandidate($request->all());
+        $candidate->processed = false; // All candidates created via API are not processed yet
+        $candidate->save();
+
+        $candidate->currencies()->attach($currencies);
+
+        return response()->json(['message' => "Issue successfully created."], 201);
     }
 
     /**
      * Display the specified resource.
-     *
+     *e
      * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function show(LocationCandidate $LocationCandidate)
+    public function show(LocationCandidate $locationCandidate)
     {
-        //
+        return view('candidates.edit', ['candidate' => $locationCandidate]);
     }
 
     /**
@@ -65,9 +73,9 @@ class LocationCandidateController extends Controller
      * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function edit(LocationCandidate $LocationCandidate)
+    public function edit(LocationCandidate $locationCandidate)
     {
-        //
+        return view('candidates.edit', ['candidate' => $locationCandidate]);
     }
 
     /**
@@ -77,9 +85,19 @@ class LocationCandidateController extends Controller
      * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, LocationCandidate $LocationCandidate)
+    public function update(Request $request, LocationCandidate $locationCandidate)
     {
-        //
+        $candidate = LocationCandidate::findOrFail($locationCandidate);
+
+        // Validate that the candidate refers to an existing shop and has a valid category
+        $request->validate([
+            'google_place_id' => 'required',
+            'currencies' => 'required|array|distinct|exists:App\Models\Currency,id'
+        ]);
+
+        $candidate->update($request->all());
+
+        return redirect(route('candidates.show', $candidate->id));
     }
 
     /**
@@ -88,8 +106,15 @@ class LocationCandidateController extends Controller
      * @param  \App\Models\LocationCandidate  $LocationCandidate
      * @return \Illuminate\Http\Response
      */
-    public function destroy(LocationCandidate $LocationCandidate)
+    public function destroy(LocationCandidate $locationCandidate)
     {
-        //
+        $user = auth()->user();
+        if (!$user->is_admin && $locationCandidate->user_id !== $user->id) {
+            return redirect(route('shops.index'));
+        }
+
+        $locationCandidate->delete();
+
+        return redirect(route('candidates.index'));
     }
 }

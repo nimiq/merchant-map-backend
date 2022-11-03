@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\LocationCandidateController;
 use App\Http\Controllers\ShopController;
 use App\Imports\SalamantexCSVImport;
 use Illuminate\Support\Facades\Route;
@@ -27,6 +28,8 @@ Route::redirect('/', '/shops', 301);
 Route::resource('shops', ShopController::class)->middleware(['auth']);
 Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);
 Route::resource('shops.shippings', ShippingController::class)->middleware(['auth']);
+
+Route::resource('candidates', LocationCandidateController::class)->middleware(['auth']);
 
 Route::get('/import/salamantex', function () {
     try {
