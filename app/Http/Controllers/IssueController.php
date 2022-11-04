@@ -41,7 +41,12 @@ class IssueController extends Controller
             'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
             'description' => 'nullable|string',
+            'token' => 'bail|required|string'
         ]);
+
+        if (!verifyToken($validated['token'])) {
+            return response()->json(['error' => 'Unable to verify token.'], 403);
+        }
 
         $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
 
