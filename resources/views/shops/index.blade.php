@@ -9,11 +9,22 @@
 
             <div class="self-end">
                 <x-utils.link-button href="{{ route('shops.create') }}">{{ __('New Shop') }}</x-utils.link-button> | 
-                <x-utils.link-button href="/shops/import/csv">{{ __('Import via CSV') }}</x-utils.link-button> | 
-                <x-utils.link-button href="{{ route('candidates.index') }}">{{ __('See candidates') }}</x-utils.link-button> 
+                <x-utils.link-button href="/shops/import/csv">{{ __('Import via CSV') }}</x-utils.link-button>
             </div>
-
         </div>
+
+         <p>
+            These are all the shops shown in the crypto map.
+            <br>
+            <details class="pl-2">
+                <summary>Actions</summary>
+                <ul class="list-disc ml-8">
+                    <li><b>See in app</b>: Opens the location in the map</li>
+                    <li><b>Details</b>: Opens details of the shop. You might change them.</li>
+                    <li><b>Delete</b>: It will remove the item from the database. This action is not reversible.</li>
+                </ul>
+            </details>
+        </p>
     </x-slot>
 
     <x-utils.container class="py-12 px-4 max-w-7xl">
@@ -53,16 +64,14 @@
                                     {{ $shop->issues->where('resolved', true)->count() }}
                                 </span>
                             </x-table.data>
-                            <x-table.data class="text-right text-sm font-medium">
-                                <x-utils.link href="{{ route('shops.show', $shop->id) }}">Show</x-utils.link>
-
-                             <x-table.data>
+                            <x-table.data>
                                 @if ($shop->currencies->count() === 0)
                                     None
                                 @else
                                     {{ $shop->currencies->pluck('symbol')->join(', ') }}
                                 @endif
                             </x-table.data>
+                             
                             <x-table.data class="text-right text-sm font-medium space-x-4">
                                 <x-utils.link target="_blank" href="https://nimiq-map.netlify.app/location/{{$shop->id}}">See in app</x-utils.link>
                                 <x-utils.link href="{{ route('shops.show', $shop->id) }}">Details</x-utils.link>

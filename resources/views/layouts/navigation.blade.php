@@ -17,6 +17,7 @@
                     </x-nav-link>
                     <x-nav-link :href="route('issues.index')" :active="request()->routeIs('issues.index')">
                         {{ __('Issues') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('candidates.index')" :active="request()->routeIs('candidates.index')">
                         {{ __('Candidates') }}
                     </x-nav-link>
@@ -70,6 +71,12 @@
         <div class="pt-2 pb-3 space-y-1">
             <x-responsive-nav-link :href="route('shops.index')" :active="request()->routeIs('shops.index')">
                 {{ __('Shops') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('issues.index')" :active="request()->routeIs('issues.index')">
+                {{ __('Issues') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('candidates.index')" :active="request()->routeIs('candidates.index')">
+                {{ __('Candidates') }}
             </x-responsive-nav-link>
         </div>
 
