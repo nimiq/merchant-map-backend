@@ -9,10 +9,8 @@ class Currency extends Model
 {
     use HasFactory;
 
-    protected $hidden = [
-        'id',
-        'created_at',
-        'updated_at',
+    protected $fillable = [
+        ''
     ];
 
     /**
@@ -21,5 +19,13 @@ class Currency extends Model
     public function shops()
     {
         return $this->belongsToMany(Shop::class)->withTimestamps();
+    }
+
+    /**
+     * The submitted places that support this currency
+     */
+    public function locationCandidates()
+    {
+        return $this->belongsToMany(LocationCandidates::class)->withTimestamps();
     }
 }
