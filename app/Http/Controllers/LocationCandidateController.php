@@ -39,30 +39,17 @@ class LocationCandidateController extends Controller
      */
     public function store(Request $request)
     {
-        // Validate that the place has valid currencies
         $request->validate([
-            'google_place_id' => 'required',
-            'token' => 'required',
-            'currencies' => 'required|array|distinct|exists:App\Models\Currency,symbol'
+            'google_place_id' => 'bail|required|unique:App\Models\Shop,source_id',
+            'token' => 'bail|required',
+            'currencies' => 'bail|required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
-        
-        
-        // if (!$ignoreToken) {
+
         if (!$this->verifyToken($request->token)) {
-            return response()->json([
-                'error' => 'Invalid token'
-            ], 400);
+            return response()->json(['error' => 'Unable to verify token.'], 403);
         }
-        // }
-
-        // TODO Check if this works
-        $shop = Shop::where('source_id', $request->google_place_id)->first();
-        if ($shop) {
-            return redirect()->back()->withErrors(['google_place_id' => 'This place already exists in the database.']);
-        }
-
+        
         $currencies = [];
-
         foreach ($request->currencies as $currency) {
             $currencies[] = \App\Models\Currency::where('symbol', $currency)->first()->id;
         }
@@ -192,8 +179,6 @@ class LocationCandidateController extends Controller
             $locationCandidate->processed = true;
             $locationCandidate->save();
 
-            var_dump($shop);
-
             return view('candidates.index', ['candidates' => LocationCandidate::all()]);
         } catch (\Throwable $th) {
             Log::debug($th->getMessage() . $th->getLine() . $th->getFile());
@@ -224,7 +209,7 @@ class LocationCandidateController extends Controller
         try {
             $url = 'https://www.google.com/recaptcha/api/siteverify';
 
-            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'), 'response' => $token];
+            $data = ['secret'  => env('GOOGLE_CAPTCHA_SECRET'), 'response' => $token];
             // We could use `remoteip` as well, it is optional. Should be user's IP, not server's!
 
             $options = [

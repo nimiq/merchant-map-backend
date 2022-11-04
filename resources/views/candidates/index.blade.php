@@ -69,7 +69,10 @@
                                         <!-- TODO Show error state if somethings goes kaput -->
                                     </form>
                                     <x-utils.link
-                                        target="_blank" href="{{ 'https://goo.gl/maps/' . $candidate->google_place_id }}">
+                                        target="_blank"
+                                        href="{{ 'https://www.google.com/maps/place/?q=place_id:'
+                                                . $candidate->google_place_id }}"
+                                    >
                                         GMaps
                                     </x-utils.link>
                                     <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}"
