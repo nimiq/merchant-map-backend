@@ -120,12 +120,18 @@ paths:
               title: LocationIssueBody
               type: object
               required:
-                - "shop_id"
+                - "google_place_id"
                 - "issue_category_id"
+                - "description"
+                - "token"
               properties:
                 issue_category_id:
                   type: string
-                shop_id:
+                google_place_id:
+                  type: string
+                token:
+                  type: string
+                description:
                   type: string
       responses:
         "201":

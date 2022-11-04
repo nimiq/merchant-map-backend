@@ -27,7 +27,7 @@
         </p>
     </x-slot>
 
-    <x-utils.container class="py-12 px-4 max-w-7xl">
+    <x-utils.container class="py-12 px-4">
 
         <x-card.card>
 

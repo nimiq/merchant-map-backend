@@ -1047,13 +1047,19 @@ ul.nav-tabs {
 };
     defs["LocationIssueBody"] = {
   "title" : "LocationIssueBody",
-  "required" : [ "issue_category_id", "shop_id" ],
+  "required" : [ "description", "google_place_id", "issue_category_id", "token" ],
   "type" : "object",
   "properties" : {
     "issue_category_id" : {
       "type" : "string"
     },
-    "shop_id" : {
+    "google_place_id" : {
+      "type" : "string"
+    },
+    "token" : {
+      "type" : "string"
+    },
+    "description" : {
       "type" : "string"
     }
   }
@@ -2839,7 +2845,9 @@ $(document).ready(function() {
  "http://localhost/api/issue" \
  -d '{
   &quot;issue_category_id&quot; : &quot;issue_category_id&quot;,
-  &quot;shop_id&quot; : &quot;shop_id&quot;
+  &quot;description&quot; : &quot;description&quot;,
+  &quot;google_place_id&quot; : &quot;google_place_id&quot;,
+  &quot;token&quot; : &quot;token&quot;
 }'
 </code></pre>
                           </div>
