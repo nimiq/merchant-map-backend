@@ -20,6 +20,7 @@ paths:
       parameters:
         - $ref: "#/components/parameters/city"
         - $ref: "#/components/parameters/country"
+        - $ref: "#/components/parameters/currency"
         - $ref: "#/components/parameters/description"
         - $ref: "#/components/parameters/email"
         - $ref: "#/components/parameters/label"
@@ -43,6 +44,104 @@ paths:
           description: Create
         "404":
           description: Not Found
+  /api/location/{locationId}:
+    get:
+      tags:
+        - locations
+      summary: Get location by id
+      operationId: getLocationById
+      parameters:
+        - in: path
+          name: locationId
+          schema:
+            type: string
+          required: true
+          description: Place id from Google Maps
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/CryptoLocation"
+        "201":
+          description: Create
+        "404":
+          description: Not Found
+  /api/currencies:
+    get:
+      tags:
+        - locations
+      summary: Currencies
+      operationId: getCurrencies
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Currencies"
+        "201":
+          description: Create
+        "404":
+          description: Not Found
+  /api/issue_categories:
+    get:
+      tags:
+        - locations
+      summary: Get issue categories with its label
+      operationId: getIssueCategories
+      responses:
+        "200":
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: LocationIssue
+                type: object
+                required:
+                  - "id"
+                  - "label"
+                properties:
+                  label:
+                    type: string
+                  id:
+                    type: number
+  /api/issue:
+    post:
+      tags:
+        - locations
+      summary: Create a new issue for a location
+      operationId: postLocationIssue
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: LocationIssueBody
+              type: object
+              required:
+                - "shop_id"
+                - "issue_category_id"
+              properties:
+                issue_category_id:
+                  type: string
+                shop_id:
+                  type: string
+      responses:
+        "201":
+          description: OK
+          content:
+            application/json:
+              schema:
+                title: LocationIssueResponse
+                type: object
+                required:
+                  - "message"
+                properties:
+                  message:
+                    type: string
+        "400":
+          description: Bad Request
   /api/location:
     post:
       tags:
@@ -95,6 +194,13 @@ components:
       in: query
       schema:
         type: string
+    currency:
+      name: "filter[currency]"
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
     description:
       name: "filter[description]"
       in: query
@@ -516,3 +622,28 @@ components:
           type: string
         active:
           type: boolean
+    Currencies:
+      title: Currency
+      description: All supported currencies
+      type: array
+      items:
+        type: object
+        required:
+          - "symbol"
+          - "name"
+        properties:
+          name:
+            type: string
+          symbol:
+            type: string
+    LocationIssue:
+      title: LocationIssue
+      type: object
+      required:
+        - "id"
+        - "label"
+      properties:
+        label:
+          type: string
+        id:
+          type: number
