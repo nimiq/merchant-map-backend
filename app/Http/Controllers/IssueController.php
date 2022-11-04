@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -14,7 +15,7 @@ class IssueController extends Controller
      */
     public function index()
     {
-        return view('issues.index', ['issues' => Issue::all()]);
+        return view('issues.index', ['issues' => Issue::where('resolved', false)->get()]);
     }
 
     /**
@@ -37,11 +38,15 @@ class IssueController extends Controller
     {
         // Validate that the issue refers to an existing shop and has a valid category
         $validated = $request->validate([
-            'shop_id' => 'required|exists:\App\Models\Shop,id',
+            'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
         ]);
 
-        $issue = new Issue($request->all());
+        $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
+
+        $issue = new Issue();
+        $issue->shop_id = $shop->id;
+        $issue->issue_category_id = $validated['issue_category_id'];
         $issue->resolved = false; // All issues created via API are not resolved yet
         $issue->save();
 
@@ -83,11 +88,15 @@ class IssueController extends Controller
 
         // Validate that the issue refers to an existing shop and has a valid category
         $validated = $request->validate([
-            'shop_id' => 'required|exists:\App\Models\Shop,id',
+            'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
         ]);
 
-        $issue->update($request->all());
+        $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
+
+        $issue->shop_id = $shop->id;
+        $issue->issue_category_id = $validated['issue_category_id'];
+        $issue->save();
 
         return redirect(route('issues.show', $issue->id));
   }

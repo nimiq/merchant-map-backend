@@ -9,7 +9,7 @@
         </div>
     </x-slot>
 
-    <x-utils.container class="py-12">
+    <x-utils.container class="py-12 max-w-7xl px-4">
 
         <x-card.card>
 
@@ -36,7 +36,8 @@
                             <x-table.data>{{ $issue->description }}</x-table.data>
                             <x-table.data class="text-right text-sm font-medium">
                                 <x-utils.link href="{{ route('issues.show', $issue->id) }}">Show</x-utils.link>
-                                <form action="{{ route('issues.destroy', [ $issue->id ]) }}" method="POST" class="inline-block">
+                                <form action="{{ route('issues.destroy', [ $issue->id ]) }}"
+                                        method="POST" class="inline-block">
                                     @csrf
                                     @method('delete')
                                     <button class="text-red-500">{{ __('Delete') }}</button>
