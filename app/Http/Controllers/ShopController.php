@@ -190,6 +190,8 @@ class ShopController extends Controller
             return redirect(route('shops.index'));
         }
 
+        $shop->issues()->delete();
+        $shop->currencies()->detach();
         $shop->delete();
 
         return redirect(route('shops.index'));
