@@ -24,7 +24,9 @@ class ShopController extends Controller
     {
         $user = auth()->user();
         return view('shops.index', [
-            'shops' => ($user->is_admin) ? Shop::all() : Shop::where('user_id', $user->id)->get()
+            'shops' => ($user->is_admin)
+                ? Shop::withPending()->get()
+                : Shop::withPending()->where('user_id', $user->id)->get()
         ]);
     }
 
@@ -36,6 +38,40 @@ class ShopController extends Controller
     public function create()
     {
         return view('shops.edit');
+    }
+
+    /**
+     * Verifies if the token is valid
+     *
+     * @param string $token
+     * @return boolean
+     */
+    public function verifyToken($token)
+    {
+        try {
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'),
+                    'response' => $_POST['g-recaptcha-response'],
+
+                    // this is optional. Should be user's IP, not server's
+                    // 'remoteip' => $_SERVER['REMOTE_ADDR']
+                    ];
+                    
+            $options = [
+                'http' => [
+                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
+                    'method'  => 'POST',
+                    'content' => http_build_query($data)
+                ]
+            ];
+        
+            $context  = stream_context_create($options);
+            $result = file_get_contents($url, false, $context);
+            return json_decode($result)->success;
+        }
+        catch (Exception $e) {
+            return null;
+        }
     }
 
     /**
@@ -52,13 +88,17 @@ class ShopController extends Controller
         ]);
 
         $shop = new Shop($request->all());
-        $shop->user_id = auth()->user()->id;
+        $shop->user_id = auth()->user()->id ?? 0;
         $shop->save();
 
         // FIXME: We probably want to support creating shops that don't accept all currencies in the future.
         $shop->currencies()->attach(\App\Models\Currency::all());
 
-        return redirect(route('shops.show', $shop->id));
+        if ($request->expectsJson()) {
+            return response()->json(['message' => "Place successfully submitted."],201);
+        } else {
+            return redirect(route('shops.show', $shop->id));
+        }
     }
 
     /**
@@ -190,6 +230,8 @@ class ShopController extends Controller
             return redirect(route('shops.index'));
         }
 
+        $shop->issues()->delete();
+        $shop->currencies()->detach();
         $shop->delete();
 
         return redirect(route('shops.index'));

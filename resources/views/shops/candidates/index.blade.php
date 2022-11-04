@@ -9,14 +9,14 @@
 
             <div class="self-end">
                 <x-utils.link-button href="{{ route('shops.create') }}">{{ __('New Shop') }}</x-utils.link-button> | 
-                <x-utils.link-button href="/shops/import/csv">{{ __('Import via CSV') }}</x-utils.link-button> | 
-                <x-utils.link-button href="{{ route('candidates.index') }}">{{ __('See candidates') }}</x-utils.link-button> 
+                <x-utils.link-button href="{{ route('shops.create') }}">{{ __('New Shop') }}</x-utils.link-button> | 
+                <x-utils.link-button href="/shops/import/csv">{{ __('Import via CSV') }}</x-utils.link-button>
             </div>
 
         </div>
     </x-slot>
 
-    <x-utils.container class="py-12 px-4 max-w-7xl">
+    <x-utils.container class="py-12">
 
         <x-card.card>
 
@@ -28,8 +28,6 @@
                     <x-table.header>{{ __('Label') }}</x-table.header>
                     <x-table.header>{{ __('Object ID') }}</x-table.header>
                     <x-table.header>{{ __('Source ID') }}</x-table.header>
-                    <x-table.header>{{ __('Issues') }}</x-table.header>
-                    <x-table.header>{{ __('Currencies') }}</x-table.header>
                     <x-table.header><span class="sr-only">Show</span></x-table.header>
 
                 </x-slot>
@@ -43,30 +41,8 @@
                             <x-table.data>{{ $shop->label }}</x-table.data>
                             <x-table.data>{{ $shop->object_id }}</x-table.data>
                             <x-table.data>{{ $shop->source_id }}</x-table.data>
-
-                            <x-table.data>
-                                <span class="text-red-700 text-bold">
-                                    {{ $shop->issues->where('resolved', false)->count() }}
-                                </span>
-                                / 
-                                <span class="text-green-700 text-bold">
-                                    {{ $shop->issues->where('resolved', true)->count() }}
-                                </span>
-                            </x-table.data>
                             <x-table.data class="text-right text-sm font-medium">
                                 <x-utils.link href="{{ route('shops.show', $shop->id) }}">Show</x-utils.link>
-
-                             <x-table.data>
-                                @if ($shop->currencies->count() === 0)
-                                    None
-                                @else
-                                    {{ $shop->currencies->pluck('symbol')->join(', ') }}
-                                @endif
-                            </x-table.data>
-                            <x-table.data class="text-right text-sm font-medium space-x-4">
-                                <x-utils.link target="_blank" href="https://nimiq-map.netlify.app/location/{{$shop->id}}">See in app</x-utils.link>
-                                <x-utils.link href="{{ route('shops.show', $shop->id) }}">Details</x-utils.link>
-
                                 <form action="{{ route('shops.destroy', [ $shop->id ]) }}" method="POST" class="inline-block">
                                     @csrf
                                     @method('delete')

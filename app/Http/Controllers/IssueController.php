@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Issue;
+use App\Models\Shop;
 use Illuminate\Http\Request;
 
 class IssueController extends Controller
@@ -14,7 +15,7 @@ class IssueController extends Controller
      */
     public function index()
     {
-        //
+        return view('issues.index', ['issues' => Issue::where('resolved', false)->get()]);
     }
 
     /**
@@ -24,7 +25,7 @@ class IssueController extends Controller
      */
     public function create()
     {
-        //
+        return view('issues.edit');
     }
 
     /**
@@ -37,11 +38,22 @@ class IssueController extends Controller
     {
         // Validate that the issue refers to an existing shop and has a valid category
         $validated = $request->validate([
-            'shop_id' => 'required|exists:\App\Models\Shop,id',
+            'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+            'description' => 'nullable|string',
+            'token' => 'bail|required|string'
         ]);
 
-        $issue = new Issue($request->all());
+        if (!verifyToken($validated['token'])) {
+            return response()->json(['error' => 'Unable to verify token.'], 403);
+        }
+
+        $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
+
+        $issue = new Issue();
+        $issue->shop_id = $shop->id;
+        $issue->issue_category_id = $validated['issue_category_id'];
+        $issue->description = $validated['description'];
         $issue->resolved = false; // All issues created via API are not resolved yet
         $issue->save();
 
@@ -51,23 +63,23 @@ class IssueController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Issue $issue)
     {
-        //
+        return view('issues.edit', ['issue' => $issue]);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Issue $issue)
     {
-        //
+        return view('issues.edit', ['issue' => $issue]);
     }
 
     /**
@@ -79,17 +91,50 @@ class IssueController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+        $issue = Issue::findOrFail($id);
+
+        // Validate that the issue refers to an existing shop and has a valid category
+        $validated = $request->validate([
+            'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
+            'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+            'description' => 'nullable|string',
+        ]);
+
+        $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
+
+        $issue->shop_id = $shop->id;
+        $issue->issue_category_id = $validated['issue_category_id'];
+        $issue->description = $validated['description'];
+        $issue->save();
+
+        return redirect(route('issues.show', $issue->id));
+  }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Issue $issue
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Issue $issue)
     {
-        //
+        $issue->delete();
+
+        return redirect(route('issue.index'));
+    }
+
+     /**
+     * Mark it as resolve
+     *
+     * @param  Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function resolve(Request $request, $issueId)
+    {
+        $issue = Issue::findOrFail($issueId);
+        $issue->resolved = true;
+        $issue->save();
+
+        return $this->index();
     }
 }

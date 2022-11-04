@@ -30,4 +30,6 @@ Route::get('/issue_categories', function () {
     });
 });
 
+
 Route::post('/location', [LocationCandidateController::class, 'store']);
+
