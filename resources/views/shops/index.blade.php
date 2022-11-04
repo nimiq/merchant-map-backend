@@ -28,6 +28,7 @@
                     <x-table.header>{{ __('Label') }}</x-table.header>
                     <x-table.header>{{ __('Object ID') }}</x-table.header>
                     <x-table.header>{{ __('Source ID') }}</x-table.header>
+                    <x-table.header>{{ __('Issues') }}</x-table.header>
                     <x-table.header><span class="sr-only">Show</span></x-table.header>
 
                 </x-slot>
@@ -41,6 +42,15 @@
                             <x-table.data>{{ $shop->label }}</x-table.data>
                             <x-table.data>{{ $shop->object_id }}</x-table.data>
                             <x-table.data>{{ $shop->source_id }}</x-table.data>
+                            <x-table.data>
+                                <span class="text-red-700 text-bold">
+                                    {{ $shop->issues->where('resolved', false)->count() }}
+                                </span>
+                                / 
+                                <span class="text-green-700 text-bold">
+                                    {{ $shop->issues->where('resolved', true)->count() }}
+                                </span>
+                            </x-table.data>
                             <x-table.data class="text-right text-sm font-medium">
                                 <x-utils.link href="{{ route('shops.show', $shop->id) }}">Show</x-utils.link>
                                 <form action="{{ route('shops.destroy', [ $shop->id ]) }}" method="POST" class="inline-block">
