@@ -26,6 +26,9 @@ Route::redirect('/', '/shops', 301);
 // })->middleware(['auth'])->name('dashboard');
 
 Route::resource('issues', IssueController::class)->middleware(['auth']);
+Route::post('/issues/resolve/{id}', [IssueController::class, 'resolve'])
+    ->name('issues.resolve')
+    ->middleware(['auth']);
 
 Route::resource('shops', ShopController::class)->middleware(['auth']);
 Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);

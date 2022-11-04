@@ -40,6 +40,7 @@ class IssueController extends Controller
         $validated = $request->validate([
             'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+            'description' => 'nullable|string',
         ]);
 
         $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
@@ -47,6 +48,7 @@ class IssueController extends Controller
         $issue = new Issue();
         $issue->shop_id = $shop->id;
         $issue->issue_category_id = $validated['issue_category_id'];
+        $issue->description = $validated['description'];
         $issue->resolved = false; // All issues created via API are not resolved yet
         $issue->save();
 
@@ -90,12 +92,14 @@ class IssueController extends Controller
         $validated = $request->validate([
             'google_place_id' => 'required|exists:\App\Models\Shop,source_id',
             'issue_category_id' => 'required|exists:App\Models\IssueCategory,id',
+            'description' => 'nullable|string',
         ]);
 
         $shop = Shop::where('source_id', $validated['google_place_id'])->firstOrFail();
 
         $issue->shop_id = $shop->id;
         $issue->issue_category_id = $validated['issue_category_id'];
+        $issue->description = $validated['description'];
         $issue->save();
 
         return redirect(route('issues.show', $issue->id));
@@ -112,5 +116,20 @@ class IssueController extends Controller
         $issue->delete();
 
         return redirect(route('issue.index'));
+    }
+
+     /**
+     * Mark it as resolve
+     *
+     * @param  Issue $issue
+     * @return \Illuminate\Http\Response
+     */
+    public function resolve(Request $request, $issueId)
+    {
+        $issue = Issue::findOrFail($issueId);
+        $issue->resolved = true;
+        $issue->save();
+
+        return $this->index();
     }
 }
