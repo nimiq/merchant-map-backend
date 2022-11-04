@@ -41,40 +41,6 @@ class ShopController extends Controller
     }
 
     /**
-     * Verifies if the token is valid
-     *
-     * @param string $token
-     * @return boolean
-     */
-    public function verifyToken($token)
-    {
-        try {
-            $url = 'https://www.google.com/recaptcha/api/siteverify';
-            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'),
-                    'response' => $_POST['g-recaptcha-response'],
-
-                    // this is optional. Should be user's IP, not server's
-                    // 'remoteip' => $_SERVER['REMOTE_ADDR']
-                    ];
-                    
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data)
-                ]
-            ];
-        
-            $context  = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            return json_decode($result)->success;
-        }
-        catch (Exception $e) {
-            return null;
-        }
-    }
-
-    /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -95,7 +61,7 @@ class ShopController extends Controller
         $shop->currencies()->attach(\App\Models\Currency::all());
 
         if ($request->expectsJson()) {
-            return response()->json(['message' => "Place successfully submitted."],201);
+            return response()->json(['message' => "Place successfully submitted."], 201);
         } else {
             return redirect(route('shops.show', $shop->id));
         }
