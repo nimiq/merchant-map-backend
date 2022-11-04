@@ -135,6 +135,7 @@ Search for shops that have a label that contains `crypto` within the city `Wels`
 |---------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | city          | ?filter[city]=value                                                                                                                                                                 |
 | country       | ?filter[country]=value                                                                                                                                                              |
+| currency      | ?filter[currency]=value,value,value                                                                                                                                                                 |
 | description   | ?filter[description]=value                                                                                                                                                          |
 | email         | ?filter[email]=value                                                                                                                                                                |
 | label         | ?filter[label]=value                                                                                                                                                                |

@@ -3,11 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Filters\BoundingBoxFilter;
+use App\Filters\CurrencyFilter;
 use App\Filters\LocationFilter;
 use App\Filters\VoidFilter;
 use App\Imports\PlacesImport;
-use App\Models\Pickup;
-use App\Models\Shipping;
 use App\Models\Shop;
 use Illuminate\Http\Request;
 use Spatie\QueryBuilder\AllowedFilter;
@@ -187,12 +186,13 @@ class ShopController extends Controller
                     'website',
                     'zip',
                     AllowedFilter::custom('bounding_box', new BoundingBoxFilter($request->query('filter')['bounding_box'] ?? null)),
+                    AllowedFilter::custom('currency', new CurrencyFilter(($request->query('filter')['currency']) ?? null)),
                     AllowedFilter::custom('limit', new VoidFilter),
                     AllowedFilter::custom('location', new LocationFilter($radius)),
                     AllowedFilter::custom('radius', new VoidFilter),
                     AllowedFilter::exact('digital_goods')
                 ])
-                ->with(['pickups', 'shippings','currencies']);
+                ->with(['pickups', 'shippings', 'currencies']);
 
             if ($limit === 0) {
                 $shops = $shops->paginate($shops->count());

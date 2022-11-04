@@ -3,7 +3,7 @@
 use App\Http\Controllers\IssueController;
 use App\Http\Controllers\PickupController;
 use App\Http\Controllers\ShippingController;
-use App\Http\Controllers\ShopCandidateController;
+use App\Http\Controllers\LocationCandidateController;
 use App\Http\Controllers\ShopController;
 use App\Imports\SalamantexCSVImport;
 use Illuminate\Support\Facades\Route;
@@ -34,7 +34,12 @@ Route::post('/issues/resolve/{id}', [IssueController::class, 'resolve'])
 Route::resource('shops', ShopController::class)->middleware(['auth']);
 Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);
 Route::resource('shops.shippings', ShippingController::class)->middleware(['auth']);
-Route::resource('candidates', ShopCandidateController::class)->middleware(['auth']);
+
+Route::resource('candidates', LocationCandidateController::class)->middleware(['auth']);
+Route::post('/candidates/process/{id}', [LocationCandidateController::class, 'process'])
+    ->name('candidates.process')
+    ->middleware(['auth']);
+
 
 Route::get('/import/salamantex', function () {
     try {
