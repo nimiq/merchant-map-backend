@@ -25,8 +25,8 @@ class ShopController extends Controller
         $user = auth()->user();
         return view('shops.index', [
             'shops' => ($user->is_admin)
-                ? Shop::withPending()->get()
-                : Shop::withPending()->where('user_id', $user->id)->get()
+                ? Shop::withAnyStatus()->get()
+                : Shop::withAnyStatus()->where('user_id', $user->id)->get()
         ]);
     }
 
@@ -159,7 +159,7 @@ class ShopController extends Controller
                     AllowedFilter::exact('digital_goods')
                 ])
                 ->with(['pickups', 'shippings', 'currencies']);
-
+            
             if ($limit === 0) {
                 $shops = $shops->paginate($shops->count());
             } else {
@@ -179,8 +179,6 @@ class ShopController extends Controller
 
             return $shop;
         });
-
-        return $shops;
     }
 
     /**
@@ -201,5 +199,37 @@ class ShopController extends Controller
         $shop->delete();
 
         return redirect(route('shops.index'));
+    }
+
+    /**
+     * Change the status of a shop
+     * 
+     * @param Request request
+     * @param Shop shop
+     * @param string status: The status is a enum of: approve, reject, postpone
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request, $shopId, $status)
+    {
+        try
+        {
+            switch ($status) {
+                case 'approve':
+                    Shop::approve($shopId);
+                        break;
+                case 'reject':
+                    Shop::reject($shopId);
+                    break;
+                case 'postpone':
+                    Shop::postpone($shopId);
+                    break;
+                default:
+                    return redirect(route('shops.index'));
+            }
+            return redirect(route('shops.index'));
+        }
+        catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }

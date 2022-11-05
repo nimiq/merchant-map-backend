@@ -90,13 +90,17 @@ class PickupController extends Controller
 
         $request->validate([
             'longtitude' => 'required',
-            'latitude' => 'required'
+            'latitude' => 'required',
+            'place_information' => 'required',
+            'place_id' => 'required',
         ]);
 
         $pickup->update(
             [
                 'geo_location' => new Point($request->latitude, $request->longtitude),
-                'label' => $request->label
+                'label' => $request->label,
+                'place_information' => $request->place_information,
+                'place_id' => $request->place_id,
             ]
         );
 
