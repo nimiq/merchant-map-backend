@@ -67,11 +67,10 @@ class PickupController extends Controller
         }
 
         $shop = Shop::find($pickup->shop->id);
-        $shop->pickups = $shop->pickups;
-        $shop->shippings = $shop->shippings;
-        $shop->currencies = $shop->currencies;
 
-        return response()->json($shop);
+        $simplifiedShop = simplifyShop($shop)[0];
+
+        return response()->json($simplifiedShop);
     }
 
     /**

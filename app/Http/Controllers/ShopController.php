@@ -171,14 +171,14 @@ class ShopController extends Controller
             return response()->json(['error' => $th->getMessage()], 400);
         }
 
-        // We only want to provide currencies' name and symbol, the rest is just noise
-        $shops->transform(function ($shop) {
-            $shop->currencies->transform(function ($currency) {
-                return array($currency->symbol => $currency->name);
-            });
-
-            return $shop;
-        });
+        $res = [];
+        foreach ($shops as $shop) {
+            // Return only the necessary data
+            $pickups = simplifyShop($shop);
+            $res = array_merge($res, $pickups);
+        }
+        
+        return $res;
     }
 
     /**

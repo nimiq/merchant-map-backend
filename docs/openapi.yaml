@@ -39,7 +39,9 @@ paths:
           content:
             application/json:
               schema:
-                $ref: "#/components/schemas/SearchLocationsResponse"
+                type: array
+                items:
+                  $ref: "#/components/schemas/CryptoLocation"
         "201":
           description: Create
         "404":
@@ -271,335 +273,55 @@ components:
       schema:
         type: boolean
   schemas:
-    SearchLocationsResponse:
+    CryptoLocation:
       type: object
       additionalProperties: false
       required:
-        - current_page
-        - data
-        - first_page_url
-        - from
-        - last_page
-        - last_page_url
-        - links
-        - next_page_url
-        - path
-        - per_page
-        - prev_page_url
-        - to
-        - total
-      properties:
-        data:
-          type: array
-          items:
-            $ref: "#/components/schemas/CryptoLocation"
-        links:
-          type: array
-          items:
-            $ref: "#/components/schemas/Link"
-
-        # Pagination
-        total:
-          type: number
-        from:
-          type: number
-        to:
-          type: number
-        last_page:
-          type: number
-        last_page_url:
-          type: string
-          nullable: true
-          format: url
-        first_page_url:
-          type: string
-          nullable: true
-          format: url
-        current_page:
-          type: number
-        next_page_url:
-          type: string
-          nullable: true
-          format: url
-        path:
-          type: string
-        per_page:
-          type: number
-        prev_page_url:
-          type: string
-          nullable: true
-          format: url
-    CryptoLocation:
-      type: object
+        - id
+        - place_id
+        - name
+        - photo_reference
+        - category
+        - type
+        - rating
+        - address
+        - gmaps_url
+        - geo_location
+        - currencies
       properties:
         id:
-          type: integer
-        label:
+          type: number
+        place_id:
           type: string
-        description:
+        name:
           type: string
-          nullable: true
-        website:
+        photo_reference:
           type: string
-          nullable: true
-        email:
+        category:
           type: string
-          nullable: true
-        phone:
+        type:
           type: string
-          nullable: true
-        zip:
+        rating:
+          type: number
+        address:
           type: string
-        city:
+        gmaps_url:
           type: string
-        country:
-          type: string
-        digital_goods:
-          type: boolean
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        address_line_1:
-          type: string
-        address_line_2:
-          type: string
-        address_line_3:
-          type: string
-        pickups:
-          type: array
-          items:
-            $ref: "#/components/schemas/Pickup"
-        shippings:
-          type: array
-          items:
-            # Assuming same as pickups
-            $ref: "#/components/schemas/Pickup"
+        geo_location:
+          type: object
+          additionalProperties: false
+          required:
+            - lat
+            - lng
+          properties:
+            lat:
+              type: number
+            lng:
+              type: number
         currencies:
           type: array
           items:
             $ref: "#/components/schemas/CryptoCurrency"
-      required:
-        - id
-        - label
-        - description
-        - website
-        - email
-        - phone
-        - zip
-        - city
-        - country
-        - digital_goods
-        - created_at
-        - updated_at
-        - address_line_1
-        - address_line_2
-        - address_line_3
-        - pickups
-        - shippings
-        - currencies
-    Pickup:
-      type: object
-      required:
-        - id
-        - shop_id
-        - geo_location
-        - created_at
-        - updated_at
-        - place_information
-        - place_id
-        - label
-      properties:
-        id:
-          type: integer
-        shop_id:
-          type: integer
-        geo_location:
-          $ref: "#/components/schemas/GeoLocation"
-        created_at:
-          type: string
-        updated_at:
-          type: string
-        place_id:
-          type: string
-        label:
-          type: string
-          nullable: true
-        place_information:
-          type: object
-          properties:
-            address_components:
-              type: array
-              items:
-                type: object
-                properties:
-                  long_name:
-                    type: string
-                  short_name:
-                    type: string
-                  types:
-                    type: array
-                    items:
-                      type: string
-                required:
-                  - long_name
-                  - short_name
-                  - types
-            adr_address:
-              type: string
-            business_status:
-              type: string
-            formatted_address:
-              type: string
-            formatted_phone_number:
-              type: string
-            geometry:
-              type: object
-              properties:
-                location:
-                  type: object
-                  properties:
-                    lat:
-                      type: number
-                    lng:
-                      type: number
-                  required:
-                    - lat
-                    - lng
-                  additionalProperties: false
-                viewport:
-                  type: object
-                  properties:
-                    northeast:
-                      type: object
-                      properties:
-                        lat:
-                          type: number
-                        lng:
-                          type: number
-                      required:
-                        - lat
-                        - lng
-                      additionalProperties: false
-                    southwest:
-                      type: object
-                      properties:
-                        lat:
-                          type: number
-                        lng:
-                          type: number
-                      required:
-                        - lat
-                        - lng
-                      additionalProperties: false
-                  required:
-                    - northeast
-                    - southwest
-                  additionalProperties: false
-              required:
-                - location
-                - viewport
-              additionalProperties: false
-            icon:
-              type: string
-            icon_background_color:
-              type: string
-            icon_mask_base_uri:
-              type: string
-            international_phone_number:
-              type: string
-            name:
-              type: string
-            photos:
-              type: array
-              nullable: true
-              items:
-                type: object
-                properties:
-                  height:
-                    type: integer
-                  html_attributions:
-                    type: array
-                    items:
-                      type: string
-                  photo_reference:
-                    type: string
-                  width:
-                    type: integer
-            place_id:
-              type: string
-            plus_code:
-              type: object
-              properties:
-                compound_code:
-                  type: string
-                global_code:
-                  type: string
-              required:
-                - compound_code
-                - global_code
-              additionalProperties: false
-            price_level:
-              type: integer
-            rating:
-              type: number
-            reference:
-              type: string
-            reviews:
-              type: array
-              items: {}
-            types:
-              type: array
-              items:
-                type: string
-            url:
-              type: string
-            user_ratings_total:
-              type: integer
-            utc_offset:
-              type: integer
-            vicinity:
-              type: string
-            website:
-              type: string
-          required:
-            - address_components
-            - adr_address
-            - business_status
-            - formatted_address
-            - formatted_phone_number
-            - geometry
-            - icon
-            - icon_background_color
-            - icon_mask_base_uri
-            - international_phone_number
-            - name
-            - place_id
-            - plus_code
-            - price_level
-            - rating
-            - reference
-            - reviews
-            - types
-            - url
-            - user_ratings_total
-            - utc_offset
-            - vicinity
-            - website
-          additionalProperties: false
-    GeoLocation:
-      type: object
-      additionalProperties: false
-      required:
-        - coordinates
-      properties:
-        type:
-          type: string
-          enum: [Point]
-        coordinates:
-          type: array
-          items:
-            type: number
     CryptoCurrency:
       type: object
       properties:
@@ -617,17 +339,6 @@ components:
           type: string
         NIM:
           type: string
-    Link:
-      title: Link
-      type: object
-      description: All pages links
-      properties:
-        url:
-          type: string
-        label:
-          type: string
-        active:
-          type: boolean
     Currencies:
       title: Currency
       description: All supported currencies
