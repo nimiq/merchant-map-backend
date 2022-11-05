@@ -99,16 +99,18 @@ paths:
           content:
             application/json:
               schema:
-                title: LocationIssue
-                type: object
-                required:
-                  - "id"
-                  - "label"
-                properties:
-                  label:
-                    type: string
-                  id:
-                    type: number
+                title: CategoriesIssues
+                type: array
+                items:
+                  type: object
+                  required:
+                    - "id"
+                    - "name"
+                  properties:
+                    name:
+                      type: string
+                    id:
+                      type: number
   /api/issue:
     post:
       tags:

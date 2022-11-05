@@ -846,6 +846,18 @@ ul.nav-tabs {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+    defs["CategoriesIssues_inner"] = {
+  "required" : [ "id", "name" ],
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "number"
+    }
+  }
+};
     defs["CryptoCurrency"] = {
   "type" : "object",
   "properties" : {
@@ -970,19 +982,6 @@ ul.nav-tabs {
   }
 };
     defs["LocationIssue"] = {
-  "title" : "LocationIssue",
-  "required" : [ "id", "label" ],
-  "type" : "object",
-  "properties" : {
-    "label" : {
-      "type" : "string"
-    },
-    "id" : {
-      "type" : "number"
-    }
-  }
-};
-    defs["LocationIssue_1"] = {
   "title" : "LocationIssue",
   "required" : [ "id", "label" ],
   "type" : "object",
@@ -1479,7 +1478,7 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
 
         try {
-            LocationIssue_1 result = apiInstance.getIssueCategories();
+            array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#getIssueCategories");
@@ -1498,7 +1497,7 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
 
         try {
-            LocationIssue_1 result = apiInstance.getIssueCategories();
+            array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#getIssueCategories");
@@ -1519,7 +1518,7 @@ LocationsApi *apiInstance = [[LocationsApi alloc] init];
 
 // Get issue categories with its label
 [apiInstance getIssueCategoriesWithCompletionHandler: 
-              ^(LocationIssue_1 output, NSError* error) {
+              ^(array[CategoriesIssues_inner] output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
     }
@@ -1568,7 +1567,7 @@ namespace Example
 
             try {
                 // Get issue categories with its label
-                LocationIssue_1 result = apiInstance.getIssueCategories();
+                array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling LocationsApi.getIssueCategories: " + e.Message );
