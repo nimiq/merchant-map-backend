@@ -27,7 +27,7 @@
         </p>
     </x-slot>
 
-    <x-utils.container class="py-12 px-4 max-w-7xl">
+    <x-utils.container class="py-12 px-4">
 
         <x-card.card>
 
@@ -37,7 +37,7 @@
 
                     <x-table.header class="text-right">{{ __('Created at') }}</x-table.header>
                     <x-table.header class="text-right">{{ __('Processed') }}</x-table.header>
-                    <x-table.header class="text-right">{{ __('Google Place ID') }}</x-table.header>
+                    <x-table.header>{{ __('Name') }}</x-table.header>
                     <x-table.header>{{ __('Currencies') }}</x-table.header>
                     <x-table.header><span class="sr-only">Show</span></x-table.header>
 
@@ -50,7 +50,7 @@
                         <tr>
                             <x-table.data class="text-right">{{ $candidate->created_at->format('d/m/y H:i') }}</x-table.data>
                             <x-table.data class="text-right">{{ $candidate->processed ? '✅' : '❌'}}</x-table.data>
-                            <x-table.data class="text-right">{{ $candidate->google_place_id }}</x-table.data>
+                            <x-table.data>{{ $candidate->name ?? 'Unknown' }}</x-table.data>
                             <x-table.data>
                                 @if ($candidate->currencies->count() === 0)
                                     None

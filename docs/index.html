@@ -954,13 +954,16 @@ ul.nav-tabs {
 };
     defs["LocationCandidateBody"] = {
   "title" : "LocationCandidateBody",
-  "required" : [ "currencies", "google_place_id", "token" ],
+  "required" : [ "currencies", "google_place_id", "name", "token" ],
   "type" : "object",
   "properties" : {
     "google_place_id" : {
       "type" : "string"
     },
     "token" : {
+      "type" : "string"
+    },
+    "name" : {
       "type" : "string"
     },
     "currencies" : {
@@ -2140,6 +2143,7 @@ Place id from Google Maps
  -H "Content-Type: application/json" \
  "http://localhost/api/location" \
  -d '{
+  &quot;name&quot; : &quot;name&quot;,
   &quot;google_place_id&quot; : &quot;google_place_id&quot;,
   &quot;token&quot; : &quot;token&quot;,
   &quot;currencies&quot; : [ &quot;currencies&quot;, &quot;currencies&quot; ]

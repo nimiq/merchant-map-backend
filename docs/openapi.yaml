@@ -167,11 +167,14 @@ paths:
               required:
                 - "google_place_id"
                 - "token"
+                - "name"
                 - "currencies"
               properties:
                 google_place_id:
                   type: string
                 token:
+                  type: string
+                name:
                   type: string
                 currencies:
                   type: array

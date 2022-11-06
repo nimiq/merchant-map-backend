@@ -34,14 +34,15 @@ class LocationCandidateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * TODO @param bool $ignoreToken - If true, it will ignore the token. This is only for the dashboard.
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
+
         $validated = $request->validate([
             'google_place_id' => 'bail|required|unique:App\Models\Shop,source_id',
             'token' => 'bail|required',
+            'name' => 'bail|required',
             'currencies' => 'bail|required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
 
@@ -54,7 +55,9 @@ class LocationCandidateController extends Controller
             $currencies[] = \App\Models\Currency::where('symbol', $currency)->first()->id;
         }
 
-        $candidate = new LocationCandidate($request->all());
+        $candidate = new LocationCandidate();
+        $candidate->google_place_id = $validated['google_place_id'];
+        $candidate->name = $validated['name'];
         $candidate->processed = false; // All candidates created via API are not processed yet
         $candidate->save();
 
