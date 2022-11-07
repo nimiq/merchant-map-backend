@@ -846,6 +846,18 @@ ul.nav-tabs {
   <script>
     // Script section to load models into a JS Var
     var defs = {}
+    defs["CategoriesIssues_inner"] = {
+  "required" : [ "id", "name" ],
+  "type" : "object",
+  "properties" : {
+    "name" : {
+      "type" : "string"
+    },
+    "id" : {
+      "type" : "number"
+    }
+  }
+};
     defs["CryptoCurrency"] = {
   "type" : "object",
   "properties" : {
@@ -873,69 +885,38 @@ ul.nav-tabs {
   }
 };
     defs["CryptoLocation"] = {
-  "required" : [ "address_line_1", "address_line_2", "address_line_3", "city", "country", "created_at", "currencies", "description", "digital_goods", "email", "id", "label", "phone", "pickups", "shippings", "updated_at", "website", "zip" ],
+  "required" : [ "address", "category", "currencies", "geo_location", "gmaps_url", "id", "name", "photo_reference", "place_id", "rating", "type" ],
   "type" : "object",
   "properties" : {
     "id" : {
-      "type" : "integer"
+      "type" : "number"
     },
-    "label" : {
+    "place_id" : {
       "type" : "string"
     },
-    "description" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "website" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "email" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "phone" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "zip" : {
+    "name" : {
       "type" : "string"
     },
-    "city" : {
+    "photo_reference" : {
       "type" : "string"
     },
-    "country" : {
+    "category" : {
       "type" : "string"
     },
-    "digital_goods" : {
-      "type" : "boolean"
-    },
-    "created_at" : {
+    "type" : {
       "type" : "string"
     },
-    "updated_at" : {
+    "rating" : {
+      "type" : "number"
+    },
+    "address" : {
       "type" : "string"
     },
-    "address_line_1" : {
+    "gmaps_url" : {
       "type" : "string"
     },
-    "address_line_2" : {
-      "type" : "string"
-    },
-    "address_line_3" : {
-      "type" : "string"
-    },
-    "pickups" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Pickup"
-      }
-    },
-    "shippings" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Pickup"
-      }
+    "geo_location" : {
+      "$ref" : "#/components/schemas/CryptoLocation_geo_location"
     },
     "currencies" : {
       "type" : "array",
@@ -943,7 +924,21 @@ ul.nav-tabs {
         "$ref" : "#/components/schemas/CryptoCurrency"
       }
     }
-  }
+  },
+  "additionalProperties" : false
+};
+    defs["CryptoLocation_geo_location"] = {
+  "required" : [ "lat", "lng" ],
+  "type" : "object",
+  "properties" : {
+    "lat" : {
+      "type" : "number"
+    },
+    "lng" : {
+      "type" : "number"
+    }
+  },
+  "additionalProperties" : false
 };
     defs["Currencies_inner"] = {
   "required" : [ "name", "symbol" ],
@@ -957,48 +952,18 @@ ul.nav-tabs {
     }
   }
 };
-    defs["GeoLocation"] = {
-  "required" : [ "coordinates" ],
-  "type" : "object",
-  "properties" : {
-    "type" : {
-      "type" : "string",
-      "enum" : [ "Point" ]
-    },
-    "coordinates" : {
-      "type" : "array",
-      "items" : {
-        "type" : "number"
-      }
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["Link"] = {
-  "title" : "Link",
-  "type" : "object",
-  "properties" : {
-    "url" : {
-      "type" : "string"
-    },
-    "label" : {
-      "type" : "string"
-    },
-    "active" : {
-      "type" : "boolean"
-    }
-  },
-  "description" : "All pages links"
-};
     defs["LocationCandidateBody"] = {
   "title" : "LocationCandidateBody",
-  "required" : [ "currencies", "google_place_id", "token" ],
+  "required" : [ "currencies", "google_place_id", "name", "token" ],
   "type" : "object",
   "properties" : {
     "google_place_id" : {
       "type" : "string"
     },
     "token" : {
+      "type" : "string"
+    },
+    "name" : {
       "type" : "string"
     },
     "currencies" : {
@@ -1032,28 +997,21 @@ ul.nav-tabs {
     }
   }
 };
-    defs["LocationIssue_1"] = {
-  "title" : "LocationIssue",
-  "required" : [ "id", "label" ],
-  "type" : "object",
-  "properties" : {
-    "label" : {
-      "type" : "string"
-    },
-    "id" : {
-      "type" : "number"
-    }
-  }
-};
     defs["LocationIssueBody"] = {
   "title" : "LocationIssueBody",
-  "required" : [ "issue_category_id", "shop_id" ],
+  "required" : [ "description", "google_place_id", "issue_category_id", "token" ],
   "type" : "object",
   "properties" : {
     "issue_category_id" : {
       "type" : "string"
     },
-    "shop_id" : {
+    "google_place_id" : {
+      "type" : "string"
+    },
+    "token" : {
+      "type" : "string"
+    },
+    "description" : {
       "type" : "string"
     }
   }
@@ -1067,277 +1025,6 @@ ul.nav-tabs {
       "type" : "string"
     }
   }
-};
-    defs["Pickup"] = {
-  "required" : [ "created_at", "geo_location", "id", "label", "place_id", "place_information", "shop_id", "updated_at" ],
-  "type" : "object",
-  "properties" : {
-    "id" : {
-      "type" : "integer"
-    },
-    "shop_id" : {
-      "type" : "integer"
-    },
-    "geo_location" : {
-      "$ref" : "#/components/schemas/GeoLocation"
-    },
-    "created_at" : {
-      "type" : "string"
-    },
-    "updated_at" : {
-      "type" : "string"
-    },
-    "place_id" : {
-      "type" : "string"
-    },
-    "label" : {
-      "type" : "string",
-      "nullable" : true
-    },
-    "place_information" : {
-      "$ref" : "#/components/schemas/Pickup_place_information"
-    }
-  }
-};
-    defs["Pickup_place_information"] = {
-  "required" : [ "address_components", "adr_address", "business_status", "formatted_address", "formatted_phone_number", "geometry", "icon", "icon_background_color", "icon_mask_base_uri", "international_phone_number", "name", "place_id", "plus_code", "price_level", "rating", "reference", "reviews", "types", "url", "user_ratings_total", "utc_offset", "vicinity", "website" ],
-  "type" : "object",
-  "properties" : {
-    "address_components" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Pickup_place_information_address_components_inner"
-      }
-    },
-    "adr_address" : {
-      "type" : "string"
-    },
-    "business_status" : {
-      "type" : "string"
-    },
-    "formatted_address" : {
-      "type" : "string"
-    },
-    "formatted_phone_number" : {
-      "type" : "string"
-    },
-    "geometry" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_geometry"
-    },
-    "icon" : {
-      "type" : "string"
-    },
-    "icon_background_color" : {
-      "type" : "string"
-    },
-    "icon_mask_base_uri" : {
-      "type" : "string"
-    },
-    "international_phone_number" : {
-      "type" : "string"
-    },
-    "name" : {
-      "type" : "string"
-    },
-    "photos" : {
-      "type" : "array",
-      "nullable" : true,
-      "items" : {
-        "$ref" : "#/components/schemas/Pickup_place_information_photos_inner"
-      }
-    },
-    "place_id" : {
-      "type" : "string"
-    },
-    "plus_code" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_plus_code"
-    },
-    "price_level" : {
-      "type" : "integer"
-    },
-    "rating" : {
-      "type" : "number"
-    },
-    "reference" : {
-      "type" : "string"
-    },
-    "reviews" : {
-      "type" : "array",
-      "items" : { }
-    },
-    "types" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
-    },
-    "url" : {
-      "type" : "string"
-    },
-    "user_ratings_total" : {
-      "type" : "integer"
-    },
-    "utc_offset" : {
-      "type" : "integer"
-    },
-    "vicinity" : {
-      "type" : "string"
-    },
-    "website" : {
-      "type" : "string"
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["Pickup_place_information_address_components_inner"] = {
-  "required" : [ "long_name", "short_name", "types" ],
-  "type" : "object",
-  "properties" : {
-    "long_name" : {
-      "type" : "string"
-    },
-    "short_name" : {
-      "type" : "string"
-    },
-    "types" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
-    }
-  }
-};
-    defs["Pickup_place_information_geometry"] = {
-  "required" : [ "location", "viewport" ],
-  "type" : "object",
-  "properties" : {
-    "location" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_geometry_location"
-    },
-    "viewport" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_geometry_viewport"
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["Pickup_place_information_geometry_location"] = {
-  "required" : [ "lat", "lng" ],
-  "type" : "object",
-  "properties" : {
-    "lat" : {
-      "type" : "number"
-    },
-    "lng" : {
-      "type" : "number"
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["Pickup_place_information_geometry_viewport"] = {
-  "required" : [ "northeast", "southwest" ],
-  "type" : "object",
-  "properties" : {
-    "northeast" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_geometry_location"
-    },
-    "southwest" : {
-      "$ref" : "#/components/schemas/Pickup_place_information_geometry_location"
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["Pickup_place_information_photos_inner"] = {
-  "type" : "object",
-  "properties" : {
-    "height" : {
-      "type" : "integer"
-    },
-    "html_attributions" : {
-      "type" : "array",
-      "items" : {
-        "type" : "string"
-      }
-    },
-    "photo_reference" : {
-      "type" : "string"
-    },
-    "width" : {
-      "type" : "integer"
-    }
-  }
-};
-    defs["Pickup_place_information_plus_code"] = {
-  "required" : [ "compound_code", "global_code" ],
-  "type" : "object",
-  "properties" : {
-    "compound_code" : {
-      "type" : "string"
-    },
-    "global_code" : {
-      "type" : "string"
-    }
-  },
-  "additionalProperties" : false
-};
-    defs["SearchLocationsResponse"] = {
-  "required" : [ "current_page", "data", "first_page_url", "from", "last_page", "last_page_url", "links", "next_page_url", "path", "per_page", "prev_page_url", "to", "total" ],
-  "type" : "object",
-  "properties" : {
-    "data" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/CryptoLocation"
-      }
-    },
-    "links" : {
-      "type" : "array",
-      "items" : {
-        "$ref" : "#/components/schemas/Link"
-      }
-    },
-    "total" : {
-      "type" : "number"
-    },
-    "from" : {
-      "type" : "number"
-    },
-    "to" : {
-      "type" : "number"
-    },
-    "last_page" : {
-      "type" : "number"
-    },
-    "last_page_url" : {
-      "type" : "string",
-      "format" : "url",
-      "nullable" : true
-    },
-    "first_page_url" : {
-      "type" : "string",
-      "format" : "url",
-      "nullable" : true
-    },
-    "current_page" : {
-      "type" : "number"
-    },
-    "next_page_url" : {
-      "type" : "string",
-      "format" : "url",
-      "nullable" : true
-    },
-    "path" : {
-      "type" : "string"
-    },
-    "per_page" : {
-      "type" : "number"
-    },
-    "prev_page_url" : {
-      "type" : "string",
-      "format" : "url",
-      "nullable" : true
-    }
-  },
-  "additionalProperties" : false
 };
 
     var errs = {};
@@ -1794,7 +1481,7 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
 
         try {
-            LocationIssue_1 result = apiInstance.getIssueCategories();
+            array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#getIssueCategories");
@@ -1813,7 +1500,7 @@ public class LocationsApiExample {
         LocationsApi apiInstance = new LocationsApi();
 
         try {
-            LocationIssue_1 result = apiInstance.getIssueCategories();
+            array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#getIssueCategories");
@@ -1834,7 +1521,7 @@ LocationsApi *apiInstance = [[LocationsApi alloc] init];
 
 // Get issue categories with its label
 [apiInstance getIssueCategoriesWithCompletionHandler: 
-              ^(LocationIssue_1 output, NSError* error) {
+              ^(array[CategoriesIssues_inner] output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
     }
@@ -1883,7 +1570,7 @@ namespace Example
 
             try {
                 // Get issue categories with its label
-                LocationIssue_1 result = apiInstance.getIssueCategories();
+                array[CategoriesIssues_inner] result = apiInstance.getIssueCategories();
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling LocationsApi.getIssueCategories: " + e.Message );
@@ -2456,6 +2143,7 @@ Place id from Google Maps
  -H "Content-Type: application/json" \
  "http://localhost/api/location" \
  -d '{
+  &quot;name&quot; : &quot;name&quot;,
   &quot;google_place_id&quot; : &quot;google_place_id&quot;,
   &quot;token&quot; : &quot;token&quot;,
   &quot;currencies&quot; : [ &quot;currencies&quot;, &quot;currencies&quot; ]
@@ -2839,7 +2527,9 @@ $(document).ready(function() {
  "http://localhost/api/issue" \
  -d '{
   &quot;issue_category_id&quot; : &quot;issue_category_id&quot;,
-  &quot;shop_id&quot; : &quot;shop_id&quot;
+  &quot;description&quot; : &quot;description&quot;,
+  &quot;google_place_id&quot; : &quot;google_place_id&quot;,
+  &quot;token&quot; : &quot;token&quot;
 }'
 </code></pre>
                           </div>
@@ -3250,7 +2940,7 @@ public class LocationsApiExample {
         Boolean filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean | 
 
         try {
-            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
+            array[CryptoLocation] result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#searchLocations");
@@ -3284,7 +2974,7 @@ public class LocationsApiExample {
         Boolean filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; // Boolean | 
 
         try {
-            SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
+            array[CryptoLocation] result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
             System.out.println(result);
         } catch (ApiException e) {
             System.err.println("Exception when calling LocationsApi#searchLocations");
@@ -3334,7 +3024,7 @@ Boolean *filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket = true; //  (
     filterLeft_Square_BracketboundingBoxRight_Square_Bracket:filterLeft_Square_BracketboundingBoxRight_Square_Bracket
     filterLeft_Square_BracketlimitRight_Square_Bracket:filterLeft_Square_BracketlimitRight_Square_Bracket
     filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket:filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket
-              completionHandler: ^(SearchLocationsResponse output, NSError* error) {
+              completionHandler: ^(array[CryptoLocation] output, NSError* error) {
     if (output) {
         NSLog(@"%@", output);
     }
@@ -3416,7 +3106,7 @@ namespace Example
 
             try {
                 // search
-                SearchLocationsResponse result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
+                array[CryptoLocation] result = apiInstance.searchLocations(filterLeft_Square_BracketcityRight_Square_Bracket, filterLeft_Square_BracketcountryRight_Square_Bracket, filterLeft_Square_BracketcurrencyRight_Square_Bracket, filterLeft_Square_BracketdescriptionRight_Square_Bracket, filterLeft_Square_BracketemailRight_Square_Bracket, filterLeft_Square_BracketlabelRight_Square_Bracket, filterLeft_Square_BracketaddressLine1Right_Square_Bracket, filterLeft_Square_BracketaddressLine2Right_Square_Bracket, filterLeft_Square_BracketaddressLine3Right_Square_Bracket, filterLeft_Square_BracketnumberRight_Square_Bracket, filterLeft_Square_BracketwebsiteRight_Square_Bracket, filterLeft_Square_BracketzipRight_Square_Bracket, filterLeft_Square_BracketboundingBoxRight_Square_Bracket, filterLeft_Square_BracketlimitRight_Square_Bracket, filterLeft_Square_BracketdigitalGoodsRight_Square_Bracket);
                 Debug.WriteLine(result);
             } catch (Exception e) {
                 Debug.Print("Exception when calling LocationsApi.searchLocations: " + e.Message );

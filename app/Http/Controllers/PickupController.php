@@ -67,11 +67,10 @@ class PickupController extends Controller
         }
 
         $shop = Shop::find($pickup->shop->id);
-        $shop->pickups = $shop->pickups;
-        $shop->shippings = $shop->shippings;
-        $shop->currencies = $shop->currencies;
 
-        return response()->json($shop);
+        $simplifiedShop = simplifyShop($shop)[0];
+
+        return response()->json($simplifiedShop);
     }
 
     /**
@@ -90,13 +89,17 @@ class PickupController extends Controller
 
         $request->validate([
             'longtitude' => 'required',
-            'latitude' => 'required'
+            'latitude' => 'required',
+            'place_information' => 'required',
+            'place_id' => 'required',
         ]);
 
         $pickup->update(
             [
                 'geo_location' => new Point($request->latitude, $request->longtitude),
-                'label' => $request->label
+                'label' => $request->label,
+                'place_information' => $request->place_information,
+                'place_id' => $request->place_id,
             ]
         );
 

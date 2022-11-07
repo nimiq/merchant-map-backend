@@ -34,18 +34,19 @@ class LocationCandidateController extends Controller
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * TODO @param bool $ignoreToken - If true, it will ignore the token. This is only for the dashboard.
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
     {
-        $request->validate([
+
+        $validated = $request->validate([
             'google_place_id' => 'bail|required|unique:App\Models\Shop,source_id',
             'token' => 'bail|required',
+            'name' => 'bail|required',
             'currencies' => 'bail|required|array|distinct|exists:App\Models\Currency,symbol'
         ]);
 
-        if (!$this->verifyToken($request->token)) {
+        if (!verifyToken($validated['token'])) {
             return response()->json(['error' => 'Unable to verify token.'], 403);
         }
         
@@ -54,7 +55,9 @@ class LocationCandidateController extends Controller
             $currencies[] = \App\Models\Currency::where('symbol', $currency)->first()->id;
         }
 
-        $candidate = new LocationCandidate($request->all());
+        $candidate = new LocationCandidate();
+        $candidate->google_place_id = $validated['google_place_id'];
+        $candidate->name = $validated['name'];
         $candidate->processed = false; // All candidates created via API are not processed yet
         $candidate->save();
 
@@ -106,12 +109,11 @@ class LocationCandidateController extends Controller
     public function destroy(LocationCandidate $locationCandidate)
     {
         $user = auth()->user();
-        if (!$user->is_admin && $locationCandidate->user_id !== $user->id) {
-            return redirect(route('shops.index'));
+        if (!$user->is_admin) {
+            return redirect(route('candidates.index'));
         }
-
+        $locationCandidate->currencies()->detach();
         $locationCandidate->delete();
-
         return redirect(route('candidates.index'));
     }
 
@@ -195,38 +197,5 @@ class LocationCandidateController extends Controller
             }
         }
         return null;
-    }
-
-        /**
-     * Verifies if the token is valid
-     *
-     * @param string $token
-     * @return boolean
-     */
-    private function verifyToken($token)
-    {
-
-        try {
-            $url = 'https://www.google.com/recaptcha/api/siteverify';
-
-            $data = ['secret'  => env('GOOGLE_CAPTCHA_SECRET'), 'response' => $token];
-            // We could use `remoteip` as well, it is optional. Should be user's IP, not server's!
-
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data)
-                ]
-            ];
-
-            $context  = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-
-            return json_decode($result)->success;
-        }
-        catch (Exception $e) {
-            return null;
-        }
     }
 }

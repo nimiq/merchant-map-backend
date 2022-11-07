@@ -26,7 +26,7 @@ Route::get('/location/{placeId}', [PickupController::class, 'searchByPlaceId']);
 Route::get('/issue_categories', function () {
     // We only want to provide categories' id and label, the rest is just noise
     return \App\Models\IssueCategory::all()->transform(function ($category) {
-        return array('id' => $category->id, 'label' => $category->label);
+        return array('id' => $category->id, 'name' => $category->label);
     });
 });
 

@@ -44,9 +44,21 @@
                                     </x-forms.input-group>
                                 </div>
                                 <div class="col-span-3">
-                                    <x-forms.label for="label">{{ __('Longtitude') }}</x-forms.label>
+                                    <x-forms.label for="label">{{ __('Longitude') }}</x-forms.label>
                                     <x-forms.input-group>
                                         <x-forms.input type="text" name="longtitude" id="longtitude" value="{{ old('longtitude', isset($pickup->geo_location) ? $pickup->geo_location->getLng() : '') }}" />
+                                    </x-forms.input-group>
+                                </div>
+                                <div class="col-span-3">
+                                    <x-forms.label for="place_information">{{ __('Place information') }}</x-forms.label>
+                                    <x-forms.input-group>
+                                        <x-forms.text-area style="min-height: 400px" type="text" name="place_information" id="place_information">{{ old('place_information', $pickup->place_information ?? '') }}</x-forms.text-area>
+                                    </x-forms.input-group>
+                                </div>
+                                <div class="col-span-3">
+                                    <x-forms.label for="place_id">{{ __('Place id') }}</x-forms.label>
+                                    <x-forms.input-group>
+                                        <x-forms.input type="text" name="place_id" id="place_id" value="{{ old('place_id', isset($pickup->place_id) ? $pickup->place_id : '') }}" />
                                     </x-forms.input-group>
                                 </div>
                             </div>

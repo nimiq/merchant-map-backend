@@ -25,8 +25,8 @@ class ShopController extends Controller
         $user = auth()->user();
         return view('shops.index', [
             'shops' => ($user->is_admin)
-                ? Shop::withPending()->get()
-                : Shop::withPending()->where('user_id', $user->id)->get()
+                ? Shop::withAnyStatus()->get()
+                : Shop::withAnyStatus()->where('user_id', $user->id)->get()
         ]);
     }
 
@@ -38,40 +38,6 @@ class ShopController extends Controller
     public function create()
     {
         return view('shops.edit');
-    }
-
-    /**
-     * Verifies if the token is valid
-     *
-     * @param string $token
-     * @return boolean
-     */
-    public function verifyToken($token)
-    {
-        try {
-            $url = 'https://www.google.com/recaptcha/api/siteverify';
-            $data = ['secret'   => env('GOOGLE_CAPTCHA_SECRET'),
-                    'response' => $_POST['g-recaptcha-response'],
-
-                    // this is optional. Should be user's IP, not server's
-                    // 'remoteip' => $_SERVER['REMOTE_ADDR']
-                    ];
-                    
-            $options = [
-                'http' => [
-                    'header'  => "Content-type: application/x-www-form-urlencoded\r\n",
-                    'method'  => 'POST',
-                    'content' => http_build_query($data)
-                ]
-            ];
-        
-            $context  = stream_context_create($options);
-            $result = file_get_contents($url, false, $context);
-            return json_decode($result)->success;
-        }
-        catch (Exception $e) {
-            return null;
-        }
     }
 
     /**
@@ -95,7 +61,7 @@ class ShopController extends Controller
         $shop->currencies()->attach(\App\Models\Currency::all());
 
         if ($request->expectsJson()) {
-            return response()->json(['message' => "Place successfully submitted."],201);
+            return response()->json(['message' => "Place successfully submitted."], 201);
         } else {
             return redirect(route('shops.show', $shop->id));
         }
@@ -193,7 +159,7 @@ class ShopController extends Controller
                     AllowedFilter::exact('digital_goods')
                 ])
                 ->with(['pickups', 'shippings', 'currencies']);
-
+            
             if ($limit === 0) {
                 $shops = $shops->paginate($shops->count());
             } else {
@@ -205,16 +171,14 @@ class ShopController extends Controller
             return response()->json(['error' => $th->getMessage()], 400);
         }
 
-        // We only want to provide currencies' name and symbol, the rest is just noise
-        $shops->transform(function ($shop) {
-            $shop->currencies->transform(function ($currency) {
-                return array($currency->symbol => $currency->name);
-            });
-
-            return $shop;
-        });
-
-        return $shops;
+        $res = [];
+        foreach ($shops as $shop) {
+            // Return only the necessary data
+            $pickups = simplifyShop($shop);
+            $res = array_merge($res, $pickups);
+        }
+        
+        return $res;
     }
 
     /**
@@ -235,5 +199,37 @@ class ShopController extends Controller
         $shop->delete();
 
         return redirect(route('shops.index'));
+    }
+
+    /**
+     * Change the status of a shop
+     * 
+     * @param Request request
+     * @param Shop shop
+     * @param string status: The status is a enum of: approve, reject, postpone
+     * @return \Illuminate\Http\Response
+     */
+    public function changeStatus(Request $request, $shopId, $status)
+    {
+        try
+        {
+            switch ($status) {
+                case 'approve':
+                    Shop::approve($shopId);
+                        break;
+                case 'reject':
+                    Shop::reject($shopId);
+                    break;
+                case 'postpone':
+                    Shop::postpone($shopId);
+                    break;
+                default:
+                    return redirect(route('shops.index'));
+            }
+            return redirect(route('shops.index'));
+        }
+        catch (\Throwable $th) {
+            dd($th);
+        }
     }
 }

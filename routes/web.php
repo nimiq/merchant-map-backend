@@ -35,6 +35,10 @@ Route::resource('shops', ShopController::class)->middleware(['auth']);
 Route::resource('shops.pickups', PickupController::class)->middleware(['auth']);
 Route::resource('shops.shippings', ShippingController::class)->middleware(['auth']);
 
+Route::post('/shop/{shopId}/status/{status}', [ShopController::class, 'changeStatus'])
+    ->name('shop.status')
+    ->middleware(['auth']);
+
 Route::resource('candidates', LocationCandidateController::class)->middleware(['auth']);
 Route::post('/candidates/process/{id}', [LocationCandidateController::class, 'process'])
     ->name('candidates.process')

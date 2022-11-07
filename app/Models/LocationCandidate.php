@@ -10,7 +10,8 @@ class LocationCandidate extends Model
     use HasFactory;
 
     protected $fillable = [
-        'google_place_id'
+        'google_place_id',
+        'name',
     ];
 
 
