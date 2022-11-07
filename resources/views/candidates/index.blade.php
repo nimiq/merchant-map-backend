@@ -21,7 +21,7 @@
                 <ul class="list-disc ml-8">
                     <li><b>Process</b>: It will fetch all the information from GMaps and will publish the location automatically</li>
                     <li><b>GMaps</b>: Opens in GMaps</li>
-                    <li><b>Reject</b>: It will remove the item from the database. This action is not reversible.</li>
+                    <li><b>Reject/Delete</b>: It will remove the candidate from the database. This action is not reversible.</li>
                 </ul>
             </details>
         </p>
@@ -75,13 +75,19 @@
                                     >
                                         GMaps
                                     </x-utils.link>
+                                @endif
                                     <form action="{{ route('candidates.destroy', [ $candidate->id ]) }}"
                                         method="POST" class="inline-block">
                                         @csrf
-                                        @method('post')
-                                        <button class="text-red-500">{{ __('Reject') }}</button>
+                                        @method('delete')
+                                        <button class="text-red-500">
+                                            @if (!$candidate->processed)
+                                                {{ __('Reject') }}
+                                            @else
+                                                {{ __('Delete') }}
+                                            @endif
+                                        </button>
                                     </form>
-                                @endif
                             </x-table.data>
                         </tr>
 

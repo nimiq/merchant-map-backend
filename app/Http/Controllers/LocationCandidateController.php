@@ -109,12 +109,11 @@ class LocationCandidateController extends Controller
     public function destroy(LocationCandidate $locationCandidate)
     {
         $user = auth()->user();
-        if (!$user->is_admin && $locationCandidate->user_id !== $user->id) {
-            return redirect(route('shops.index'));
+        if (!$user->is_admin) {
+            return redirect(route('candidates.index'));
         }
-
+        $locationCandidate->currencies()->detach();
         $locationCandidate->delete();
-
         return redirect(route('candidates.index'));
     }
 
