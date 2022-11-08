@@ -24,9 +24,7 @@ class ShopController extends Controller
     {
         $user = auth()->user();
         return view('shops.index', [
-            'shops' => ($user->is_admin)
-                ? Shop::withAnyStatus()->get()
-                : Shop::withAnyStatus()->where('user_id', $user->id)->get()
+            'shops' => ($user->is_admin) ? Shop::all() : Shop::where('user_id', $user->id)->get()
         ]);
     }
 

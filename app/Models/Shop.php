@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Hootlex\Moderation\Moderatable;
 
 class Shop extends Model
 {
     use HasFactory;
-    use Moderatable;
 
     protected $fillable = [
         'label',
