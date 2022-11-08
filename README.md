@@ -151,7 +151,7 @@ Search for shops that have a label that contains `crypto` within the city `Wels`
 
 <br/>
 
-## Import Salamantex Excel file
+## Import Salamantex CSV file
 
 Make sure you've supplied a `GOOGLE_MAPS_GEOCODING_API_KEY` in the `.env`.
 

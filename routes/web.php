@@ -54,7 +54,7 @@ Route::get('/import/salamantex', function () {
         return response('Import successful.');
     } catch (\Throwable $th) {
         Log::error($th->getMessage());
-        return response('Error importing Excel file: ' . $th->getMessage());
+        return response('Error importing file: ' . $th->getMessage());
     }
 })->middleware(['auth']);
 
